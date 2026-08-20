@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Five Chambers — a personal hive</title>
+<meta name="description" content="A personal site for a Buddhist youth, tea-zen wanderer, EV data analyst, proud ally, and solo driver of long empty roads.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='%238A4B9C'/%3E%3Ctext x='16' y='21' font-size='14' text-anchor='middle' fill='%23FAF3E8' font-family='Georgia'%3EH%3C/text%3E%3C/svg%3E">
+
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Five Chambers — a personal hive">
+<meta property="og:description" content="A personal site for a Buddhist youth, tea-zen wanderer, EV data analyst, proud ally, and solo driver of long empty roads.">
+<meta property="og:image" content="https://REPLACE-WITH-YOUR-DOMAIN/og-image.jpg">
+<meta property="og:url" content="https://REPLACE-WITH-YOUR-DOMAIN/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Five Chambers — a personal hive">
+<meta name="twitter:description" content="A personal site for a Buddhist youth, tea-zen wanderer, EV data analyst, proud ally, and solo driver of long empty roads.">
+<meta name="twitter:image" content="https://REPLACE-WITH-YOUR-DOMAIN/og-image.jpg">
+
+<!-- Person structured data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Andrew Jin",
+  "alternateName": "智宏",
+  "email": "mailto:jinandrew@outlook.com.au",
+  "url": "https://REPLACE-WITH-YOUR-DOMAIN/",
+  "sameAs": [
+    "https://www.linkedin.com/in/andrewjinyi",
+    "https://www.instagram.com/andrewsbrew"
+  ],
+  "jobTitle": "Data Analyst",
+  "description": "Buddhist youth, tea-zen wanderer, EV data analyst, proud ally, and solo driver of long empty roads."
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --bg:#FAF3E8;
+  --bg-2:#F3E8D5;
+  --surface:#FFFDF7;
+  --ink:#2F2419;
+  --ink-soft:#6E5D4B;
+  --purple:#8A4B9C;
+  --purple-deep:#6E3A80;
+  --purple-tint:#A66DB8;
+  --green:#2E4B26;
+  --green-soft:#4A6B3E;
+  --amber:#C87F1F;
+  --amber-bright:#E09B3D;
+  --line:#E7D9C3;
+  --r-lg:22px;
+  --r-md:14px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --font-display:"Fraunces",Georgia,"Times New Roman",serif;
+  --font-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-cn:"Noto Serif SC","SimSun",serif;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:1rem;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--purple);color:var(--bg)}
+:focus-visible{outline:2px solid var(--purple);outline-offset:3px;border-radius:4px}
+
+.container{max-width:1120px;margin-inline:auto;padding-inline:clamp(20px,5vw,48px)}
+section{scroll-margin-top:92px;position:relative}
+
+/* shared bits */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--purple);
+}
+.eyebrow::before{content:"";width:10px;height:10px;background:var(--purple);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.eyebrow.on-dark{color:var(--amber-bright)}
+.eyebrow.on-dark::before{background:var(--amber-bright)}
+h2.display{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(2rem,4vw,3rem);
+  line-height:1.08;
+  letter-spacing:-.015em;
+  margin-top:14px;
+}
+h2.display em{font-style:italic;color:var(--purple)}
+.lead{max-width:56ch;color:var(--ink-soft);margin-top:16px;font-size:1.05rem}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  background:rgba(250,243,232,.86);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:1120px;margin-inline:auto;padding-inline:clamp(20px,5vw,48px);
+  height:68px;display:flex;align-items:center;justify-content:space-between;
+}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;font-size:1.2rem}
+.brand .hex{width:18px;height:18px;background:var(--purple);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);transition:transform .5s var(--ease)}
+.brand:hover .hex{transform:rotate(180deg)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{
+  font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-soft);position:relative;padding-block:6px;transition:color .3s;
+}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1.5px;background:var(--purple);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-toggle{display:none;background:none;border:0;cursor:pointer;padding:8px;color:var(--ink)}
+.nav-toggle svg{width:24px;height:24px}
+
+/* mobile menu */
+.mobile-menu{
+  position:fixed;inset:0;z-index:99;background:var(--bg);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;
+  opacity:0;pointer-events:none;transition:opacity .4s var(--ease);
+}
+.mobile-menu.open{opacity:1;pointer-events:auto}
+.mobile-menu a{
+  font-family:var(--font-display);font-size:2rem;padding:10px 24px;
+  opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease);
+}
+.mobile-menu.open a{opacity:1;transform:none}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{padding:170px 0 80px;position:relative;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;top:-160px;right:-160px;width:520px;height:520px;
+  background:radial-gradient(circle,rgba(138,75,156,.14) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;position:relative}
+.hero h1{
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(2.5rem,5.6vw,4.4rem);line-height:1.06;letter-spacing:-.02em;
+  margin-top:18px;
+}
+.hero h1 em{font-style:italic;color:var(--purple)}
+.hero .aka{
+  margin-top:10px;font-family:var(--font-cn);color:var(--ink-soft);font-size:1.1rem;
+}
+.hero .aka b{color:var(--green-soft);font-weight:600}
+.hero p.sub{max-width:52ch;color:var(--ink-soft);font-size:1.1rem;margin-top:22px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 26px;border-radius:999px;font-size:.9rem;font-weight:600;letter-spacing:.04em;
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease),background .3s,color .3s;
+}
+.btn svg{width:16px;height:16px}
+.btn-primary{background:var(--purple);color:var(--bg)}
+.btn-primary:hover{background:var(--purple-deep);transform:translateY(-3px);box-shadow:0 14px 30px -12px rgba(110,58,128,.55)}
+.btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--bg);transform:translateY(-3px)}
+
+/* hexagon art */
+.hero-art{display:flex;justify-content:center}
+.hex-cluster{width:min(430px,88%);height:auto}
+.hex-cluster g.hex{transition:transform .6s var(--ease)}
+.hex-cluster g.hex:hover{transform:scale(1.07)}
+.hex-cluster .hex-label{font-family:var(--font-cn);font-size:30px;fill:var(--bg);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.hex-cluster .hex-sub{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;fill:var(--bg);text-anchor:middle;dominant-baseline:central;opacity:.85;pointer-events:none}
+@keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.hex-cluster .drift{animation:drift 6s ease-in-out infinite}
+.hex-cluster .drift2{animation:drift 7.5s ease-in-out infinite;animation-delay:1.2s}
+
+/* ticker — doubles as a quick-jump directory to each chamber */
+.ticker{
+  margin-top:76px;border-block:1px solid var(--line);background:var(--green);color:var(--bg);
+  overflow:hidden;white-space:nowrap;padding-block:14px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+.ticker-track{display:inline-block;animation:marquee 26s linear infinite;font-size:.82rem;letter-spacing:.26em;text-transform:uppercase;font-weight:600}
+.ticker:hover .ticker-track,.ticker:focus-within .ticker-track{animation-play-state:paused}
+.ticker-track a{
+  display:inline-block;margin-inline:26px;opacity:.92;color:inherit;
+  transition:opacity .3s,color .3s,transform .3s var(--ease);
+}
+.ticker-track a:hover,.ticker-track a:focus-visible{opacity:1;color:var(--amber-bright);transform:translateY(-1px)}
+.ticker-track a:focus-visible{outline-color:var(--amber-bright)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============================================================
+   VISION / MISSION
+   ============================================================ */
+.vision{background:var(--purple);color:var(--bg);padding:110px 0}
+.vision-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.vision-item h3{font-family:var(--font-display);font-weight:600;font-size:clamp(1.6rem,3vw,2.3rem);line-height:1.15;margin-top:16px}
+.vision-item h3 em{font-style:italic;color:var(--amber-bright)}
+.vision-item p{color:rgba(250,243,232,.85);margin-top:16px;max-width:44ch;font-size:1.02rem}
+.vision-item + .vision-item{border-left:1px solid rgba(250,243,232,.25);padding-left:56px}
+
+/* ============================================================
+   PASSIONS
+   ============================================================ */
+.passions{padding:110px 0 70px}
+.passions-head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.passions-head .lead{max-width:44ch}
+
+.cards{display:grid;grid-template-columns:repeat(6,1fr);gap:22px;margin-top:52px}
+.card{
+  --c:var(--purple);
+  position:relative;grid-column:span 2;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:30px 28px 26px;overflow:hidden;
+  scroll-margin-top:92px; /* so the ticker/thread anchor links don't land under the fixed nav */
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .4s;
+}
+.card:nth-child(4),.card:nth-child(5){grid-column:span 3}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--c);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.card:hover{transform:translateY(-7px);border-color:var(--c);box-shadow:0 26px 48px -26px rgba(47,36,25,.28)}
+.card:hover::before{transform:scaleX(1)}
+.card .ghost{
+  position:absolute;right:-14px;top:-26px;font-family:var(--font-cn);font-size:130px;line-height:1;
+  color:var(--c);opacity:.07;pointer-events:none;user-select:none;
+}
+.card .num{font-size:.74rem;font-weight:600;letter-spacing:.2em;color:var(--c)}
+.card h3{font-family:var(--font-display);font-weight:600;font-size:1.55rem;margin-top:12px;line-height:1.15}
+.card h3 .cn{font-family:var(--font-cn);font-size:1rem;color:var(--c);margin-left:8px;vertical-align:2px}
+.card .pun{font-family:var(--font-display);font-style:italic;color:var(--c);font-size:1.02rem;margin-top:6px}
+.card p{color:var(--ink-soft);font-size:.94rem;margin-top:12px;max-width:46ch}
+.card .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.card .tags span{font-size:.72rem;font-weight:600;letter-spacing:.06em;padding:5px 12px;border-radius:999px;background:var(--bg-2);color:var(--ink-soft)}
+.card .card-link{
+  display:inline-flex;align-items:center;gap:6px;margin-top:20px;
+  font-size:.82rem;font-weight:600;color:var(--c);
+  transition:gap .3s var(--ease);
+}
+.card .card-link svg{width:14px;height:14px}
+.card .card-link:hover{gap:10px}
+
+/* Something in common... */
+.thread{background:var(--bg-2);padding:64px 0;margin-top:64px}
+.thread .eyebrow{color:var(--green-soft)}
+.thread .eyebrow::before{background:var(--green-soft)}
+.thread-inner{display:grid;grid-template-columns:minmax(250px,.9fr) minmax(0,1.55fr);gap:72px;align-items:stretch}
+.thread h3{font-family:var(--font-display);font-weight:600;font-size:clamp(1.7rem,2.8vw,2.25rem);line-height:1.1;margin-top:10px}
+.thread-intro{display:flex;flex-direction:column;justify-content:center;text-align:center;padding:12px 20px}
+.thread-intro p{color:var(--ink-soft);font-size:.9rem;line-height:1.55;margin:16px auto 0;max-width:28ch}
+.thread-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 34px;margin-top:0}
+.thread-column{display:flex;flex-direction:column}
+.thread-item{display:grid;grid-template-columns:30px 1fr;border-top:1px solid var(--line);padding:16px 0;column-gap:10px;word-break:break-word;overflow-wrap:break-word}
+.thread-column .thread-item:first-child{border-top:0;padding-top:6px}
+.thread-item a{display:contents;color:inherit}
+.thread-item .t-content{grid-column:2}
+.thread-item .t-num{font-size:.7rem;font-weight:600;letter-spacing:.18em;color:var(--c)}
+.thread-item .t-pun{font-family:var(--font-display);font-style:italic;font-size:1.08rem;line-height:1.2;transition:color .25s}
+.thread-item .t-desc{font-size:.8rem;color:var(--ink-soft);margin-top:5px;line-height:1.45}
+.thread-item:hover .t-pun,.thread-item:focus-within .t-pun{color:var(--c)}
+@media (max-width: 860px) {
+  .thread-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .thread-intro {
+    padding: 0;
+  }
+  .thread-list {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .thread-column .thread-item:first-child {
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+  .thread-column:first-child .thread-item:first-child {
+    border-top: 0;
+    padding-top: 6px;
+  }
+}
+/* ============================================================
+   ROAD LOG
+   ============================================================ */
+.roadlog{padding:110px 0 90px}
+.log{list-style:none;margin-top:48px;border-top:1px solid var(--line)}
+.log li{
+  display:grid;grid-template-columns:190px 1fr auto;gap:26px;align-items:baseline;
+  padding:26px 12px;border-bottom:1px solid var(--line);
+  transition:background .35s,padding-left .45s var(--ease);
+}
+.log li:hover{background:var(--surface);padding-left:22px}
+.log .when{font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.log .what h4{font-family:var(--font-display);font-weight:600;font-size:1.22rem;line-height:1.25}
+.log .what .where{font-size:.85rem;color:var(--ink-soft);margin-top:4px}
+.log .tag{
+  --tc:var(--ink);
+  font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 14px;border-radius:999px;border:1px solid var(--tc);color:var(--tc);white-space:nowrap;
+}
+.log .tag.trip{--tc:var(--green-soft)}
+.log .tag.retreat{--tc:var(--purple)}
+.log .tag.exhibit{--tc:var(--amber)}
+.log-note{margin-top:22px;font-family:var(--font-display);font-style:italic;color:var(--ink-soft);font-size:1rem}
+.trip-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:54px}
+.trip-gallery article{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.trip-gallery-head{padding:22px 24px 16px;border-bottom:1px solid var(--line)}
+.trip-gallery-head .when{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--purple)}
+.trip-gallery-head h3{font-family:var(--font-display);font-weight:600;font-size:1.35rem;line-height:1.18;margin-top:8px}
+.trip-gallery-head p{color:var(--ink-soft);font-size:.86rem;margin-top:8px;line-height:1.5}
+.photo-slots{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:16px}
+.photo-slot{position:relative;aspect-ratio:1.1;background:var(--bg-2);overflow:hidden}
+.photo-slot.wide{grid-column:span 2;aspect-ratio:2.05}
+.photo-slot img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ============================================================
+   CONNECT
+   ============================================================ */
+.connect{background:var(--bg-2);padding:100px 0}
+.connect-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.connect h2{font-family:var(--font-display);font-weight:600;font-size:clamp(2rem,4vw,3rem);line-height:1.08;margin-top:14px;letter-spacing:-.015em}
+.connect h2 em{font-style:italic;color:var(--purple)}
+.connect p{color:var(--ink-soft);margin-top:18px;max-width:48ch}
+.mail{
+  display:inline-flex;align-items:center;gap:10px;margin-top:26px;
+  font-family:var(--font-display);font-style:italic;font-size:1.25rem;color:var(--purple);
+  border-bottom:2px solid var(--purple);padding-bottom:4px;
+  transition:color .3s,border-color .3s;
+}
+.mail:hover{color:var(--purple-deep);border-color:var(--purple-deep)}
+.socials{display:flex;gap:14px;margin-top:30px}
+.socials a{
+  display:flex;align-items:center;gap:8px;
+  border:1.5px solid var(--line);border-radius:999px;padding:10px 18px;
+  font-size:.82rem;font-weight:600;color:var(--ink-soft);
+  transition:border-color .3s,color .3s,transform .4s var(--ease);
+}
+.socials a svg{width:15px;height:15px}
+.socials a:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-2px)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{background:var(--ink);color:var(--bg);padding:90px 0 44px;text-align:center}
+footer .big{font-family:var(--font-display);font-size:clamp(2.2rem,5.5vw,4rem);font-weight:600;line-height:1.1}
+footer .big em{font-style:italic;color:var(--amber-bright)}
+footer .big-line{display:block;margin-top:6px}
+footer .foot-cta{
+  display:inline-flex;align-items:center;gap:10px;margin-top:36px;
+  background:var(--purple);color:var(--bg);padding:15px 30px;border-radius:999px;
+  font-weight:600;letter-spacing:.04em;font-size:.92rem;
+  transition:background .3s,transform .45s var(--ease),box-shadow .45s var(--ease);
+}
+footer .foot-cta:hover{background:var(--purple-tint);transform:translateY(-3px);box-shadow:0 14px 30px -12px rgba(166,109,184,.5)}
+footer .fine{margin-top:56px;font-size:.78rem;color:rgba(250,243,232,.55);letter-spacing:.05em}
+footer .fine .sep{padding-inline:8px}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:900px){
+  .nav-links{display:none}
+  .nav-toggle{display:block}
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-art{order:-1}
+  .hex-cluster{width:min(340px,80%)}
+  .vision-grid{grid-template-columns:1fr;gap:40px}
+  .vision-item + .vision-item{border-left:0;border-top:1px solid rgba(250,243,232,.25);padding-left:0;padding-top:40px}
+  .cards{grid-template-columns:1fr}
+  .card,.card:nth-child(4),.card:nth-child(5){grid-column:span 1}
+  .thread-inner{grid-template-columns:1fr;gap:28px}
+  .thread-intro{padding:0 0 6px}
+  .thread-intro p{max-width:48ch}
+  .thread-list{margin-top:0}
+  .log li{grid-template-columns:1fr;gap:8px}
+  .trip-gallery{grid-template-columns:1fr}
+  .connect-grid{grid-template-columns:1fr;gap:40px}
+}
+@media (max-width:520px){
+  .thread-list{grid-template-columns:1fr}
+  .hero{padding-top:140px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a class="brand" href="#top" aria-label="Back to top">
+      <span class="hex" aria-hidden="true"></span>
+      <span data-fill="name">Andrew</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#passions">Passions</a></li>
+      <li><a href="#roadlog">Road log</a></li>
+      <li><a href="#connect">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about">About</a>
+  <a href="#passions">Passions</a>
+  <a href="#roadlog">Road log</a>
+  <a href="#connect">Contact</a>
+</div>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow reveal">A personal hive · five chambers, one mind</span>
+      <h1 class="reveal" style="transition-delay:.08s">Hi, I'm <em data-fill="name"> Andrew </em>.<br>I keep a hive of five obsessions.</h1>
+      <p class="aka reveal" style="transition-delay:.14s">aka <b data-fill="nameZh">智宏</b> · 茶禅行者</p>
+      <p class="sub reveal" style="transition-delay:.2s">Buddhist youth. Tea Meditation Practioner. Data analyst in the EV trade. Proud ally. And a solo driver of long, empty roads. This is the corner of the internet where all five live — and occasionally argue.</p>
+      <div class="hero-cta reveal" style="transition-delay:.26s">
+        <a class="btn btn-primary" href="#passions">
+          Explore the chambers
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#connect">Write to me</a>
+      </div>
+    </div>
+
+    <!-- hexagon comb: one cell per passion -->
+    <div class="hero-art reveal" style="transition-delay:.2s" aria-hidden="true">
+      <svg class="hex-cluster" viewBox="0 0 440 400" role="img" aria-label="Five hexagonal cells labelled Fo, Hong, Cha, Shu, Lu">
+        <g class="hex drift">
+          <polygon points="110,70 162,98 162,154 110,182 58,154 58,98" fill="#8A4B9C"/>
+          <text class="hex-label" x="110" y="110">佛</text>
+          <text class="hex-sub" x="110" y="138">Sangha</text>
+        </g>
+        <g class="hex drift2">
+          <polygon points="330,70 382,98 382,154 330,182 278,154 278,98" fill="#2E4B26"/>
+          <text class="hex-label" x="330" y="110">彩</text>
+          <text class="hex-sub" x="330" y="138">Pride</text>
+        </g>
+        <g class="hex drift" style="animation-delay:.6s">
+          <polygon points="220,120 284,154 284,222 220,256 156,222 156,154" fill="#E09B3D"/>
+          <text class="hex-label" x="220" y="166" style="fill:#2F2419">茶</text>
+          <text class="hex-sub" x="220" y="196" style="fill:#2F2419">Tea Meditation</text>
+        </g>
+        <g class="hex drift2" style="animation-delay:.9s">
+          <polygon points="110,250 162,278 162,334 110,362 58,334 58,278" fill="#6E3A80"/>
+          <text class="hex-label" x="110" y="290">数</text>
+          <text class="hex-sub" x="110" y="318">Data Analysis</text>
+        </g>
+        <g class="hex drift" style="animation-delay:1.4s">
+          <polygon points="330,250 382,278 382,334 330,362 278,334 278,278" fill="none" stroke="#8A4B9C" stroke-width="2.5"/>
+          <text class="hex-label" x="330" y="290" style="fill:#2F2419">旅</text>
+          <text class="hex-sub" x="330" y="318" style="fill:#6E5D4B">Solo Travel</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <nav class="ticker" aria-label="Jump to a chamber">
+    <div class="ticker-track">
+      <a href="#project-sangha">Mind over matter</a><a href="#project-pride">Out &amp; proud</a><a href="#project-tea">Steeped in stillness</a><a href="#project-data">Drive the data</a><a href="#project-travel">Explore the world</a>
+      <a href="#project-sangha" aria-hidden="true" tabindex="-1">Mind over matter</a><a href="#project-pride" aria-hidden="true" tabindex="-1">Out &amp; proud</a><a href="#project-tea" aria-hidden="true" tabindex="-1">Steeped in stillness</a><a href="#project-data" aria-hidden="true" tabindex="-1">Drive the data</a><a href="#project-travel" aria-hidden="true" tabindex="-1">Explore the world</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ================= VISION / MISSION ================= -->
+<section class="vision" id="about">
+  <div class="container">
+    <div class="vision-grid">
+      <div class="vision-item reveal">
+        <span class="eyebrow on-dark">Value...?</span>
+        <h3>To live like a good cup of tea — <em>steeped in tradition, clear in intention, warm without fuss.</em></h3>
+        <p>The Dharma hall and the gongfu table teach the same lesson: presence beats performance. I want the rest of my life to match.</p>
+      </div>
+      <div class="vision-item reveal" style="transition-delay:.12s">
+        <span class="eyebrow on-dark">Task...?</span>
+        <h3>Keep learning where the <em>meditation cushion meets the spreadsheet</em>.</h3>
+        <p>Read the old texts, defend the new rights, clean the messy dataset, and leave every road I drive a little kinder than I found it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PASSIONS ================= -->
+<section class="passions" id="passions">
+  <div class="container">
+    <div class="passions-head reveal">
+      <div>
+        <span class="eyebrow">01 · The showcase</span>
+        <h2 class="display">Five chambers, <em>one hive</em></h2>
+      </div>
+      <p class="lead">Each chamber holds a habit I've been building for years. They don't always agree with each other — that's exactly why I keep them all.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card reveal" id="project-sangha" style="--c:var(--purple)">
+        <span class="ghost" aria-hidden="true">佛</span>
+        <span class="num">01</span>
+        <h3>Buddhist Youth<span class="cn"><br>佛教青年</span></h3>
+        <p class="pun">The middle way, moving forward.</p>
+        <p>Humanistic Buddhism in the Fo Guang Shan tradition — I read the sūtras, argue with AI-ethics papers, and study how modern identity meets an old practice.</p>
+        <div class="tags"><span>人间佛教</span><span>AI &amp; consciousness</span><span>meditation</span></div>
+        <a class="card-link" href="sangha.html">Explore this chamber <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="card reveal" id="project-pride" style="--c:var(--green);transition-delay:.08s">
+        <span class="ghost" aria-hidden="true">彩</span>
+        <span class="num">02</span>
+        <h3>Pride &amp; Practice<span class="cn">LGBTQ+ 权益</span></h3>
+        <p class="pun">Rainbows in the Dharma hall.</p>
+        <p>Compassion without rights is just a slogan. I show up as an ally at work and in the community — because equity work doesn't stop at the temple gate.</p>
+        <div class="tags"><span>allyship</span><span>inclusive workplaces</span><span>pride</span></div>
+        <a class="card-link" href="pride.html">Explore this chamber <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="card reveal" id="project-tea" style="--c:var(--amber);transition-delay:.16s">
+        <span class="ghost" aria-hidden="true">茶</span>
+        <span class="num">03</span>
+        <h3>Tea &amp; the Way<span class="cn"><br>茶禅行者</span></h3>
+        <p class="pun">One pot, one mind.</p>
+        <p>The gongfu table is my second meditation cushion. I brew slowly, sip slowly, and believe 禅茶一味 — the Way and the tea are one single flavour.</p>
+        <div class="tags"><span>gongfu cha</span><span>禅茶一味</span><span>stillness</span></div>
+        <a class="card-link" href="tea.html">Explore this chamber <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="card reveal" id="project-data" style="--c:var(--green-soft)">
+        <span class="ghost" aria-hidden="true">数</span>
+        <span class="num">04</span>
+        <h3>Data &amp; Drive<span class="cn">产业数据分析</span></h3>
+        <p class="pun">Pivot tables, pavement, EVs.</p>
+        <p>By day I turn dealership data into decisions for an EV brand in Australia and New Zealand — VFACTS, KPIs, and the quiet thrill of a model that finally runs clean.</p>
+        <div class="tags"><span>EV industry</span><span>sales analytics</span><span>VFACTS</span></div>
+        <a class="card-link" href="data.html">Explore this chamber <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="card reveal" id="project-travel" style="--c:var(--purple-deep);transition-delay:.08s">
+        <span class="ghost" aria-hidden="true">旅</span>
+        <span class="num">05</span>
+        <h3>Solo Maps<span class="cn">自驾旅行</span></h3>
+        <p class="pun">One pedal, one throttle, many stories.</p>
+        <p>New Zealand's South Island and Australia's coastlines, driven alone. A full tank, a half-baked plan, and my own company for company.</p>
+        <div class="tags"><span>NZ South Island</span><span>coastal Australia</span><span>Tasman sea</span><span>self-drive</span></div>
+        <a class="card-link" href="travel.html">Explore this chamber <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+    </div>
+
+    <div class="thread reveal">
+      <div class="thread-inner">
+          <div class="thread-intro">
+            <span class="eyebrow">Something in common...</span>
+            <h3>Five habits, one thread</h3>
+            <p>Different practices, the same direction: stay present, stay curious, and keep moving with intention.</p>
+          </div>
+          <div class="thread-list">
+            <div class="thread-column">
+              <div class="thread-item" style="--c:var(--purple)"><a href="sangha.html" aria-label="Open Buddhist Youth project"><div class="t-num">01</div><div class="t-content"><div class="t-pun">Mind over matter</div><div class="t-desc">sitting with discomfort</div></div></a></div>
+              <div class="thread-item" style="--c:var(--green-soft)"><a href="pride.html" aria-label="Open Pride and Practice project"><div class="t-num">02</div><div class="t-content"><div class="t-pun">Out &amp; proud</div><div class="t-desc">showing up as myself</div></div></a></div>
+              <div class="thread-item" style="--c:var(--amber)"><a href="tea.html" aria-label="Open Tea and the Way project"><div class="t-num">03</div><div class="t-content"><div class="t-pun">Steeped in stillness</div><div class="t-desc">slowing the kettle down</div></div></a></div>
+            </div>
+            <div class="thread-column">
+              <div class="thread-item" style="--c:var(--purple-deep)"><a href="data.html" aria-label="Open Data and Drive project"><div class="t-num">04</div><div class="t-content"><div class="t-pun">Drive the data</div><div class="t-desc">turning rows into roads</div></div></a></div>
+              <div class="thread-item" style="--c:var(--green)"><a href="travel.html" aria-label="Open Solo Maps project"><div class="t-num">05</div><div class="t-content"><div class="t-pun">Explore the world</div><div class="t-desc">discovering new horizons</div></div></a></div>
+            </div>
+          </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ROAD LOG ================= -->
+<section class="roadlog" id="roadlog">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">02 · Stay tuned</span>
+      <h2 class="display">The road <em>log</em></h2>
+      <p class="lead">Solo trips, retreats and small projects — the log fills up slowly, on purpose.</p>
+    </div>
+
+    <ul class="log reveal">
+      <li>
+        <div class="when">Done · April 2026</div>
+        <div class="what">
+          <h4>Launceston → Hobart → Launceston</h4>
+          <div class="where">Tasmania · National Highway 1 · a road of blood and sweat, remembering the first immigrants here</div>
+        </div>
+        <span class="tag trip">Trip</span>
+      </li>
+      <li>
+        <div class="when">Done · February 2026</div>
+        <div class="what">
+          <h4>Jingdezhen → Changsha</h4>
+          <div class="where">China · from a newly discovered world treasure to a newly influential city, where history meets new consumer behaviour</div>
+        </div>
+        <span class="tag trip">Trip</span>
+      </li>
+      <li>
+        <div class="when">Done · November–December 2025</div>
+        <div class="what">
+          <h4>Queenstown → Wanaka → Christchurch → Auckland</h4>
+          <div class="where">New Zealand · bungee, swing, luge, lakes, mountains, temples, galleries, Sakura and long southern roads</div>
+        </div>
+        <span class="tag trip">Trip</span>
+      </li>
+      <li>
+        <div class="when">Ongoing</div>
+        <div class="what">
+          <h4>EV share of NSW — a VFACTS deep-dive</h4>
+          <div class="where">Sydney · turning registration data into something a sales floor can use</div>
+        </div>
+        <span class="tag exhibit">Exhibit</span>
+      </li>
+      <li>
+        <div class="when">Every March</div>
+        <div class="what">
+          <h4>Pride </h4>
+          <div class="where">Mardi Gras · march with the community: USYD, ANTRA, ACON</div>
+        </div>
+        <span class="tag">Campaign</span>
+      </li>
+    </ul>
+    <div class="trip-gallery" aria-label="Trip photo spaces">
+      <article class="reveal">
+        <div class="trip-gallery-head"><div class="when">April 2026 · Tasmania</div><h3>Blood, sweat &amp; the highway</h3><p>Launceston → Hobart → Launceston through National Highway 1.</p></div>
+        <div class="photo-slots">
+          <div class="photo-slot wide"><img src="photos/tasmania/01.jpg" alt="National Highway 1 road through Tasmania" loading="lazy"></div>
+          <div class="photo-slot"><img src="photos/tasmania/02.jpg" alt="A stop along the Tasmania trip" loading="lazy"></div>
+          <div class="photo-slot"><img src="photos/tasmania/03.jpg" alt="Detail from the Tasmania trip" loading="lazy"></div>
+        </div>
+      </article>
+      <article class="reveal" style="transition-delay:.08s">
+        <div class="trip-gallery-head"><div class="when">February 2026 · China</div><h3>Clay, memory &amp; momentum</h3><p>Jingdezhen → Changsha: world treasure to influential new city.</p></div>
+        <div class="photo-slots">
+          <div class="photo-slot wide"><img src="photos/china/01.jpg" alt="Jingdezhen to Changsha trip" loading="lazy"></div>
+          <div class="photo-slot"><img src="photos/china/02.jpg" alt="A stop along the China trip" loading="lazy"></div>
+          <div class="photo-slot"><img src="photos/china/03.jpg" alt="Detail from the China trip" loading="lazy"></div>
+        </div>
+      </article>
+      <article class="reveal" style="transition-delay:.16s">
+        <div class="trip-gallery-head"><div class="when">November–December 2025 · New Zealand</div><h3>Lakes, temples &amp; cherry blossom</h3><p>Queenstown → Wanaka → Pukaki Ward → Lake Tekapo → Totara Valley → Christchurch → Auckland.</p></div>
+        <div class="photo-slots">
+          <div class="photo-slot wide"><img src="photos/new-zealand/01.jpg" alt="South Island New Zealand road trip" loading="lazy"></div>
+          <div class="photo-slot"><img src="photos/new-zealand/02.jpg" alt="A stop along the New Zealand trip" loading="lazy"></div>
+          <div class="photo-slot"><img src="photos/new-zealand/03.jpg" alt="Detail from the New Zealand trip" loading="lazy"></div>
+        </div>
+      </article>
+    </div>
+    <p class="log-note reveal">More coming — this page updates as often as the tank runs empty.</p>
+  </div>
+</section>
+
+<!-- ================= CONNECT ================= -->
+<section class="connect" id="connect">
+  <div class="container connect-grid">
+    <div class="reveal">
+      <span class="eyebrow">03 · Let's get brewing</span>
+      <h2>Tea's on.<br><em>Pull up a chair.</em></h2>
+      <p>If you're into EVs, the āgamas, or the perfect gongfu brew — or you just need a passenger for the coast — write to me. I answer faster than my kettle boils.</p>
+      <a class="mail" data-fill="mail" href="mailto:jinandrew@outlook.com.au">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        <span data-fill="mailText">jinandrew@outlook.com.au</span>
+      </a>
+      <div class="socials">
+        <a data-fill="linkedin" href="https://www.linkedin.com/in/andrewjinyi" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.49 2.49 0 1 1 0 3.5a2.49 2.49 0 0 1 4.98 0zM.24 8.31h4.52V23H.24zM8.34 8.31h4.33v2h.06c.6-1.14 2.07-2.34 4.27-2.34 4.56 0 5.4 3 5.4 6.9V23h-4.5v-7.2c0-1.72-.03-3.93-2.4-3.93-2.4 0-2.77 1.87-2.77 3.8V23H8.34z"/></svg>
+          LinkedIn
+        </a>
+        <a data-fill="instagram" href="https://www.instagram.com/andrewsbrew" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.1s" aria-hidden="true">
+      <svg viewBox="0 0 380 220" style="width:100%;max-width:420px;margin-left:auto">
+        <g fill="none" stroke="#C9B79B" stroke-width="1.4" opacity=".8">
+          <path d="M20 190 C 70 160, 90 120, 150 125 C 205 130, 220 165, 260 158 C 300 151, 320 130, 360 90"/>
+          <path d="M40 205 C 100 180, 130 150, 200 155 C 260 159, 300 195, 350 165"/>
+          <path d="M30 150 C 80 130, 110 100, 165 108 C 215 116, 255 145, 305 120"/>
+        </g>
+        <g font-family="'Noto Serif SC',serif" font-size="16" fill="#8A4B9C" opacity=".55" text-anchor="middle">
+          <text x="150" y="128">禅</text><text x="205" y="160" fill="#2E4B26">茶</text>
+          <text x="262" y="140" fill="#C87F1F">旅</text>
+          <text x="335" y="76">佛</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <p class="big reveal">Enter the <em>hive</em> mind<span class="big-line">— five chambers, one cup of tea.</span></p>
+    <a class="foot-cta reveal" data-fill="mail" href="mailto:jinandrew@outlook.com.au">
+      Say hello
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    </a>
+    <p class="fine">© <span data-fill="year">2026</span> <span data-fill="name">Andrew Jin</span><span class="sep">·</span>Built with tea, spreadsheets and one very patient GPS.</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   SITE CONFIG — edit this one block and the whole site updates
+   ============================================================ */
+const SITE = {
+  nameEn: "Andrew Jin",            // ← your English name
+  nameZh: "智宏 易",              // ← your Chinese nickname
+  mail:   "jinandrew@outlook.com.au", // ← your email
+  linkedin: "https://www.linkedin.com/in/andrewjinyi",
+  instagram: "https://www.instagram.com/andrewsbrew", // ← your Instagram profile link
+};
+
+/* fill placeholders */
+document.querySelectorAll("[data-fill]").forEach(el=>{
+  const key = el.dataset.fill;
+  if(key === "year"){ el.textContent = new Date().getFullYear(); return; }
+  if(key === "mail"){ return; } // href-only, handled below — keeps icons/label text intact
+  if(key === "mailText"){ el.textContent = SITE.mail; return; }
+  if(SITE[key] !== undefined){
+    if(el.tagName === "A" && SITE[key] && SITE[key].startsWith("http")) el.href = SITE[key];
+    el.textContent = SITE[key];
+  }
+});
+/* any element (link, button…) tagged data-fill="mail" gets its href synced to SITE.mail,
+   without touching its visible label/icon */
+document.querySelectorAll("[data-fill='mail']").forEach(a=>{ a.href = "mailto:" + SITE.mail; });
+
+/* scroll reveal */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+},{ threshold:.12, rootMargin:"0px 0px -40px 0px" });
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+/* mobile menu */
+const toggle = document.querySelector(".nav-toggle");
+const menu = document.getElementById("mobile-menu");
+toggle.addEventListener("click",()=>{
+  const open = menu.classList.toggle("open");
+  toggle.setAttribute("aria-expanded",open);
+  toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  document.body.style.overflow = open ? "hidden" : "";
+});
+menu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{
+  menu.classList.remove("open");
+  toggle.setAttribute("aria-expanded","false");
+  document.body.style.overflow = "";
+}));
+</script>
+</body>
+</html>

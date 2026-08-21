@@ -1,0 +1,34 @@
+{
+  "galleries": [
+    {
+      "when": "April 2026 . Tasmania",
+      "title": "Blood, sweat & the highway",
+      "desc": "Launceston -> Hobart -> Launceston through National Highway 1.",
+      "photos": [
+        { "src": "photos/tasmania/01.jpg", "alt": "National Highway 1 road through Tasmania", "wide": true },
+        { "src": "photos/tasmania/02.jpg", "alt": "A stop along the Tasmania trip", "wide": false },
+        { "src": "photos/tasmania/03.jpg", "alt": "Detail from the Tasmania trip", "wide": false }
+      ]
+    },
+    {
+      "when": "February 2026 . China",
+      "title": "Clay, memory & momentum",
+      "desc": "Jingdezhen -> Changsha: world treasure to influential new city.",
+      "photos": [
+        { "src": "photos/china/01.jpg", "alt": "Jingdezhen to Changsha trip", "wide": true },
+        { "src": "photos/china/02.jpg", "alt": "A stop along the China trip", "wide": false },
+        { "src": "photos/china/03.jpg", "alt": "Detail from the China trip", "wide": false }
+      ]
+    },
+    {
+      "when": "November-December 2025 . New Zealand",
+      "title": "Lakes, temples & cherry blossom",
+      "desc": "Queenstown -> Wanaka -> Pukaki Ward -> Lake Tekapo -> Totara Valley -> Christchurch -> Auckland.",
+      "photos": [
+        { "src": "photos/new-zealand/01.jpg", "alt": "South Island New Zealand road trip", "wide": true },
+        { "src": "photos/new-zealand/02.jpg", "alt": "A stop along the New Zealand trip", "wide": false },
+        { "src": "photos/new-zealand/03.jpg", "alt": "Detail from the New Zealand trip", "wide": false }
+      ]
+    }
+  ]
+}

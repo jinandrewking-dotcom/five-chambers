@@ -1,0 +1,7 @@
+{
+  "photos": [
+    { "src": "photos/tea/01.jpg", "alt": "tea photo" },
+    { "src": "photos/tea/02.jpg", "alt": "tea photo" },
+    { "src": "photos/tea/03.jpg", "alt": "tea photo" }
+  ]
+}

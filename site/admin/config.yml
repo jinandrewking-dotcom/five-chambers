@@ -1,0 +1,148 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "photos"
+public_folder: "photos"
+
+collections:
+  # ────────────────────────────────────────
+  # Road Log — 路书
+  # ────────────────────────────────────────
+  - name: "roadlog"
+    label: "Road Log · 路书"
+    delete: false
+    files:
+      - file: "content/roadlog.json"
+        name: "data"
+        label: "Road Log Entries"
+        format: json
+        fields:
+          - name: "entries"
+            label: "Entries"
+            widget: "list"
+            add_to_top: true
+            summary: "{{title}} — {{when}}"
+            fields:
+              - { label: "When",  name: "when",  widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Where", name: "where", widget: "string" }
+              - { label: "Tag",   name: "tag",   widget: "select", options: ["trip", "retreat", "exhibit", ""] }
+              - { label: "Tag Label", name: "tagLabel", widget: "string" }
+
+  # ────────────────────────────────────────
+  # Trip Gallery — 游记图集
+  # ────────────────────────────────────────
+  - name: "tripgallery"
+    label: "Trip Gallery · 游记图集"
+    delete: false
+    files:
+      - file: "content/tripgallery.json"
+        name: "data"
+        label: "Trip Gallery"
+        format: json
+        fields:
+          - name: "galleries"
+            label: "Galleries"
+            widget: "list"
+            add_to_top: true
+            summary: "{{title}} — {{when}}"
+            fields:
+              - { label: "When",  name: "when",  widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+              - name: "photos"
+                label: "Photos"
+                widget: "list"
+                fields:
+                  - { label: "Image", name: "src", widget: "image" }
+                  - { label: "Alt Text", name: "alt", widget: "string", default: "Trip photo" }
+                  - { label: "Wide layout", name: "wide", widget: "boolean", default: false }
+
+  # ────────────────────────────────────────
+  # Chamber Galleries — 五室图集
+  # ────────────────────────────────────────
+  - name: "sangha-gallery"
+    label: "Sangha Gallery · 佛教青年"
+    delete: false
+    files:
+      - file: "content/sangha-photos.json"
+        name: "data"
+        label: "Sangha Photos"
+        format: json
+        fields:
+          - name: "photos"
+            label: "Photos"
+            widget: "list"
+            add_to_top: true
+            fields:
+              - { label: "Image", name: "src", widget: "image" }
+              - { label: "Alt Text", name: "alt", widget: "string", default: "Sangha photo" }
+
+  - name: "pride-gallery"
+    label: "Pride Gallery · 彩虹权益"
+    delete: false
+    files:
+      - file: "content/pride-photos.json"
+        name: "data"
+        label: "Pride Photos"
+        format: json
+        fields:
+          - name: "photos"
+            label: "Photos"
+            widget: "list"
+            add_to_top: true
+            fields:
+              - { label: "Image", name: "src", widget: "image" }
+              - { label: "Alt Text", name: "alt", widget: "string", default: "Pride photo" }
+
+  - name: "tea-gallery"
+    label: "Tea Gallery · 茶禅"
+    delete: false
+    files:
+      - file: "content/tea-photos.json"
+        name: "data"
+        label: "Tea Photos"
+        format: json
+        fields:
+          - name: "photos"
+            label: "Photos"
+            widget: "list"
+            add_to_top: true
+            fields:
+              - { label: "Image", name: "src", widget: "image" }
+              - { label: "Alt Text", name: "alt", widget: "string", default: "Tea photo" }
+
+  - name: "data-gallery"
+    label: "Data Gallery · 数据分析"
+    delete: false
+    files:
+      - file: "content/data-photos.json"
+        name: "data"
+        label: "Data Photos"
+        format: json
+        fields:
+          - name: "photos"
+            label: "Photos"
+            widget: "list"
+            add_to_top: true
+            fields:
+              - { label: "Image", name: "src", widget: "image" }
+              - { label: "Alt Text", name: "alt", widget: "string", default: "Data photo" }
+
+  - name: "travel-gallery"
+    label: "Travel Gallery · 自驾"
+    delete: false
+    files:
+      - file: "content/travel-photos.json"
+        name: "data"
+        label: "Travel Photos"
+        format: json
+        fields:
+          - name: "photos"
+            label: "Photos"
+            widget: "list"
+            add_to_top: true
+            fields:
+              - { label: "Image", name: "src", widget: "image" }
+              - { label: "Alt Text", name: "alt", widget: "string", default: "Travel photo" }

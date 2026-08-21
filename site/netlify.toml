@@ -1,0 +1,14 @@
+[build]
+  publish = "."
+
+# Decap CMS admin — serve as a normal page
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
+# Enable Netlify Identity headers for Decap CMS
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"

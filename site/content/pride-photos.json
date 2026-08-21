@@ -1,0 +1,7 @@
+{
+  "photos": [
+    { "src": "photos/pride/01.jpg", "alt": "pride photo" },
+    { "src": "photos/pride/02.jpg", "alt": "pride photo" },
+    { "src": "photos/pride/03.jpg", "alt": "pride photo" }
+  ]
+}

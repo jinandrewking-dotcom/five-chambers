@@ -31,11 +31,7 @@
   </section>
   <section class="chamber-block" style="--c:var(--amber)">
     <h2>Gallery</h2>
-    <div class="chamber-gallery">
-      <div class="g-slot"><img src="photos/tea/01.jpg" alt="Tea photo" loading="lazy"></div>
-      <div class="g-slot"><img src="photos/tea/02.jpg" alt="Tea photo" loading="lazy"></div>
-      <div class="g-slot"><img src="photos/tea/03.jpg" alt="Tea photo" loading="lazy"></div>
-    </div>
+    <div class="chamber-gallery" id="chamber-gallery"></div>
   </section>
 </main>
 
@@ -45,6 +41,24 @@
     <a class="back-link" href="index.html#passions" style="color:var(--amber)">← Back to the hive · 回蜂巢</a>
   </div>
 </footer>
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+<script>
+document.getElementById('y').textContent = new Date().getFullYear();
+var PHOTOS_FALLBACK = [
+  { src:"photos/tea/01.jpg", alt:"Tea photo" },
+  { src:"photos/tea/02.jpg", alt:"Tea photo" },
+  { src:"photos/tea/03.jpg", alt:"Tea photo" }
+];
+function renderChamberGallery(photos){
+  var el = document.getElementById("chamber-gallery");
+  if(!el) return;
+  el.innerHTML = photos.map(function(p){
+    return '<div class="g-slot"><img src="' + p.src + '" alt="' + (p.alt||"photo") + '" loading="lazy"></div>';
+  }).join('');
+}
+fetch("content/tea-photos.json")
+  .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+  .then(function(data){ renderChamberGallery(data.photos || PHOTOS_FALLBACK); })
+  .catch(function(){ renderChamberGallery(PHOTOS_FALLBACK); });
+</script>
 </body>
 </html>

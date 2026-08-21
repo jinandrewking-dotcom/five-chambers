@@ -1,0 +1,39 @@
+{
+  "entries": [
+    {
+      "when": "Done . April 2026",
+      "title": "Launceston -> Hobart -> Launceston",
+      "where": "Tasmania . National Highway 1 . a road of blood and sweat, remembering the first immigrants here",
+      "tag": "trip",
+      "tagLabel": "Trip"
+    },
+    {
+      "when": "Done . February 2026",
+      "title": "Jingdezhen -> Changsha",
+      "where": "China . from a newly discovered world treasure to a newly influential city, where history meets new consumer behaviour",
+      "tag": "trip",
+      "tagLabel": "Trip"
+    },
+    {
+      "when": "Done . November-December 2025",
+      "title": "Queenstown -> Wanaka -> Christchurch -> Auckland",
+      "where": "New Zealand . bungee, swing, luge, lakes, mountains, temples, galleries, Sakura and long southern roads",
+      "tag": "trip",
+      "tagLabel": "Trip"
+    },
+    {
+      "when": "Ongoing",
+      "title": "EV share of NSW -- a VFACTS deep-dive",
+      "where": "Sydney . turning registration data into something a sales floor can use",
+      "tag": "exhibit",
+      "tagLabel": "Exhibit"
+    },
+    {
+      "when": "Every March",
+      "title": "Pride",
+      "where": "Mardi Gras . march with the community: USYD, ANTRA, ACON",
+      "tag": "",
+      "tagLabel": "Campaign"
+    }
+  ]
+}

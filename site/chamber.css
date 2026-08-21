@@ -1,0 +1,92 @@
+/* ============================================================
+   SHARED STYLES for the five "chamber" sub-pages
+   (sangha.html / pride.html / tea.html / data.html / travel.html)
+   Tokens mirror index.html so the whole site feels like one place.
+   ============================================================ */
+:root{
+  --bg:#FAF3E8;
+  --bg-2:#F3E8D5;
+  --surface:#FFFDF7;
+  --ink:#2F2419;
+  --ink-soft:#6E5D4B;
+  --purple:#8A4B9C;
+  --purple-deep:#6E3A80;
+  --purple-tint:#A66DB8;
+  --green:#2E4B26;
+  --green-soft:#4A6B3E;
+  --amber:#C87F1F;
+  --amber-bright:#E09B3D;
+  --line:#E7D9C3;
+  --r-lg:22px;
+  --r-md:14px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --font-display:"Fraunces",Georgia,"Times New Roman",serif;
+  --font-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-cn:"Noto Serif SC","SimSun",serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--font-body);
+  font-size:1rem;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--purple);color:var(--bg)}
+:focus-visible{outline:2px solid var(--purple);outline-offset:3px;border-radius:4px}
+.container{max-width:880px;margin-inline:auto;padding-inline:clamp(20px,5vw,48px)}
+
+/* back link */
+.back-link{
+  display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:inherit;opacity:.8;
+  transition:opacity .3s,transform .3s var(--ease);
+}
+.back-link:hover{opacity:1;transform:translateX(-3px)}
+
+/* hero */
+.chamber-hero{
+  --c:var(--purple);
+  padding:110px 0 70px;background:var(--c);color:var(--bg);
+  position:relative;overflow:hidden;
+}
+.chamber-hero::before{
+  content:"";position:absolute;top:-140px;right:-140px;width:420px;height:420px;
+  background:radial-gradient(circle,rgba(250,243,232,.14) 0%,transparent 65%);pointer-events:none;
+}
+.chamber-hero .eyebrow{
+  display:inline-flex;align-items:center;gap:10px;margin-top:28px;
+  font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--amber-bright);
+}
+.chamber-hero .eyebrow::before{content:"";width:10px;height:10px;background:var(--amber-bright);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.chamber-hero h1{
+  font-family:var(--font-display);font-weight:600;font-size:clamp(2.1rem,5.5vw,3.4rem);
+  line-height:1.08;letter-spacing:-.015em;margin-top:14px;
+}
+.chamber-hero h1 .cn{font-family:var(--font-cn);font-size:.55em;opacity:.85;margin-left:10px}
+.chamber-hero .pun{font-family:var(--font-display);font-style:italic;font-size:1.2rem;margin-top:14px;color:var(--amber-bright)}
+.chamber-hero .lead{max-width:58ch;color:rgba(250,243,232,.9);margin-top:18px;font-size:1.05rem}
+.chamber-hero .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chamber-hero .tags span{font-size:.72rem;font-weight:600;letter-spacing:.06em;padding:6px 14px;border-radius:999px;background:rgba(250,243,232,.16);color:var(--bg)}
+
+/* body */
+.chamber-body{padding:64px 0 90px}
+.chamber-block{margin-bottom:56px}
+.chamber-block h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.4rem,3vw,1.9rem);margin-bottom:16px;color:var(--c,var(--purple))}
+.chamber-block p{color:var(--ink-soft);max-width:66ch}
+.placeholder-note{
+  border:1px dashed var(--line);border-radius:var(--r-md);padding:18px 20px;
+  font-style:italic;background:var(--surface);
+}
+.chamber-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.g-slot{aspect-ratio:1;background:var(--bg-2);border-radius:var(--r-md);overflow:hidden}
+.g-slot img{width:100%;height:100%;object-fit:cover}
+
+/* footer */
+.chamber-footer{border-top:1px solid var(--line);padding:36px 0;margin-top:20px}
+.chamber-footer .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.chamber-footer p{font-size:.85rem;color:var(--ink-soft)}
+.chamber-footer .back-link{color:var(--purple)}
+
+@media (max-width:640px){
+  .chamber-gallery{grid-template-columns:1fr 1fr}
+}

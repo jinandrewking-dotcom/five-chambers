@@ -106,6 +106,16 @@ h2.display{
 h2.display em{font-style:italic;color:var(--purple)}
 .lead{max-width:56ch;color:var(--ink-soft);margin-top:16px;font-size:1.05rem}
 
+/* Chinese accent — keeps the site bilingual without tipping it over */
+.cn-sub{
+  font-family:var(--font-cn);font-weight:600;letter-spacing:.04em;
+  text-transform:none;font-size:.82em;margin-left:8px;opacity:.8;
+  white-space:nowrap;vertical-align:middle;
+}
+h2 .cn-sub{font-size:.4em;margin-left:14px;letter-spacing:.06em;opacity:.72}
+h3 .cn-sub{font-size:.5em;margin-left:12px;opacity:.85}
+.eyebrow .cn-sub{font-size:.85em;letter-spacing:.08em;margin-left:6px;opacity:.85}
+
 /* reveal on scroll */
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal.in{opacity:1;transform:none}
@@ -121,12 +131,12 @@ h2.display em{font-style:italic;color:var(--purple)}
 }
 .nav-inner{
   max-width:1120px;margin-inline:auto;padding-inline:clamp(20px,5vw,48px);
-  height:68px;display:flex;align-items:center;justify-content:space-between;
+  height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px;
 }
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;font-size:1.2rem}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;font-size:1.2rem;flex-shrink:0}
 .brand .hex{width:18px;height:18px;background:var(--purple);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);transition:transform .5s var(--ease)}
 .brand:hover .hex{transform:rotate(180deg)}
-.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links{display:flex;gap:28px;list-style:none;margin-right:auto;margin-left:32px}
 .nav-links a{
   font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-soft);position:relative;padding-block:6px;transition:color .3s;
@@ -134,21 +144,117 @@ h2.display em{font-style:italic;color:var(--purple)}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1.5px;background:var(--purple);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
 .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after{transform:scaleX(1)}
-.nav-toggle{display:none;background:none;border:0;cursor:pointer;padding:8px;color:var(--ink)}
-.nav-toggle svg{width:24px;height:24px}
+.nav-links a.active{color:var(--ink)}
+.nav-links a.active::after{transform:scaleX(1)}
 
-/* mobile menu */
-.mobile-menu{
-  position:fixed;inset:0;z-index:99;background:var(--bg);
-  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;
-  opacity:0;pointer-events:none;transition:opacity .4s var(--ease);
+/* menu button — visible on ALL screen sizes, opens liquid menu */
+.nav-toggle{
+  display:flex;align-items:center;gap:8px;
+  background:none;border:1.5px solid var(--line);border-radius:999px;
+  cursor:pointer;padding:8px 16px;color:var(--ink);
+  font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  transition:border-color .3s,color .3s,background .3s;
+  flex-shrink:0;
 }
-.mobile-menu.open{opacity:1;pointer-events:auto}
-.mobile-menu a{
-  font-family:var(--font-display);font-size:2rem;padding:10px 24px;
-  opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease);
+.nav-toggle:hover{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.nav-toggle svg{width:18px;height:18px}
+.nav-toggle .menu-text{display:inline}
+
+/* ============================================================
+   LIQUID FULL-SCREEN MENU
+   ============================================================ */
+.liquid-menu{
+  position:fixed;inset:0;z-index:200;pointer-events:none;
 }
-.mobile-menu.open a{opacity:1;transform:none}
+.liquid-menu-bg{
+  position:absolute;inset:0;background:var(--ink);
+  clip-path:circle(0% at 100% 0%);
+  transition:clip-path .85s cubic-bezier(.86,0,.07,1);
+}
+.liquid-menu.open{pointer-events:auto}
+.liquid-menu.open .liquid-menu-bg{clip-path:circle(160% at 100% 0%)}
+
+/* gooey blob SVG for organic liquid feel */
+.liquid-blobs{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .6s .25s}
+.liquid-menu.open .liquid-blobs{opacity:1}
+.liquid-blobs .blob{transform-origin:center;animation:blob-drift 8s ease-in-out infinite}
+.liquid-blobs .blob:nth-child(2){animation-duration:10s;animation-delay:1s}
+.liquid-blobs .blob:nth-child(3){animation-duration:7s;animation-delay:.5s}
+@keyframes blob-drift{0%,100%{transform:translate(0,0)}33%{transform:translate(20px,-15px)}66%{transform:translate(-15px,10px)}}
+
+.liquid-close{
+  position:absolute;top:22px;right:28px;z-index:3;
+  background:none;border:1.5px solid rgba(250,243,232,.3);border-radius:999px;
+  cursor:pointer;color:var(--bg);width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(.5);transition:all .4s .35s var(--ease);
+}
+.liquid-close svg{width:20px;height:20px}
+.liquid-menu.open .liquid-close{opacity:1;transform:none}
+.liquid-close:hover{border-color:var(--bg);background:rgba(250,243,232,.1)}
+
+.liquid-items{
+  position:relative;z-index:2;height:100%;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;
+}
+.liquid-items a{
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.8rem,5vw,3rem);color:var(--bg);
+  line-height:1.35;padding:4px 20px;
+  opacity:0;transform:translateY(40px) scale(.92);
+  transition:opacity .5s var(--ease),transform .5s var(--ease),color .3s;
+}
+.liquid-items a em{font-style:italic;color:var(--amber-bright)}
+.liquid-items a:hover{color:var(--amber-bright)}
+.liquid-menu.open .liquid-items a{opacity:1;transform:none}
+.liquid-menu.open .liquid-items a:nth-child(1){transition-delay:.25s}
+.liquid-menu.open .liquid-items a:nth-child(2){transition-delay:.32s}
+.liquid-menu.open .liquid-items a:nth-child(3){transition-delay:.39s}
+.liquid-menu.open .liquid-items a:nth-child(4){transition-delay:.46s}
+.liquid-menu.open .liquid-items a:nth-child(5){transition-delay:.53s}
+.liquid-items .liquid-sub{
+  margin-top:28px;display:flex;gap:22px;flex-wrap:wrap;justify-content:center;
+}
+.liquid-items .liquid-sub a{
+  font-family:var(--font-body);font-size:.78rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;padding:6px 16px;border:1px solid rgba(250,243,232,.25);border-radius:999px;
+}
+.liquid-items .liquid-sub a:hover{border-color:var(--amber-bright);color:var(--amber-bright)}
+
+/* ============================================================
+   DOT-NAV (sticky section indicator, desktop only)
+   ============================================================ */
+.dot-nav{
+  position:fixed;right:28px;top:50%;transform:translateY(-50%);
+  z-index:90;display:flex;flex-direction:column;gap:18px;
+}
+.dot-nav button{
+  width:12px;height:12px;border-radius:50%;border:2px solid var(--line);
+  background:var(--bg);cursor:pointer;padding:0;position:relative;
+  transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);
+}
+/* inner fill — scale driven by --p (0→1) set in JS as you scroll through a section */
+.dot-nav button::before{
+  content:"";position:absolute;inset:2px;border-radius:50%;
+  background:var(--purple);
+  transform:scale(var(--p,0));
+  transform-origin:center;
+  transition:transform .12s linear;
+}
+.dot-nav button.active{
+  border-color:var(--purple);transform:scale(1.45);
+  box-shadow:0 0 0 5px rgba(138,75,156,.16);
+}
+.dot-nav button:hover{border-color:var(--purple)}
+.dot-nav button::after{
+  content:attr(data-label);position:absolute;right:24px;top:50%;transform:translateY(-50%);
+  white-space:nowrap;font-size:.66rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);opacity:0;pointer-events:none;
+  transition:opacity .25s;background:var(--surface);padding:3px 10px;border-radius:4px;
+  box-shadow:0 2px 8px -4px rgba(47,36,25,.15);
+}
+.dot-nav button:hover::after{opacity:1}
+.dot-nav button.active::after{opacity:1;color:var(--purple)}
 
 /* ============================================================
    HERO
@@ -234,7 +340,7 @@ h2.display em{font-style:italic;color:var(--purple)}
   position:relative;grid-column:span 2;
   background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
   padding:30px 28px 26px;overflow:hidden;
-  scroll-margin-top:92px; /* so the ticker/thread anchor links don't land under the fixed nav */
+  scroll-margin-top:92px;
   transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .4s;
 }
 .card:nth-child(4),.card:nth-child(5){grid-column:span 3}
@@ -299,6 +405,36 @@ h2.display em{font-style:italic;color:var(--purple)}
     padding-top: 6px;
   }
 }
+
+/* ============================================================
+   LOGO MARQUEE — infinite scrolling strip
+   ============================================================ */
+.logo-marquee{
+  overflow:hidden;padding:26px 0;background:var(--surface);
+  border-block:1px solid var(--line);position:relative;
+}
+.logo-marquee-track{
+  display:flex;align-items:center;width:max-content;
+  animation:marquee-slow 38s linear infinite;
+}
+.logo-marquee:hover .logo-marquee-track{animation-play-state:paused}
+.logo-marquee-item{
+  display:flex;align-items:center;gap:14px;padding-inline:32px;flex-shrink:0;
+}
+.logo-marquee-item .lm-en{
+  font-family:var(--font-display);font-size:1.1rem;color:var(--ink-soft);
+  letter-spacing:.01em;font-weight:500;
+}
+.logo-marquee-item .lm-cn{
+  font-family:var(--font-cn);font-size:.95rem;color:var(--purple);opacity:.55;
+}
+.logo-marquee-dot{
+  width:7px;height:7px;background:var(--amber);flex-shrink:0;
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+  opacity:.7;
+}
+@keyframes marquee-slow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
 /* ============================================================
    ROAD LOG
    ============================================================ */
@@ -365,6 +501,10 @@ footer{background:var(--ink);color:var(--bg);padding:90px 0 44px;text-align:cent
 footer .big{font-family:var(--font-display);font-size:clamp(2.2rem,5.5vw,4rem);font-weight:600;line-height:1.1}
 footer .big em{font-style:italic;color:var(--amber-bright)}
 footer .big-line{display:block;margin-top:6px}
+footer .big-cn{
+  display:block;font-family:var(--font-cn);font-size:.32em;font-weight:600;
+  letter-spacing:.14em;color:var(--amber-bright);opacity:.9;margin-bottom:18px;
+}
 footer .foot-cta{
   display:inline-flex;align-items:center;gap:10px;margin-top:36px;
   background:var(--purple);color:var(--bg);padding:15px 30px;border-radius:999px;
@@ -380,7 +520,9 @@ footer .fine .sep{padding-inline:8px}
    ============================================================ */
 @media (max-width:900px){
   .nav-links{display:none}
-  .nav-toggle{display:block}
+  .nav-toggle .menu-text{display:none}
+  .nav-toggle{padding:8px 10px}
+  .dot-nav{display:none}
   .hero-grid{grid-template-columns:1fr;gap:40px}
   .hero-art{order:-1}
   .hex-cluster{width:min(340px,80%)}
@@ -404,6 +546,7 @@ footer .fine .sep{padding-inline:8px}
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none}
+  .liquid-menu-bg{transition:clip-path .01s}
 }
 </style>
 </head>
@@ -422,27 +565,67 @@ footer .fine .sep{padding-inline:8px}
       <li><a href="#roadlog">Road log</a></li>
       <li><a href="#connect">Contact</a></li>
     </ul>
-    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="liquid-menu">
+      <span class="menu-text">Menu</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
   </div>
 </nav>
 
-<div class="mobile-menu" id="mobile-menu">
-  <a href="#about">About</a>
-  <a href="#passions">Passions</a>
-  <a href="#roadlog">Road log</a>
-  <a href="#connect">Contact</a>
+<!-- ================= LIQUID FULL-SCREEN MENU ================= -->
+<div class="liquid-menu" id="liquid-menu" aria-hidden="true">
+  <div class="liquid-menu-bg">
+    <svg class="liquid-blobs" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="14"/>
+          <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10"/>
+        </filter>
+      </defs>
+      <g filter="url(#goo)">
+        <circle class="blob" cx="1200" cy="120" r="90" fill="#8A4B9C" opacity=".45"/>
+        <circle class="blob" cx="180" cy="720" r="110" fill="#2E4B26" opacity=".35"/>
+        <circle class="blob" cx="720" cy="420" r="70" fill="#E09B3D" opacity=".25"/>
+        <circle class="blob" cx="1100" cy="650" r="80" fill="#6E3A80" opacity=".3"/>
+      </g>
+    </svg>
+  </div>
+  <button class="liquid-close" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <nav class="liquid-items" aria-label="Full menu">
+    <a href="#top">Home</a>
+    <a href="#about">About</a>
+    <a href="#passions">Passions</a>
+    <a href="#roadlog">Road <em>log</em></a>
+    <a href="#connect">Contact</a>
+    <div class="liquid-sub">
+      <a href="sangha.html">Buddhist Youth · 佛教青年</a>
+      <a href="pride.html">Pride · 彩虹权益</a>
+      <a href="tea.html">Tea · 茶禅</a>
+      <a href="data.html">Data · 数据分析</a>
+      <a href="travel.html">Travel · 自驾</a>
+    </div>
+  </nav>
+</div>
+
+<!-- ================= DOT-NAV (desktop section indicator) ================= -->
+<div class="dot-nav" id="dot-nav" aria-label="Section navigation">
+  <button data-target="#top" data-label="Home" aria-label="Go to Home"></button>
+  <button data-target="#about" data-label="About" aria-label="Go to About"></button>
+  <button data-target="#passions" data-label="Passions" aria-label="Go to Passions"></button>
+  <button data-target="#roadlog" data-label="Road Log" aria-label="Go to Road Log"></button>
+  <button data-target="#connect" data-label="Contact" aria-label="Go to Contact"></button>
 </div>
 
 <!-- ================= HERO ================= -->
 <header class="hero" id="top">
   <div class="container hero-grid">
     <div>
-      <span class="eyebrow reveal">A personal hive · five chambers, one mind</span>
+      <span class="eyebrow reveal">One flower, five petals <span class="cn-sub">一花五叶</span></span>
       <h1 class="reveal" style="transition-delay:.08s">Hi, I'm <em data-fill="name"> Andrew </em>.<br>I keep a hive of five obsessions.</h1>
       <p class="aka reveal" style="transition-delay:.14s">aka <b data-fill="nameZh">智宏</b> · 茶禅行者</p>
-      <p class="sub reveal" style="transition-delay:.2s">Buddhist youth. Tea Meditation Practioner. Data analyst in the EV trade. Proud ally. And a solo driver of long, empty roads. This is the corner of the internet where all five live — and occasionally argue.</p>
+      <p class="sub reveal" style="transition-delay:.2s">Buddhist youth. Tea Meditation Practioner. Data analyst in the EV trade. Proud ally. And a solo driver of long, empty roads. This is the corner of the internet where all five live -- and occasionally argue.</p>
       <div class="hero-cta reveal" style="transition-delay:.26s">
         <a class="btn btn-primary" href="#passions">
           Explore the chambers
@@ -454,7 +637,7 @@ footer .fine .sep{padding-inline:8px}
 
     <!-- hexagon comb: one cell per passion -->
     <div class="hero-art reveal" style="transition-delay:.2s" aria-hidden="true">
-      <svg class="hex-cluster" viewBox="0 0 440 400" role="img" aria-label="Five hexagonal cells labelled Fo, Hong, Cha, Shu, Lu">
+      <svg class="hex-cluster" viewBox="0 0 440 400" role="img" aria-label="Five hexagonal cells labelled 佛、虹、茶、数、路">
         <g class="hex drift">
           <polygon points="110,70 162,98 162,154 110,182 58,154 58,98" fill="#8A4B9C"/>
           <text class="hex-label" x="110" y="110">佛</text>
@@ -462,7 +645,7 @@ footer .fine .sep{padding-inline:8px}
         </g>
         <g class="hex drift2">
           <polygon points="330,70 382,98 382,154 330,182 278,154 278,98" fill="#2E4B26"/>
-          <text class="hex-label" x="330" y="110">彩</text>
+          <text class="hex-label" x="330" y="110">虹</text>
           <text class="hex-sub" x="330" y="138">Pride</text>
         </g>
         <g class="hex drift" style="animation-delay:.6s">
@@ -477,7 +660,7 @@ footer .fine .sep{padding-inline:8px}
         </g>
         <g class="hex drift" style="animation-delay:1.4s">
           <polygon points="330,250 382,278 382,334 330,362 278,334 278,278" fill="none" stroke="#8A4B9C" stroke-width="2.5"/>
-          <text class="hex-label" x="330" y="290" style="fill:#2F2419">旅</text>
+          <text class="hex-label" x="330" y="290" style="fill:#2F2419">路</text>
           <text class="hex-sub" x="330" y="318" style="fill:#6E5D4B">Solo Travel</text>
         </g>
       </svg>
@@ -486,8 +669,8 @@ footer .fine .sep{padding-inline:8px}
 
   <nav class="ticker" aria-label="Jump to a chamber">
     <div class="ticker-track">
-      <a href="#project-sangha">Mind over matter</a><a href="#project-pride">Out &amp; proud</a><a href="#project-tea">Steeped in stillness</a><a href="#project-data">Drive the data</a><a href="#project-travel">Explore the world</a>
-      <a href="#project-sangha" aria-hidden="true" tabindex="-1">Mind over matter</a><a href="#project-pride" aria-hidden="true" tabindex="-1">Out &amp; proud</a><a href="#project-tea" aria-hidden="true" tabindex="-1">Steeped in stillness</a><a href="#project-data" aria-hidden="true" tabindex="-1">Drive the data</a><a href="#project-travel" aria-hidden="true" tabindex="-1">Explore the world</a>
+      <a href="sangha.html">Mind over matter</a><a href="pride.html">Out &amp; proud</a><a href="tea.html">Steeped in stillness</a><a href="data.html">Drive the data</a><a href="travel.html">Explore the world</a>
+      <a href="sangha.html" aria-hidden="true" tabindex="-1">Mind over matter</a><a href="pride.html" aria-hidden="true" tabindex="-1">Out &amp; proud</a><a href="tea.html" aria-hidden="true" tabindex="-1">Steeped in stillness</a><a href="data.html" aria-hidden="true" tabindex="-1">Drive the data</a><a href="travel.html" aria-hidden="true" tabindex="-1">Explore the world</a>
     </div>
   </nav>
 </header>
@@ -498,12 +681,12 @@ footer .fine .sep{padding-inline:8px}
     <div class="vision-grid">
       <div class="vision-item reveal">
         <span class="eyebrow on-dark">Value...?</span>
-        <h3>To live like a good cup of tea — <em>steeped in tradition, clear in intention, warm without fuss.</em></h3>
+        <h3>To live like a good cup of tea -- <em>steeped in tradition, clear in intention, warm without fuss.</em><span class="cn-sub">一盏茶，一味禅</span></h3>
         <p>The Dharma hall and the gongfu table teach the same lesson: presence beats performance. I want the rest of my life to match.</p>
       </div>
       <div class="vision-item reveal" style="transition-delay:.12s">
         <span class="eyebrow on-dark">Task...?</span>
-        <h3>Keep learning where the <em>meditation cushion meets the spreadsheet</em>.</h3>
+        <h3>Keep learning where the <em>meditation cushion meets the spreadsheet</em>.<span class="cn-sub">蒲团与表格</span></h3>
         <p>Read the old texts, defend the new rights, clean the messy dataset, and leave every road I drive a little kinder than I found it.</p>
       </div>
     </div>
@@ -515,10 +698,10 @@ footer .fine .sep{padding-inline:8px}
   <div class="container">
     <div class="passions-head reveal">
       <div>
-        <span class="eyebrow">01 · The showcase</span>
-        <h2 class="display">Five chambers, <em>one hive</em></h2>
+        <span class="eyebrow">01 . The showcase <span class="cn-sub">心室展示</span></span>
+        <h2 class="display">One flower, <em>five petals</em><span class="cn-sub">一花五叶</span></h2>
       </div>
-      <p class="lead">Each chamber holds a habit I've been building for years. They don't always agree with each other — that's exactly why I keep them all.</p>
+      <p class="lead">Each chamber holds a habit I've been building for years. They don't always agree with each other -- that's exactly why I keep them all.</p>
     </div>
 
     <div class="cards">
@@ -527,17 +710,17 @@ footer .fine .sep{padding-inline:8px}
         <span class="num">01</span>
         <h3>Buddhist Youth<span class="cn"><br>佛教青年</span></h3>
         <p class="pun">The middle way, moving forward.</p>
-        <p>Humanistic Buddhism in the Fo Guang Shan tradition — I read the sūtras, argue with AI-ethics papers, and study how modern identity meets an old practice.</p>
-        <div class="tags"><span>人间佛教</span><span>AI &amp; consciousness</span><span>meditation</span></div>
+        <p>Humanistic Buddhism in the Fo Guang Shan tradition -- I read the sutras, argue with AI-ethics papers, and study how modern identity meets an old practice.</p>
+        <div class="tags"><span>Humanistic Buddhism</span><span>AI &amp; consciousness</span><span>meditation</span></div>
         <a class="card-link" href="sangha.html">Explore this chamber <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </article>
 
       <article class="card reveal" id="project-pride" style="--c:var(--green);transition-delay:.08s">
-        <span class="ghost" aria-hidden="true">彩</span>
+        <span class="ghost" aria-hidden="true">虹</span>
         <span class="num">02</span>
-        <h3>Pride &amp; Practice<span class="cn">LGBTQ+ 权益</span></h3>
+        <h3>Pride &amp; Practice<span class="cn">彩虹权益</span></h3>
         <p class="pun">Rainbows in the Dharma hall.</p>
-        <p>Compassion without rights is just a slogan. I show up as an ally at work and in the community — because equity work doesn't stop at the temple gate.</p>
+        <p>Compassion without rights is just a slogan. I show up as an ally at work and in the community -- because equity work doesn't stop at the temple gate.</p>
         <div class="tags"><span>allyship</span><span>inclusive workplaces</span><span>pride</span></div>
         <a class="card-link" href="pride.html">Explore this chamber <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </article>
@@ -547,8 +730,8 @@ footer .fine .sep{padding-inline:8px}
         <span class="num">03</span>
         <h3>Tea &amp; the Way<span class="cn"><br>茶禅行者</span></h3>
         <p class="pun">One pot, one mind.</p>
-        <p>The gongfu table is my second meditation cushion. I brew slowly, sip slowly, and believe 禅茶一味 — the Way and the tea are one single flavour.</p>
-        <div class="tags"><span>gongfu cha</span><span>禅茶一味</span><span>stillness</span></div>
+        <p>The gongfu table is my second meditation cushion. I brew slowly, sip slowly, and believe the Way and the tea are one single flavour.</p>
+        <div class="tags"><span>gongfu cha</span><span>one flavour</span><span>stillness</span></div>
         <a class="card-link" href="tea.html">Explore this chamber <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </article>
 
@@ -557,13 +740,13 @@ footer .fine .sep{padding-inline:8px}
         <span class="num">04</span>
         <h3>Data &amp; Drive<span class="cn">产业数据分析</span></h3>
         <p class="pun">Pivot tables, pavement, EVs.</p>
-        <p>By day I turn dealership data into decisions for an EV brand in Australia and New Zealand — VFACTS, KPIs, and the quiet thrill of a model that finally runs clean.</p>
+        <p>By day I turn dealership data into decisions for an EV brand in Australia and New Zealand -- VFACTS, KPIs, and the quiet thrill of a model that finally runs clean.</p>
         <div class="tags"><span>EV industry</span><span>sales analytics</span><span>VFACTS</span></div>
         <a class="card-link" href="data.html">Explore this chamber <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </article>
 
       <article class="card reveal" id="project-travel" style="--c:var(--purple-deep);transition-delay:.08s">
-        <span class="ghost" aria-hidden="true">旅</span>
+        <span class="ghost" aria-hidden="true">路</span>
         <span class="num">05</span>
         <h3>Solo Maps<span class="cn">自驾旅行</span></h3>
         <p class="pun">One pedal, one throttle, many stories.</p>
@@ -576,7 +759,7 @@ footer .fine .sep{padding-inline:8px}
     <div class="thread reveal">
       <div class="thread-inner">
           <div class="thread-intro">
-            <span class="eyebrow">Something in common...</span>
+            <span class="eyebrow">Something in common... <span class="cn-sub">一以贯之</span></span>
             <h3>Five habits, one thread</h3>
             <p>Different practices, the same direction: stay present, stay curious, and keep moving with intention.</p>
           </div>
@@ -595,84 +778,65 @@ footer .fine .sep{padding-inline:8px}
   </div>
 </section>
 
+<!-- ================= LOGO MARQUEE ================= -->
+<section class="logo-marquee" aria-label="Affiliations and keywords">
+  <div class="logo-marquee-track">
+    <div class="logo-marquee-item"><span class="lm-en">Fo Guang Shan</span><span class="lm-cn">佛光山</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">USYD . MCom</span><span class="lm-cn">悉尼大学</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">VFACTS</span><span class="lm-cn">汽车数据</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">Gongfu Cha</span><span class="lm-cn">功夫茶</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">Mardi Gras</span><span class="lm-cn">骄傲游行</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">Harmony Auto</span><span class="lm-cn">澳洲经销商</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">NZ South Island</span><span class="lm-cn">新西兰南岛</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">Agamas</span><span class="lm-cn">阿含经</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">Tea Ceremony</span><span class="lm-cn">茶道</span></div>
+    <span class="logo-marquee-dot"></span>
+    <!-- duplicate set for seamless loop -->
+    <div class="logo-marquee-item"><span class="lm-en">Fo Guang Shan</span><span class="lm-cn">佛光山</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">USYD . MCom</span><span class="lm-cn">悉尼大学</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">VFACTS</span><span class="lm-cn">汽车数据</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">Gongfu Cha</span><span class="lm-cn">功夫茶</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">Mardi Gras</span><span class="lm-cn">骄傲游行</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">Harmony Auto</span><span class="lm-cn">澳洲经销商</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">NZ South Island</span><span class="lm-cn">新西兰南岛</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">Agamas</span><span class="lm-cn">阿含经</span></div>
+    <span class="logo-marquee-dot"></span>
+    <div class="logo-marquee-item"><span class="lm-en">Tea Ceremony</span><span class="lm-cn">茶道</span></div>
+    <span class="logo-marquee-dot"></span>
+  </div>
+</section>
+
 <!-- ================= ROAD LOG ================= -->
 <section class="roadlog" id="roadlog">
   <div class="container">
     <div class="reveal">
-      <span class="eyebrow">02 · Stay tuned</span>
-      <h2 class="display">The road <em>log</em></h2>
-      <p class="lead">Solo trips, retreats and small projects — the log fills up slowly, on purpose.</p>
+      <span class="eyebrow">02 . Stay tuned <span class="cn-sub">在路上</span></span>
+      <h2 class="display">The road <em>log</em><span class="cn-sub">路书</span></h2>
+      <p class="lead">Solo trips, retreats and small projects -- the log fills up slowly, on purpose.</p>
     </div>
 
-    <ul class="log reveal">
-      <li>
-        <div class="when">Done · April 2026</div>
-        <div class="what">
-          <h4>Launceston → Hobart → Launceston</h4>
-          <div class="where">Tasmania · National Highway 1 · a road of blood and sweat, remembering the first immigrants here</div>
-        </div>
-        <span class="tag trip">Trip</span>
-      </li>
-      <li>
-        <div class="when">Done · February 2026</div>
-        <div class="what">
-          <h4>Jingdezhen → Changsha</h4>
-          <div class="where">China · from a newly discovered world treasure to a newly influential city, where history meets new consumer behaviour</div>
-        </div>
-        <span class="tag trip">Trip</span>
-      </li>
-      <li>
-        <div class="when">Done · November–December 2025</div>
-        <div class="what">
-          <h4>Queenstown → Wanaka → Christchurch → Auckland</h4>
-          <div class="where">New Zealand · bungee, swing, luge, lakes, mountains, temples, galleries, Sakura and long southern roads</div>
-        </div>
-        <span class="tag trip">Trip</span>
-      </li>
-      <li>
-        <div class="when">Ongoing</div>
-        <div class="what">
-          <h4>EV share of NSW — a VFACTS deep-dive</h4>
-          <div class="where">Sydney · turning registration data into something a sales floor can use</div>
-        </div>
-        <span class="tag exhibit">Exhibit</span>
-      </li>
-      <li>
-        <div class="when">Every March</div>
-        <div class="what">
-          <h4>Pride </h4>
-          <div class="where">Mardi Gras · march with the community: USYD, ANTRA, ACON</div>
-        </div>
-        <span class="tag">Campaign</span>
-      </li>
-    </ul>
-    <div class="trip-gallery" aria-label="Trip photo spaces">
-      <article class="reveal">
-        <div class="trip-gallery-head"><div class="when">April 2026 · Tasmania</div><h3>Blood, sweat &amp; the highway</h3><p>Launceston → Hobart → Launceston through National Highway 1.</p></div>
-        <div class="photo-slots">
-          <div class="photo-slot wide"><img src="photos/tasmania/01.jpg" alt="National Highway 1 road through Tasmania" loading="lazy"></div>
-          <div class="photo-slot"><img src="photos/tasmania/02.jpg" alt="A stop along the Tasmania trip" loading="lazy"></div>
-          <div class="photo-slot"><img src="photos/tasmania/03.jpg" alt="Detail from the Tasmania trip" loading="lazy"></div>
-        </div>
-      </article>
-      <article class="reveal" style="transition-delay:.08s">
-        <div class="trip-gallery-head"><div class="when">February 2026 · China</div><h3>Clay, memory &amp; momentum</h3><p>Jingdezhen → Changsha: world treasure to influential new city.</p></div>
-        <div class="photo-slots">
-          <div class="photo-slot wide"><img src="photos/china/01.jpg" alt="Jingdezhen to Changsha trip" loading="lazy"></div>
-          <div class="photo-slot"><img src="photos/china/02.jpg" alt="A stop along the China trip" loading="lazy"></div>
-          <div class="photo-slot"><img src="photos/china/03.jpg" alt="Detail from the China trip" loading="lazy"></div>
-        </div>
-      </article>
-      <article class="reveal" style="transition-delay:.16s">
-        <div class="trip-gallery-head"><div class="when">November–December 2025 · New Zealand</div><h3>Lakes, temples &amp; cherry blossom</h3><p>Queenstown → Wanaka → Pukaki Ward → Lake Tekapo → Totara Valley → Christchurch → Auckland.</p></div>
-        <div class="photo-slots">
-          <div class="photo-slot wide"><img src="photos/new-zealand/01.jpg" alt="South Island New Zealand road trip" loading="lazy"></div>
-          <div class="photo-slot"><img src="photos/new-zealand/02.jpg" alt="A stop along the New Zealand trip" loading="lazy"></div>
-          <div class="photo-slot"><img src="photos/new-zealand/03.jpg" alt="Detail from the New Zealand trip" loading="lazy"></div>
-        </div>
-      </article>
-    </div>
-    <p class="log-note reveal">More coming — this page updates as often as the tank runs empty.</p>
+    <!-- Road log list is rendered from the ROAD_LOG array in JS below -->
+    <ul class="log reveal" id="road-log-list"></ul>
+
+    <!-- Trip gallery is rendered from the TRIP_GALLERY array in JS below -->
+    <div class="trip-gallery" id="trip-gallery" aria-label="Trip photo spaces"></div>
+
+    <p class="log-note reveal">More coming -- this page updates as often as the tank runs empty.</p>
   </div>
 </section>
 
@@ -680,9 +844,9 @@ footer .fine .sep{padding-inline:8px}
 <section class="connect" id="connect">
   <div class="container connect-grid">
     <div class="reveal">
-      <span class="eyebrow">03 · Let's get brewing</span>
-      <h2>Tea's on.<br><em>Pull up a chair.</em></h2>
-      <p>If you're into EVs, the āgamas, or the perfect gongfu brew — or you just need a passenger for the coast — write to me. I answer faster than my kettle boils.</p>
+      <span class="eyebrow">03 . Let's get brewing <span class="cn-sub">茶已备好</span></span>
+      <h2>Tea's on.<br><em>Pull up a chair.</em><span class="cn-sub">请坐</span></h2>
+      <p>If you're into EVs, the agamas, or the perfect gongfu brew -- or you just need a passenger for the coast -- write to me. I answer faster than my kettle boils.</p>
       <a class="mail" data-fill="mail" href="mailto:jinandrew@outlook.com.au">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
         <span data-fill="mailText">jinandrew@outlook.com.au</span>
@@ -705,9 +869,9 @@ footer .fine .sep{padding-inline:8px}
           <path d="M40 205 C 100 180, 130 150, 200 155 C 260 159, 300 195, 350 165"/>
           <path d="M30 150 C 80 130, 110 100, 165 108 C 215 116, 255 145, 305 120"/>
         </g>
-        <g font-family="'Noto Serif SC',serif" font-size="16" fill="#8A4B9C" opacity=".55" text-anchor="middle">
+        <g font-family="'Noto Serif SC',serif" font-size="18" fill="#8A4B9C" opacity=".55" text-anchor="middle">
           <text x="150" y="128">禅</text><text x="205" y="160" fill="#2E4B26">茶</text>
-          <text x="262" y="140" fill="#C87F1F">旅</text>
+          <text x="262" y="140" fill="#C87F1F">路</text>
           <text x="335" y="76">佛</text>
         </g>
       </svg>
@@ -718,62 +882,217 @@ footer .fine .sep{padding-inline:8px}
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="container">
-    <p class="big reveal">Enter the <em>hive</em> mind<span class="big-line">— five chambers, one cup of tea.</span></p>
+    <p class="big reveal"><span class="big-cn">一花五叶 · 一茶一味 · 一以贯之</span>Enter the <em>hive</em> mind<span class="big-line">-- five petals, one cup of tea.</span></p>
     <a class="foot-cta reveal" data-fill="mail" href="mailto:jinandrew@outlook.com.au">
       Say hello
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
     </a>
-    <p class="fine">© <span data-fill="year">2026</span> <span data-fill="name">Andrew Jin</span><span class="sep">·</span>Built with tea, spreadsheets and one very patient GPS.</p>
+    <p class="fine">(c) <span data-fill="year">2026</span> <span data-fill="name">Andrew Jin</span><span class="sep">.</span>Built with tea, spreadsheets and one very patient GPS.</p>
   </div>
 </footer>
 
 <script>
 /* ============================================================
-   SITE CONFIG — edit this one block and the whole site updates
+   SITE CONFIG -- edit this one block and the whole site updates
    ============================================================ */
 const SITE = {
-  nameEn: "Andrew Jin",            // ← your English name
-  nameZh: "智宏 易",              // ← your Chinese nickname
-  mail:   "jinandrew@outlook.com.au", // ← your email
+  nameEn: "Andrew Jin",
+  nameZh: "智宏",
+  mail:   "jinandrew@outlook.com.au",
   linkedin: "https://www.linkedin.com/in/andrewjinyi",
-  instagram: "https://www.instagram.com/andrewsbrew", // ← your Instagram profile link
+  instagram: "https://www.instagram.com/andrewsbrew",
 };
 
-/* fill placeholders */
-document.querySelectorAll("[data-fill]").forEach(el=>{
-  const key = el.dataset.fill;
+/* ============================================================
+   ROAD LOG DATA -- add a new entry = add one line to this array
+   Fields: when, title, where, tag (trip|retreat|exhibit|""), tagLabel
+   ============================================================ */
+const ROAD_LOG = [
+  { when:"Done . April 2026", title:"Launceston -> Hobart -> Launceston", where:"Tasmania . National Highway 1 . a road of blood and sweat, remembering the first immigrants here", tag:"trip", tagLabel:"Trip" },
+  { when:"Done . February 2026", title:"Jingdezhen -> Changsha", where:"China . from a newly discovered world treasure to a newly influential city, where history meets new consumer behaviour", tag:"trip", tagLabel:"Trip" },
+  { when:"Done . November-December 2025", title:"Queenstown -> Wanaka -> Christchurch -> Auckland", where:"New Zealand . bungee, swing, luge, lakes, mountains, temples, galleries, Sakura and long southern roads", tag:"trip", tagLabel:"Trip" },
+  { when:"Ongoing", title:"EV share of NSW -- a VFACTS deep-dive", where:"Sydney . turning registration data into something a sales floor can use", tag:"exhibit", tagLabel:"Exhibit" },
+  { when:"Every March", title:"Pride", where:"Mardi Gras . march with the community: USYD, ANTRA, ACON", tag:"", tagLabel:"Campaign" },
+];
+
+/* ============================================================
+   TRIP GALLERY DATA -- add a new gallery card = add one entry
+   Each photo: { src, alt, wide }
+   ============================================================ */
+const TRIP_GALLERY = [
+  {
+    when:"April 2026 . Tasmania",
+    title:"Blood, sweat &amp; the highway",
+    desc:"Launceston -> Hobart -> Launceston through National Highway 1.",
+    photos:[
+      { src:"photos/tasmania/01.jpg", alt:"National Highway 1 road through Tasmania", wide:true },
+      { src:"photos/tasmania/02.jpg", alt:"A stop along the Tasmania trip", wide:false },
+      { src:"photos/tasmania/03.jpg", alt:"Detail from the Tasmania trip", wide:false },
+    ]
+  },
+  {
+    when:"February 2026 . China",
+    title:"Clay, memory &amp; momentum",
+    desc:"Jingdezhen -> Changsha: world treasure to influential new city.",
+    photos:[
+      { src:"photos/china/01.jpg", alt:"Jingdezhen to Changsha trip", wide:true },
+      { src:"photos/china/02.jpg", alt:"A stop along the China trip", wide:false },
+      { src:"photos/china/03.jpg", alt:"Detail from the China trip", wide:false },
+    ]
+  },
+  {
+    when:"November-December 2025 . New Zealand",
+    title:"Lakes, temples &amp; cherry blossom",
+    desc:"Queenstown -> Wanaka -> Pukaki Ward -> Lake Tekapo -> Totara Valley -> Christchurch -> Auckland.",
+    photos:[
+      { src:"photos/new-zealand/01.jpg", alt:"South Island New Zealand road trip", wide:true },
+      { src:"photos/new-zealand/02.jpg", alt:"A stop along the New Zealand trip", wide:false },
+      { src:"photos/new-zealand/03.jpg", alt:"Detail from the New Zealand trip", wide:false },
+    ]
+  },
+];
+
+/* ============================================================
+   RENDER: Road Log list
+   ============================================================ */
+(function renderRoadLog(){
+  const ul = document.getElementById("road-log-list");
+  if(!ul) return;
+  ul.innerHTML = ROAD_LOG.map(e => '\
+    <li>\
+      <div class="when">' + e.when + '</div>\
+      <div class="what">\
+        <h4>' + e.title + '</h4>\
+        <div class="where">' + e.where + '</div>\
+      </div>\
+      <span class="tag ' + e.tag + '">' + e.tagLabel + '</span>\
+    </li>').join('');
+})();
+
+/* ============================================================
+   RENDER: Trip Gallery
+   ============================================================ */
+(function renderTripGallery(){
+  const el = document.getElementById("trip-gallery");
+  if(!el) return;
+  el.innerHTML = TRIP_GALLERY.map(function(g, i){
+    var photos = g.photos.map(function(p){
+      return '<div class="photo-slot' + (p.wide ? ' wide' : '') + '">\
+        <img src="' + p.src + '" alt="' + p.alt + '" loading="lazy">\
+      </div>';
+    }).join('');
+    return '\
+    <article class="reveal"' + (i ? ' style="transition-delay:' + (i*0.08) + 's"' : '') + '>\
+      <div class="trip-gallery-head">\
+        <div class="when">' + g.when + '</div>\
+        <h3>' + g.title + '</h3>\
+        <p>' + g.desc + '</p>\
+      </div>\
+      <div class="photo-slots">' + photos + '</div>\
+    </article>';
+  }).join('');
+})();
+
+/* ============================================================
+   FILL PLACEHOLDERS
+   ============================================================ */
+document.querySelectorAll("[data-fill]").forEach(function(el){
+  var key = el.dataset.fill;
   if(key === "year"){ el.textContent = new Date().getFullYear(); return; }
-  if(key === "mail"){ return; } // href-only, handled below — keeps icons/label text intact
+  if(key === "mail"){ return; }
   if(key === "mailText"){ el.textContent = SITE.mail; return; }
   if(SITE[key] !== undefined){
     if(el.tagName === "A" && SITE[key] && SITE[key].startsWith("http")) el.href = SITE[key];
     el.textContent = SITE[key];
   }
 });
-/* any element (link, button…) tagged data-fill="mail" gets its href synced to SITE.mail,
-   without touching its visible label/icon */
-document.querySelectorAll("[data-fill='mail']").forEach(a=>{ a.href = "mailto:" + SITE.mail; });
+document.querySelectorAll("[data-fill='mail']").forEach(function(a){ a.href = "mailto:" + SITE.mail; });
 
-/* scroll reveal */
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+/* ============================================================
+   SCROLL REVEAL (observe after dynamic content is rendered)
+   ============================================================ */
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
 },{ threshold:.12, rootMargin:"0px 0px -40px 0px" });
-document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
 
-/* mobile menu */
-const toggle = document.querySelector(".nav-toggle");
-const menu = document.getElementById("mobile-menu");
-toggle.addEventListener("click",()=>{
-  const open = menu.classList.toggle("open");
-  toggle.setAttribute("aria-expanded",open);
-  toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-  document.body.style.overflow = open ? "hidden" : "";
-});
-menu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{
-  menu.classList.remove("open");
-  toggle.setAttribute("aria-expanded","false");
+/* ============================================================
+   LIQUID FULL-SCREEN MENU
+   ============================================================ */
+var liquidMenu = document.getElementById("liquid-menu");
+var navToggle = document.querySelector(".nav-toggle");
+var liquidClose = document.querySelector(".liquid-close");
+
+function openLiquidMenu(){
+  liquidMenu.classList.add("open");
+  liquidMenu.setAttribute("aria-hidden","false");
+  navToggle.setAttribute("aria-expanded","true");
+  navToggle.setAttribute("aria-label","Close menu");
+  document.body.style.overflow = "hidden";
+}
+function closeLiquidMenu(){
+  liquidMenu.classList.remove("open");
+  liquidMenu.setAttribute("aria-hidden","true");
+  navToggle.setAttribute("aria-expanded","false");
+  navToggle.setAttribute("aria-label","Open menu");
   document.body.style.overflow = "";
-}));
+}
+navToggle.addEventListener("click", function(){
+  if(liquidMenu.classList.contains("open")) closeLiquidMenu();
+  else openLiquidMenu();
+});
+liquidClose.addEventListener("click", closeLiquidMenu);
+/* close on Escape */
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape" && liquidMenu.classList.contains("open")) closeLiquidMenu();
+});
+/* close when a menu link is clicked */
+liquidMenu.querySelectorAll(".liquid-items a").forEach(function(a){
+  a.addEventListener("click", closeLiquidMenu);
+});
+
+/* ============================================================
+   DOT-NAV (sticky section indicator + scroll-progress fill)
+   ============================================================ */
+var dotButtons = document.querySelectorAll(".dot-nav button");
+var navLinks = document.querySelectorAll(".nav-links a");
+var dotSections = document.querySelectorAll("section[id], header[id]");
+var dotTicking = false;
+
+function updateDotNav(){
+  dotTicking = false;
+  var line = window.innerHeight * 0.38;   /* reference line near the top of the viewport */
+  var activeId = null, activeProgress = 0;
+  dotSections.forEach(function(sec){
+    var r = sec.getBoundingClientRect();
+    if(r.top <= line){                    /* the last section whose top crossed the line owns it */
+      activeId = "#" + sec.id;
+      var span = Math.max(1, r.height);
+      activeProgress = Math.min(1, Math.max(0, (line - r.top) / span));
+    }
+  });
+  dotButtons.forEach(function(b){
+    var on = b.dataset.target === activeId;
+    b.classList.toggle("active", on);
+    b.style.setProperty("--p", on ? activeProgress.toFixed(3) : "0");
+  });
+  navLinks.forEach(function(a){
+    a.classList.toggle("active", a.getAttribute("href") === activeId);
+  });
+}
+window.addEventListener("scroll", function(){
+  if(!dotTicking){ dotTicking = true; requestAnimationFrame(updateDotNav); }
+}, { passive:true });
+window.addEventListener("resize", updateDotNav);
+updateDotNav();
+
+/* click dot to jump */
+dotButtons.forEach(function(b){
+  b.addEventListener("click", function(){
+    var target = document.querySelector(b.dataset.target);
+    if(target) target.scrollIntoView({ behavior:"smooth" });
+  });
+});
 </script>
 </body>
 </html>

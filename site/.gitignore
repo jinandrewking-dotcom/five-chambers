@@ -1,0 +1,12 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+
+# WorkBuddy workspace artifacts (do not deploy)
+.workbuddy/
+_ref/

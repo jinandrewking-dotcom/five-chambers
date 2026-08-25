@@ -165,14 +165,21 @@ h3 .cn-sub{font-size:.5em;margin-left:12px;opacity:.85}
    ============================================================ */
 .liquid-menu{
   position:fixed;inset:0;z-index:200;pointer-events:none;
+  overflow:hidden; /* clips the oversized circle below back to the viewport */
 }
 .liquid-menu-bg{
-  position:absolute;inset:0;background:var(--ink);
-  clip-path:circle(0% at 100% 0%);
-  transition:clip-path .85s cubic-bezier(.86,0,.07,1);
+  /* a huge circle centered on the viewport's top-right corner, revealed via
+     transform:scale — compositor-only, so it stays smooth even on low-end
+     devices (animating clip-path directly forces a repaint every frame). */
+  position:absolute;top:0;right:0;width:300vmax;height:300vmax;
+  margin-top:-150vmax;margin-right:-150vmax;
+  border-radius:50%;background:var(--ink);
+  transform:scale(0);
+  will-change:transform;
+  transition:transform .85s cubic-bezier(.86,0,.07,1);
 }
 .liquid-menu.open{pointer-events:auto}
-.liquid-menu.open .liquid-menu-bg{clip-path:circle(160% at 100% 0%)}
+.liquid-menu.open .liquid-menu-bg{transform:scale(1)}
 
 /* gooey blob SVG for organic liquid feel */
 .liquid-blobs{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .6s .25s}
@@ -446,6 +453,12 @@ h3 .cn-sub{font-size:.5em;margin-left:12px;opacity:.85}
   transition:background .35s,padding-left .45s var(--ease);
 }
 .log li:hover{background:var(--surface);padding-left:22px}
+.log li.linked{cursor:pointer}
+.log li.linked a{display:contents;color:inherit}
+.log li.linked .what h4{transition:color .3s}
+.log li.linked .what h4::after{content:" →";display:inline-block;opacity:0;transform:translateX(-4px);transition:opacity .3s,transform .3s var(--ease);color:var(--purple-deep)}
+.log li.linked:hover .what h4,.log li.linked a:focus-visible .what h4{color:var(--purple-deep)}
+.log li.linked:hover .what h4::after,.log li.linked a:focus-visible .what h4::after{opacity:1;transform:none}
 .log .when{font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
 .log .what h4{font-family:var(--font-display);font-weight:600;font-size:1.22rem;line-height:1.25}
 .log .what .where{font-size:.85rem;color:var(--ink-soft);margin-top:4px}
@@ -546,7 +559,7 @@ footer .fine .sep{padding-inline:8px}
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none}
-  .liquid-menu-bg{transition:clip-path .01s}
+  .liquid-menu-bg{transition:transform .01s}
 }
 </style>
 </head>
@@ -574,22 +587,21 @@ footer .fine .sep{padding-inline:8px}
 
 <!-- ================= LIQUID FULL-SCREEN MENU ================= -->
 <div class="liquid-menu" id="liquid-menu" aria-hidden="true">
-  <div class="liquid-menu-bg">
-    <svg class="liquid-blobs" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs>
-        <filter id="goo">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="14"/>
-          <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10"/>
-        </filter>
-      </defs>
-      <g filter="url(#goo)">
-        <circle class="blob" cx="1200" cy="120" r="90" fill="#8A4B9C" opacity=".45"/>
-        <circle class="blob" cx="180" cy="720" r="110" fill="#2E4B26" opacity=".35"/>
-        <circle class="blob" cx="720" cy="420" r="70" fill="#E09B3D" opacity=".25"/>
-        <circle class="blob" cx="1100" cy="650" r="80" fill="#6E3A80" opacity=".3"/>
-      </g>
-    </svg>
-  </div>
+  <div class="liquid-menu-bg"></div>
+  <svg class="liquid-blobs" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="14"/>
+        <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10"/>
+      </filter>
+    </defs>
+    <g filter="url(#goo)">
+      <circle class="blob" cx="1200" cy="120" r="90" fill="#8A4B9C" opacity=".45"/>
+      <circle class="blob" cx="180" cy="720" r="110" fill="#2E4B26" opacity=".35"/>
+      <circle class="blob" cx="720" cy="420" r="70" fill="#E09B3D" opacity=".25"/>
+      <circle class="blob" cx="1100" cy="650" r="80" fill="#6E3A80" opacity=".3"/>
+    </g>
+  </svg>
   <button class="liquid-close" aria-label="Close menu">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
   </button>
@@ -913,9 +925,9 @@ const SITE = {
    Fields: when, title, where, tag (trip|retreat|exhibit|""), tagLabel
    ============================================================ */
 const ROAD_LOG_FALLBACK = [
-  { when:"Done · April 2026", title:"Launceston → Hobart → Launceston", where:"Tasmania · National Highway 1 · a road of blood and sweat, remembering the first immigrants here", tag:"trip", tagLabel:"Trip" },
-  { when:"Done · February 2026", title:"Jingdezhen → Changsha", where:"China · from a newly discovered world treasure to a newly influential city, where history meets new consumer behaviour", tag:"trip", tagLabel:"Trip" },
-  { when:"Done · November–December 2025", title:"Queenstown → Wanaka → Christchurch → Auckland", where:"New Zealand · bungee, swing, luge, lakes, mountains, temples, galleries, Sakura and long southern roads", tag:"trip", tagLabel:"Trip" },
+  { when:"Done · April 2026", title:"Launceston → Hobart → Launceston", where:"Tasmania · National Highway 1 · a road of blood and sweat, remembering the first immigrants here", tag:"trip", tagLabel:"Trip", link:"tasmania.html" },
+  { when:"Done · February 2026", title:"Jingdezhen → Changsha", where:"China · from a newly discovered world treasure to a newly influential city, where history meets new consumer behaviour", tag:"trip", tagLabel:"Trip", link:"china.html" },
+  { when:"Done · November–December 2025", title:"Queenstown → Wanaka → Christchurch → Auckland", where:"New Zealand · bungee, swing, luge, lakes, mountains, temples, galleries, Sakura and long southern roads", tag:"trip", tagLabel:"Trip", link:"new-zealand.html" },
   { when:"Ongoing", title:"EV share of NSW — a VFACTS deep-dive", where:"Sydney · turning registration data into something a sales floor can use", tag:"exhibit", tagLabel:"Exhibit" },
   { when:"Every March", title:"Pride", where:"Mardi Gras · march with the community: USYD, ANTRA, ACON", tag:"", tagLabel:"Campaign" },
 ];
@@ -927,6 +939,7 @@ const ROAD_LOG_FALLBACK = [
    ============================================================ */
 const TRIP_GALLERY_FALLBACK = [
   {
+    slug:"tasmania",
     when:"April 2026 · Tasmania",
     title:"Blood, sweat &amp; the highway",
     desc:"Launceston → Hobart → Launceston through National Highway 1.",
@@ -937,6 +950,7 @@ const TRIP_GALLERY_FALLBACK = [
     ]
   },
   {
+    slug:"china",
     when:"February 2026 · China",
     title:"Clay, memory &amp; momentum",
     desc:"Jingdezhen → Changsha: world treasure to influential new city.",
@@ -947,6 +961,7 @@ const TRIP_GALLERY_FALLBACK = [
     ]
   },
   {
+    slug:"new-zealand",
     when:"November–December 2025 · New Zealand",
     title:"Lakes, temples &amp; cherry blossom",
     desc:"Queenstown → Wanaka → Pukaki Ward → Lake Tekapo → Totara Valley → Christchurch → Auckland.",
@@ -965,14 +980,17 @@ function renderRoadLog(entries){
   var ul = document.getElementById("road-log-list");
   if(!ul) return;
   ul.innerHTML = entries.map(function(e){
-    return '<li>\
+    var body = '\
       <div class="when">' + e.when + '</div>\
       <div class="what">\
         <h4>' + e.title + '</h4>\
         <div class="where">' + e.where + '</div>\
       </div>\
-      <span class="tag ' + e.tag + '">' + e.tagLabel + '</span>\
-    </li>';
+      <span class="tag ' + e.tag + '">' + e.tagLabel + '</span>';
+    if(e.link){
+      return '<li class="linked"><a href="' + e.link + '" aria-label="Open ' + e.title + ' trip page">' + body + '</a></li>';
+    }
+    return '<li>' + body + '</li>';
   }).join('');
 }
 

@@ -90,3 +90,23 @@ a{color:inherit;text-decoration:none}
 @media (max-width:640px){
   .chamber-gallery{grid-template-columns:1fr 1fr}
 }
+
+/* ============================================================
+   TRIP PAGES (tasmania.html / china.html / new-zealand.html)
+   ============================================================ */
+/* photo grid: one wide hero shot + smaller shots underneath */
+.trip-photos{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
+.trip-photos .g-slot{aspect-ratio:1.1}
+.trip-photos .g-slot.wide{grid-column:span 2;aspect-ratio:2.05}
+@media (max-width:520px){
+  .trip-photos{grid-template-columns:1fr}
+  .trip-photos .g-slot.wide{grid-column:span 1}
+}
+
+/* hand-drawn route illustration — decorative, not geographically accurate */
+.route-map{margin-top:8px}
+.route-map svg{width:100%;height:auto;max-width:640px}
+.route-map .route-line{fill:none;stroke:var(--c,var(--purple-deep));stroke-width:2;opacity:.45}
+.route-map .route-dot{fill:var(--c,var(--purple-deep))}
+.route-map .route-label{font-family:var(--font-display);font-style:italic;font-size:15px;fill:var(--ink);text-anchor:middle}
+.route-map .route-label.cn{font-family:var(--font-cn);font-style:normal;font-size:12px;fill:var(--ink-soft)}

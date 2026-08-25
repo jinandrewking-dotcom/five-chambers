@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tasmania — Five Chambers</title>
+<meta name="description" content="Launceston → Hobart → Launceston through National Highway 1 — Tasmania, April 2026.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='%238A4B9C'/%3E%3Ctext x='16' y='21' font-size='14' text-anchor='middle' fill='%23FAF3E8' font-family='Georgia'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chamber.css">
+</head>
+<body>
+
+<header class="chamber-hero" style="--c:var(--purple-deep)">
+  <div class="container">
+    <a class="back-link" href="index.html#roadlog">← Back to the road log · 回路书</a>
+    <span class="eyebrow">Solo Maps · Trip</span>
+    <h1 id="trip-title">Blood, sweat &amp; the highway</h1>
+    <p class="pun" id="trip-when">April 2026 · Tasmania</p>
+    <p class="lead" id="trip-desc">Launceston → Hobart → Launceston through National Highway 1.</p>
+    <div class="tags"><span>Highway 1</span><span>Tasmania</span><span>self-drive</span></div>
+  </div>
+</header>
+
+<main class="container chamber-body">
+  <section class="chamber-block" style="--c:var(--purple-deep)">
+    <h2>The route</h2>
+    <p class="placeholder-note">There and back down the island's spine on Highway 1, through the old convict-built Midlands towns — replace this with your own account of the drive.</p>
+    <div class="route-map">
+      <svg viewBox="0 0 640 200" role="img" aria-label="Route map: Launceston to Ross to Hobart, then back to Launceston via Highway 1">
+        <path class="route-line" d="M70,150 C150,150 180,70 330,80 C460,90 500,150 570,150"/>
+        <circle class="route-dot" cx="70" cy="150" r="6"/>
+        <text class="route-label" x="70" y="182">Launceston</text>
+        <circle class="route-dot" cx="330" cy="80" r="6"/>
+        <text class="route-label" x="330" y="58">Ross</text>
+        <circle class="route-dot" cx="570" cy="150" r="6"/>
+        <text class="route-label" x="570" y="182">Hobart</text>
+      </svg>
+    </div>
+  </section>
+  <section class="chamber-block" style="--c:var(--purple-deep)">
+    <h2>Gallery</h2>
+    <div class="trip-photos" id="trip-photos"></div>
+  </section>
+</main>
+
+<footer class="chamber-footer">
+  <div class="container">
+    <p>© <span id="y"></span> Andrew Jin</p>
+    <a class="back-link" href="index.html#roadlog" style="color:var(--purple-deep)">← Back to the road log · 回路书</a>
+  </div>
+</footer>
+<script>
+document.getElementById('y').textContent = new Date().getFullYear();
+
+var SLUG = "tasmania";
+var FALLBACK = {
+  when:"April 2026 · Tasmania",
+  title:"Blood, sweat & the highway",
+  desc:"Launceston → Hobart → Launceston through National Highway 1.",
+  photos:[
+    { src:"photos/tasmania/01.jpg", alt:"National Highway 1 road through Tasmania", wide:true },
+    { src:"photos/tasmania/02.jpg", alt:"A stop along the Tasmania trip", wide:false },
+    { src:"photos/tasmania/03.jpg", alt:"Detail from the Tasmania trip", wide:false }
+  ]
+};
+
+function renderTrip(data){
+  document.getElementById("trip-title").textContent = data.title;
+  document.getElementById("trip-when").textContent = data.when;
+  document.getElementById("trip-desc").textContent = data.desc;
+  document.title = data.title + " — Five Chambers";
+  var el = document.getElementById("trip-photos");
+  el.innerHTML = (data.photos || []).map(function(p){
+    return '<div class="g-slot' + (p.wide ? ' wide' : '') + '"><img src="' + p.src + '" alt="' + (p.alt || "photo") + '" loading="lazy"></div>';
+  }).join('');
+}
+
+fetch("content/tripgallery.json")
+  .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+  .then(function(data){
+    var match = (data.galleries || []).filter(function(g){ return g.slug === SLUG; })[0];
+    renderTrip(match || FALLBACK);
+  })
+  .catch(function(){ renderTrip(FALLBACK); });
+</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>China — Five Chambers</title>
+<meta name="description" content="Jingdezhen → Changsha: world treasure to influential new city — China, February 2026.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='%238A4B9C'/%3E%3Ctext x='16' y='21' font-size='14' text-anchor='middle' fill='%23FAF3E8' font-family='Georgia'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chamber.css">
+</head>
+<body>
+
+<header class="chamber-hero" style="--c:var(--purple-deep)">
+  <div class="container">
+    <a class="back-link" href="index.html#roadlog">← Back to the road log · 回路书</a>
+    <span class="eyebrow">Solo Maps · Trip</span>
+    <h1 id="trip-title">Clay, memory &amp; momentum</h1>
+    <p class="pun" id="trip-when">February 2026 · China</p>
+    <p class="lead" id="trip-desc">Jingdezhen → Changsha: world treasure to influential new city.</p>
+    <div class="tags"><span>Jingdezhen</span><span>Changsha</span><span>self-drive</span></div>
+  </div>
+</header>
+
+<main class="container chamber-body">
+  <section class="chamber-block" style="--c:var(--purple-deep)">
+    <h2>The route</h2>
+    <p class="placeholder-note">From the porcelain capital to a city reinventing itself — replace this with your own account of the drive.</p>
+    <div class="route-map">
+      <svg viewBox="0 0 640 200" role="img" aria-label="Route map: Jingdezhen to Changsha">
+        <path class="route-line" d="M80,120 C220,40 420,200 560,120"/>
+        <circle class="route-dot" cx="80" cy="120" r="6"/>
+        <text class="route-label" x="80" y="152">Jingdezhen</text>
+        <text class="route-label cn" x="80" y="170">景德镇</text>
+        <circle class="route-dot" cx="560" cy="120" r="6"/>
+        <text class="route-label" x="560" y="152">Changsha</text>
+        <text class="route-label cn" x="560" y="170">长沙</text>
+      </svg>
+    </div>
+  </section>
+  <section class="chamber-block" style="--c:var(--purple-deep)">
+    <h2>Gallery</h2>
+    <div class="trip-photos" id="trip-photos"></div>
+  </section>
+</main>
+
+<footer class="chamber-footer">
+  <div class="container">
+    <p>© <span id="y"></span> Andrew Jin</p>
+    <a class="back-link" href="index.html#roadlog" style="color:var(--purple-deep)">← Back to the road log · 回路书</a>
+  </div>
+</footer>
+<script>
+document.getElementById('y').textContent = new Date().getFullYear();
+
+var SLUG = "china";
+var FALLBACK = {
+  when:"February 2026 · China",
+  title:"Clay, memory & momentum",
+  desc:"Jingdezhen → Changsha: world treasure to influential new city.",
+  photos:[
+    { src:"photos/china/01.jpg", alt:"Jingdezhen to Changsha trip", wide:true },
+    { src:"photos/china/02.jpg", alt:"A stop along the China trip", wide:false },
+    { src:"photos/china/03.jpg", alt:"Detail from the China trip", wide:false }
+  ]
+};
+
+function renderTrip(data){
+  document.getElementById("trip-title").textContent = data.title;
+  document.getElementById("trip-when").textContent = data.when;
+  document.getElementById("trip-desc").textContent = data.desc;
+  document.title = data.title + " — Five Chambers";
+  var el = document.getElementById("trip-photos");
+  el.innerHTML = (data.photos || []).map(function(p){
+    return '<div class="g-slot' + (p.wide ? ' wide' : '') + '"><img src="' + p.src + '" alt="' + (p.alt || "photo") + '" loading="lazy"></div>';
+  }).join('');
+}
+
+fetch("content/tripgallery.json")
+  .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+  .then(function(data){
+    var match = (data.galleries || []).filter(function(g){ return g.slug === SLUG; })[0];
+    renderTrip(match || FALLBACK);
+  })
+  .catch(function(){ renderTrip(FALLBACK); });
+</script>
+</body>
+</html>

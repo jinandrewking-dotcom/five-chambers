@@ -2,8 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "photos"
-public_folder: "photos"
+media_folder: "site/photos"
+public_folder: "/photos"
 
 collections:
   # ────────────────────────────────────────
@@ -13,7 +13,7 @@ collections:
     label: "Road Log · 路书"
     delete: false
     files:
-      - file: "content/roadlog.json"
+      - file: "site/content/roadlog.json"
         name: "data"
         label: "Road Log Entries"
         format: json
@@ -38,7 +38,7 @@ collections:
     label: "Trip Gallery · 游记图集"
     delete: false
     files:
-      - file: "content/tripgallery.json"
+      - file: "site/content/tripgallery.json"
         name: "data"
         label: "Trip Gallery"
         format: json
@@ -68,7 +68,7 @@ collections:
     label: "Sangha Gallery · 佛教青年"
     delete: false
     files:
-      - file: "content/sangha-photos.json"
+      - file: "site/content/sangha-photos.json"
         name: "data"
         label: "Sangha Photos"
         format: json
@@ -85,7 +85,7 @@ collections:
     label: "Pride Gallery · 彩虹权益"
     delete: false
     files:
-      - file: "content/pride-photos.json"
+      - file: "site/content/pride-photos.json"
         name: "data"
         label: "Pride Photos"
         format: json
@@ -102,7 +102,7 @@ collections:
     label: "Tea Gallery · 茶禅"
     delete: false
     files:
-      - file: "content/tea-photos.json"
+      - file: "site/content/tea-photos.json"
         name: "data"
         label: "Tea Photos"
         format: json
@@ -119,7 +119,7 @@ collections:
     label: "Data Gallery · 数据分析"
     delete: false
     files:
-      - file: "content/data-photos.json"
+      - file: "site/content/data-photos.json"
         name: "data"
         label: "Data Photos"
         format: json
@@ -136,7 +136,7 @@ collections:
     label: "Travel Gallery · 自驾"
     delete: false
     files:
-      - file: "content/travel-photos.json"
+      - file: "site/content/travel-photos.json"
         name: "data"
         label: "Travel Photos"
         format: json

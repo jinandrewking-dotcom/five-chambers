@@ -29,6 +29,7 @@ collections:
               - { label: "Where", name: "where", widget: "string" }
               - { label: "Tag",   name: "tag",   widget: "select", options: ["trip", "retreat", "exhibit", ""] }
               - { label: "Tag Label", name: "tagLabel", widget: "string" }
+              - { label: "Link (optional — e.g. tasmania.html, to make this entry clickable)", name: "link", widget: "string", required: false }
 
   # ────────────────────────────────────────
   # Trip Gallery — 游记图集
@@ -48,6 +49,7 @@ collections:
             add_to_top: true
             summary: "{{title}} — {{when}}"
             fields:
+              - { label: "Slug (do not change — links this trip to its own page, e.g. tasmania)", name: "slug", widget: "string" }
               - { label: "When",  name: "when",  widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Description", name: "desc", widget: "string" }

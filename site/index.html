@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Netlify Identity sends recovery/invite/confirmation links to this root page.
+     Only /admin (Decap CMS) knows how to read that token, so bounce it there
+     immediately, hash and all, before anything else on this page loads. -->
+<script>
+  if (/^#\/?(invite_token|recovery_token|confirmation_token)=/.test(location.hash)) {
+    location.replace("/admin/" + location.hash);
+  }
+</script>
 <title>Five Chambers — a personal hive</title>
 <meta name="description" content="A personal site for a Buddhist youth, tea-zen wanderer, EV data analyst, proud ally, and solo driver of long empty roads.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='%238A4B9C'/%3E%3Ctext x='16' y='21' font-size='14' text-anchor='middle' fill='%23FAF3E8' font-family='Georgia'%3EH%3C/text%3E%3C/svg%3E">

@@ -48,19 +48,19 @@
       "desc": "Queenstown → Wanaka → Pukaki Ward → Lake Tekapo → Totara Valley → Christchurch → Auckland.",
       "photos": [
         {
-          "src": "photos/new-zealand/01.jpg",
-          "alt": "South Island New Zealand road trip",
+          "src": "/photos/img_2915.jpeg",
+          "alt": "Lake Tekapo",
           "wide": true
         },
         {
-          "src": "photos/new-zealand/02.jpg",
-          "alt": "A stop along the New Zealand trip",
-          "wide": false
+          "src": "/photos/img_2922.jpeg",
+          "alt": "A view from Hostel",
+          "wide": true
         },
         {
-          "src": "photos/new-zealand/03.jpg",
-          "alt": "Detail from the New Zealand trip",
-          "wide": false
+          "src": "/photos/img_2718.jpeg",
+          "alt": "Bungee Jump",
+          "wide": true
         }
       ]
     }

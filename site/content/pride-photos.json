@@ -1,7 +1,16 @@
 {
   "photos": [
-    { "src": "photos/pride/01.jpg", "alt": "pride photo" },
-    { "src": "photos/pride/02.jpg", "alt": "pride photo" },
-    { "src": "photos/pride/03.jpg", "alt": "pride photo" }
+    {
+      "src": "/photos/311dd11fba0af58e6f8ac3fdddb8ac3e.jpeg",
+      "alt": "I Participate in Sydney Uni Mardi Gras"
+    },
+    {
+      "src": "/photos/img_0764.jpeg",
+      "alt": "Rainbow Archery Session"
+    },
+    {
+      "src": "photos/pride/03.jpg",
+      "alt": "pride photo"
+    }
   ]
 }

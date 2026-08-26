@@ -1,7 +1,16 @@
 {
   "photos": [
-    { "src": "photos/sangha/01.jpg", "alt": "sangha photo" },
-    { "src": "photos/sangha/02.jpg", "alt": "sangha photo" },
-    { "src": "photos/sangha/03.jpg", "alt": "sangha photo" }
+    {
+      "src": "/photos/img_4345.jpeg",
+      "alt": "meditation"
+    },
+    {
+      "src": "/photos/img_2520.jpeg",
+      "alt": "Tsung Lin University for Buddhism in Taiwan"
+    },
+    {
+      "src": "/photos/img_5418.jpeg",
+      "alt": "Finding the meaningful moments of current"
+    }
   ]
 }

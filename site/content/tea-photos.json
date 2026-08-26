@@ -1,7 +1,16 @@
 {
   "photos": [
-    { "src": "photos/tea/01.jpg", "alt": "tea photo" },
-    { "src": "photos/tea/02.jpg", "alt": "tea photo" },
-    { "src": "photos/tea/03.jpg", "alt": "tea photo" }
+    {
+      "src": "/photos/4a7a6397-c9a7-4d30-b8aa-961392b772e2.jpeg",
+      "alt": "Teahouse in China"
+    },
+    {
+      "src": "/photos/714999a6e8a0f0ca645163fc1dbc661d.jpeg",
+      "alt": "tea set"
+    },
+    {
+      "src": "/photos/img_8233.jpeg",
+      "alt": "tea set"
+    }
   ]
 }

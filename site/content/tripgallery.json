@@ -14,12 +14,12 @@
         {
           "src": "/photos/img_5472.jpeg",
           "alt": "Harvest Market in Launceston",
-          "wide": false
+          "wide": true
         },
         {
           "src": "/photos/img_5841.jpeg",
           "alt": "National Highway 1 - the Women Factory",
-          "wide": false
+          "wide": true
         }
       ]
     },

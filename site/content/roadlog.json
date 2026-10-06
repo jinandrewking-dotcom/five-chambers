@@ -35,8 +35,9 @@
       "when": "Every March",
       "title": "Pride",
       "where": "Mardi Gras · march with the community: USYD, ANTRA, ACON",
-      "tag": "",
-      "tagLabel": "Campaign"
+      "tag": "exhibit",
+      "tagLabel": "Campaign",
+      "link": "pride.html"
     }
   ]
 }

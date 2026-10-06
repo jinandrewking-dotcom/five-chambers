@@ -53,6 +53,14 @@
   </div>
 </footer>
 <script>
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+    return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+  });
+}
+/* a photo whose file is missing removes its own slot instead of showing a broken icon */
+function dropSlot(img){ var s = img.closest(".g-slot"); if(s) s.remove(); }
+var DROP_ON_ERROR = ' onerror="dropSlot(this)"';
 document.getElementById('y').textContent = new Date().getFullYear();
 
 var SLUG = "tasmania";
@@ -74,7 +82,7 @@ function renderTrip(data){
   document.title = data.title + " — Five Chambers";
   var el = document.getElementById("trip-photos");
   el.innerHTML = (data.photos || []).map(function(p){
-    return '<div class="g-slot' + (p.wide ? ' wide' : '') + '"><img src="' + p.src + '" alt="' + (p.alt || "photo") + '" loading="lazy"></div>';
+    return '<div class="g-slot' + (p.wide ? ' wide' : '') + '"><img src="' + esc(p.src) + '" alt="' + esc(p.alt || "photo") + '" loading="lazy"' + DROP_ON_ERROR + '></div>';
   }).join('');
 }
 

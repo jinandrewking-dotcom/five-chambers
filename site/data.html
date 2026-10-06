@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Data & Drive — Five Chambers</title>
-<meta name="description" content="Turning dealership data into decisions for an EV brand — VFACTS, KPIs, and the quiet thrill of a model that runs clean.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='%238A4B9C'/%3E%3Ctext x='16' y='21' font-size='14' text-anchor='middle' fill='%23FAF3E8' font-family='Georgia'%3EH%3C/text%3E%3C/svg%3E">
+<title>Data &amp; Drive — Five Chambers</title>
+<meta name="description" content="Australia's EV shift read from public VFACTS data, and how finance &amp; insurance changes with it — charts, interpretation and the metrics worth watching.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='%232E4B26'/%3E%3Ctext x='16' y='21' font-size='14' text-anchor='middle' fill='%23FAF3E8' font-family='Georgia'%3EH%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap" rel="stylesheet">
@@ -20,19 +20,94 @@
     <h1>Data &amp; Drive<span class="cn">产业数据分析</span></h1>
     <p class="pun">Pivot tables, pavement, EVs.</p>
     <p class="lead">By day, turning dealership data into decisions for an EV brand in Australia and New Zealand — VFACTS, KPIs, and the quiet thrill of a model that finally runs clean.</p>
-    <div class="tags"><span>EV industry</span><span>sales analytics</span><span>VFACTS</span></div>
+    <div class="tags"><span>EV industry</span><span>sales analytics</span><span>F&amp;I</span><span>VFACTS</span></div>
   </div>
 </header>
 
 <main class="container chamber-body">
+
   <section class="chamber-block" style="--c:var(--green-soft)">
-    <h2>The story so far</h2>
-    <p class="placeholder-note">This is where the full write-up goes — replace this paragraph with a case study, a dashboard walkthrough, or what the EV market taught you this quarter.</p>
+    <h2>Australia's EV shift, read from VFACTS</h2>
+    <p id="headline-text">Australia's new-vehicle market rotated faster in 2026 than almost any other major market on record.</p>
+    <div class="stat-row" id="stat-row"></div>
   </section>
+
   <section class="chamber-block" style="--c:var(--green-soft)">
-    <h2>Gallery</h2>
-    <div class="chamber-gallery" id="chamber-gallery"></div>
+    <h2>The charts</h2>
+    <p>Same metric at different altitudes: the national monthly trend, then where each state and territory sits inside it.</p>
+
+    <div class="chart-panel">
+      <h3 id="chart1-title">Battery-electric share of new-vehicle sales</h3>
+      <p class="chart-sub" id="chart1-sub"></p>
+      <div class="chart-wrap"><canvas id="chart-monthly" aria-label="Line chart of monthly battery-electric share of Australian new-vehicle sales, 2026"></canvas></div>
+      <p class="chart-sub" id="chart1-context"></p>
+      <details>
+        <summary class="chart-sub" style="cursor:pointer">View as table</summary>
+        <div class="table-scroll" id="table-monthly"></div>
+      </details>
+      <p class="source-note" id="chart1-src"></p>
+    </div>
+
+    <div class="chart-panel">
+      <h3 id="chart2-title">Battery-electric share by state and territory</h3>
+      <p class="chart-sub" id="chart2-sub"></p>
+      <div class="chart-wrap bar-chart"><canvas id="chart-state" aria-label="Bar chart of battery-electric share of new-vehicle sales by Australian state and territory"></canvas></div>
+      <details>
+        <summary class="chart-sub" style="cursor:pointer">View as table</summary>
+        <div class="table-scroll" id="table-states"></div>
+      </details>
+      <p class="source-note" id="chart2-src"></p>
+    </div>
+
+    <div class="chart-panel" id="brand-panel" hidden>
+      <h3 id="chart3-title">Battery-electric deliveries by brand</h3>
+      <p class="chart-sub" id="chart3-sub"></p>
+      <div class="chart-wrap bar-chart"><canvas id="chart-brand" aria-label="Bar chart of battery-electric deliveries by brand"></canvas></div>
+      <details>
+        <summary class="chart-sub" style="cursor:pointer">View as table</summary>
+        <div class="table-scroll" id="table-brands"></div>
+      </details>
+      <p class="source-note" id="chart3-src"></p>
+    </div>
   </section>
+
+  <section class="chamber-block" style="--c:var(--green-soft)">
+    <h2>What it means on a sales floor</h2>
+    <ul class="deep-dive">
+      <li><strong>Registrations lag, finance leads.</strong> VFACTS tells you what already happened. The forward-looking signals are finance applications and used-EV auction volumes. That's where a quarter gets won or lost.</li>
+      <li><strong>The objection script is changing.</strong> With battery-electric cars near a quarter of sales, "where do I charge?" gives way to questions about running costs, battery health and resale. The floor needs answers on future value, not maps of chargers.</li>
+      <li><strong>Mix moved before volume did.</strong> Electrified drivetrains passed half of August sales (see the stat cards). The opportunity is substitution within the market, not a bigger market.</li>
+      <li><strong>State policy is a real variable.</strong> <span id="state-spread">The spread between the highest and lowest state</span> isn't consumer taste. It comes from rebate design, fleet procurement and the charging rollout.</li>
+    </ul>
+  </section>
+
+  <section class="chamber-block" id="fi-section" style="--c:var(--green-soft)">
+    <h2>The other half of the deal — F&amp;I and value-add</h2>
+    <p id="fi-intro"></p>
+    <p class="guardrail" id="fi-guardrail"></p>
+
+    <h3 class="sub-h">Metrics I'd watch</h3>
+    <div class="metric-grid" id="fi-metrics"></div>
+
+    <div class="chart-panel">
+      <h3 id="fi-lenders-title">Lender channels compared</h3>
+      <p class="chart-sub" id="fi-lenders-sub"></p>
+      <div id="fi-lenders"></div>
+    </div>
+
+    <h3 class="sub-h">Hypotheses I'd test as the market electrifies</h3>
+    <ul class="deep-dive" id="fi-hypotheses"></ul>
+
+    <h3 class="sub-h">Rule changes that reshaped dealer F&amp;I</h3>
+    <ol class="timeline" id="fi-timeline"></ol>
+    <p class="source-note" id="fi-sources"></p>
+  </section>
+
+  <section class="chamber-block" style="--c:var(--green-soft)">
+    <h2>Notes on the numbers</h2>
+    <ul class="deep-dive" id="data-notes"></ul>
+  </section>
+
 </main>
 
 <footer class="chamber-footer">
@@ -41,24 +116,259 @@
     <a class="back-link" href="index.html#passions">← Back to the hive · 回蜂巢</a>
   </div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
-document.getElementById('y').textContent = new Date().getFullYear();
-var PHOTOS_FALLBACK = [
-  { src:"photos/data/01.jpg", alt:"Data analysis photo" },
-  { src:"photos/data/02.jpg", alt:"Data analysis photo" },
-  { src:"photos/data/03.jpg", alt:"Data analysis photo" }
-];
-function renderChamberGallery(photos){
-  var el = document.getElementById("chamber-gallery");
-  if(!el) return;
-  el.innerHTML = photos.map(function(p){
-    return '<div class="g-slot"><img src="' + p.src + '" alt="' + (p.alt||"photo") + '" loading="lazy"></div>';
-  }).join('');
+/* ============================================================
+   EV DATA — inline fallback. The live site fetches
+   content/ev-share.json instead, so the numbers can be updated
+   (in /admin or by editing the file) without touching this page.
+   ============================================================ */
+var EV_FALLBACK = {
+  headline: "Battery-electric vehicles went from 8.4% of Australian new-vehicle sales in January 2026 to 24.9% in August — the first month on record that BEVs outsold petrol.",
+  stats: [
+    { value:"24.9%",  label:"BEV share of new-vehicle sales, August 2026 — a record, and the first month battery-electric cars outsold petrol." },
+    { value:"27,089", label:"BEVs delivered in August 2026, against 7,316 in January — roughly 3.7× in eight months." },
+    { value:"53.9%",  label:"Electrified share of August sales (BEV + PHEV + hybrid). Combustion-only cars became the minority." },
+    { value:"21.0%",  label:"Battery-electric share in NSW, Q2 2026 — the ACT leads at 40.1%, the Northern Territory trails at 7.3%." }
+  ],
+  monthly: {
+    title:"Battery-electric share of new-vehicle sales",
+    subtitle:"Australia, monthly 2026 — share of total new-vehicle deliveries (%)",
+    points:[
+      {label:"Jan",value:8.4,units:7316},{label:"Feb",value:12.2,units:11067},
+      {label:"Mar",value:15.1,units:15839},{label:"Apr",value:16.4,units:15459},
+      {label:"May",value:21.3,units:21303},{label:"Jun",value:23.5,units:32583},
+      {label:"Jul",value:22.7,units:23510},{label:"Aug",value:24.9,units:27089}
+    ],
+    context:[{label:"Aug 2024",value:5.8},{label:"Aug 2025",value:9.7}],
+    sources:[]
+  },
+  states: {
+    title:"Battery-electric share by state and territory",
+    subtitle:"Q2 2026 — battery-electric share of new-vehicle sales (%)",
+    points:[
+      {label:"ACT",value:40.14},{label:"VIC",value:22.37},{label:"TAS",value:21.16},{label:"NSW",value:21.03},
+      {label:"WA",value:19.69},{label:"QLD",value:19.59},{label:"SA",value:19.42},{label:"NT",value:7.25}
+    ],
+    sources:[]
+  },
+  brands: { points:[] },
+  notes:["Electrified share counts battery-electric, plug-in hybrid and conventional hybrid together; BEV-only figures are the ones used in the charts."]
+};
+
+var PALETTE = { green:"#4A6B3E", amber:"#C87F1F", ink:"#2F2419", soft:"#6E5D4B", line:"#E7D9C3", surface:"#FFFDF7", bg:"#FAF3E8" };
+
+/* --- helpers ------------------------------------------------- */
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+    return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+  });
 }
-fetch("content/data-photos.json")
+/* only http(s) links are allowed out — blocks javascript:, data: etc. */
+function safeUrl(u){
+  return /^https?:\/\//i.test(String(u || "").trim()) ? String(u).trim() : "";
+}
+function sourceLine(sources, prefix){
+  var items = (sources || []).filter(function(s){ return s && s.label; }).map(function(s){
+    var url = safeUrl(s.url);
+    return url
+      ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a>'
+      : esc(s.label);
+  });
+  return items.length ? (prefix || "Source: ") + items.join(" · ") : "";
+}
+function table(list, head, unit){
+  return '<table class="data-table"><thead><tr><th>' + esc(head[0]) + '</th><th>' + esc(head[1]) + '</th></tr></thead><tbody>'
+    + list.map(function(p){
+        var v = typeof p.value === "number" ? p.value.toLocaleString() : esc(p.value);
+        return "<tr><td>" + esc(p.label) + "</td><td>" + v + (unit || "") + "</td></tr>";
+      }).join("")
+    + "</tbody></table>";
+}
+function setText(id, text){ var el = document.getElementById(id); if(el && text) el.textContent = text; }
+function setHTML(id, html){ var el = document.getElementById(id); if(el) el.innerHTML = html; }
+
+/* --- EV: stat cards, headings, tables, notes ------------------ */
+function renderEV(d){
+  setText("headline-text", d.headline);
+  setHTML("stat-row", (d.stats || []).map(function(s){
+    return '<div class="stat"><b>' + esc(s.value) + '</b><span>' + esc(s.label) + '</span></div>';
+  }).join(""));
+
+  var m = d.monthly || {}, s = d.states || {}, b = d.brands || {};
+  setText("chart1-title", m.title); setText("chart1-sub", m.subtitle);
+  setText("chart2-title", s.title); setText("chart2-sub", s.subtitle);
+  if(m.points) setHTML("table-monthly", table(m.points, ["Month", "BEV share"], "%"));
+  if(s.points) setHTML("table-states", table(s.points, ["State / territory", "BEV share"], "%"));
+  setHTML("chart1-src", sourceLine(m.sources));
+  setHTML("chart2-src", sourceLine(s.sources));
+
+  /* same month in earlier years, so the 2026 line has a baseline */
+  var last = (m.points || [])[(m.points || []).length - 1];
+  if(m.context && m.context.length && last){
+    setText("chart1-context", "Same month, earlier years: " + m.context.map(function(c){
+      return c.label + " " + c.value + "%";
+    }).join(" → ") + " → " + last.label + " 2026 " + last.value + "%.");
+  }
+
+  /* the state-spread sentence is computed, so it can't drift from the data */
+  var vals = (s.points || []).filter(function(p){ return typeof p.value === "number"; });
+  if(vals.length > 1){
+    vals.sort(function(a, z){ return z.value - a.value; });
+    var hi = vals[0], lo = vals[vals.length - 1];
+    setText("state-spread", "A " + Math.round(hi.value - lo.value) + "-point spread between " + hi.label + " (" + hi.value.toFixed(1) + "%) and " + lo.label + " (" + lo.value.toFixed(1) + "%)");
+  }
+
+  var brandPanel = document.getElementById("brand-panel");
+  if(brandPanel && b.points && b.points.length){
+    brandPanel.hidden = false;
+    setText("chart3-title", b.title); setText("chart3-sub", b.subtitle);
+    setHTML("table-brands", table(b.points, ["Brand", "Units"], ""));
+    setHTML("chart3-src", sourceLine(b.sources));
+  }
+
+  setHTML("data-notes", (d.notes || []).map(function(n){ return "<li>" + esc(n) + "</li>"; }).join(""));
+}
+
+/* --- F&I and value-add ---------------------------------------- */
+function renderFI(f){
+  setText("fi-intro", f.intro);
+  setText("fi-guardrail", f.guardrail);
+
+  setHTML("fi-metrics", (f.metrics || []).map(function(x){
+    return '<div class="metric"><b>' + esc(x.name) + '</b><code>' + esc(x.formula) + '</code><span>' + esc(x.why) + '</span></div>';
+  }).join(""));
+
+  var L = f.lenders || {}, cols = L.columns || [];
+  setText("fi-lenders-title", L.title); setText("fi-lenders-sub", L.subtitle);
+  setHTML("fi-lenders", '<table class="data-table compare-table"><thead><tr>'
+    + cols.map(function(c){ return "<th>" + esc(c) + "</th>"; }).join("")
+    + "</tr></thead><tbody>"
+    + (L.rows || []).map(function(r){
+        return "<tr>" + r.map(function(cell, i){
+          return '<td data-label="' + esc(cols[i] || "") + '">' + esc(cell) + "</td>";
+        }).join("") + "</tr>";
+      }).join("")
+    + "</tbody></table>");
+
+  setHTML("fi-hypotheses", (f.hypotheses || []).map(function(h){
+    return "<li><strong>" + esc(h.title) + ".</strong> " + esc(h.body)
+      + (h.test ? ' <em class="test">How to test: ' + esc(h.test) + "</em>" : "") + "</li>";
+  }).join(""));
+
+  setHTML("fi-timeline", (f.timeline || []).map(function(t){
+    return '<li><span class="t-when">' + esc(t.when) + '</span><b>' + esc(t.what) + '</b><span>' + esc(t.why) + "</span></li>";
+  }).join(""));
+
+  setHTML("fi-sources", sourceLine(f.sources, "Sources: "));
+}
+
+/* --- charts --------------------------------------------------- */
+function tooltipStyle(extra){
+  var t = { backgroundColor: PALETTE.ink, titleColor: PALETTE.bg, bodyColor: PALETTE.bg, padding: 11, cornerRadius: 8, displayColors: false };
+  for(var k in extra) t[k] = extra[k];
+  return t;
+}
+function hBar(canvasId, block, opts){
+  var el = document.getElementById(canvasId);
+  if(!el || !block || !block.points || !block.points.length) return;
+  new Chart(el.getContext("2d"), {
+    type: "bar",
+    data: {
+      labels: block.points.map(function(p){ return p.label; }),
+      datasets: [{
+        data: block.points.map(function(p){ return p.value; }),
+        backgroundColor: block.points.map(function(p){ return p.label === opts.highlight ? PALETTE.amber : PALETTE.green; }),
+        borderRadius: 5, maxBarThickness: 22
+      }]
+    },
+    options: {
+      indexAxis: "y", responsive: true, maintainAspectRatio: false,
+      layout: { padding: { right: 12 } },
+      plugins: {
+        legend: { display: false },
+        tooltip: tooltipStyle({ callbacks: { label: function(c){ return opts.label(c.parsed.x); } } })
+      },
+      scales: {
+        x: { beginAtZero: true, grid: { color: PALETTE.line, drawTicks: false }, border: { display: false },
+             ticks: { callback: opts.tick, padding: 6 } },
+        y: { grid: { display: false }, border: { color: PALETTE.line } }
+      }
+    }
+  });
+}
+function buildCharts(d){
+  if(typeof Chart === "undefined") return;   // the tables above still carry the data
+
+  Chart.defaults.font.family = "'Instrument Sans', system-ui, -apple-system, sans-serif";
+  Chart.defaults.font.size = window.innerWidth < 520 ? 11 : 12;
+  Chart.defaults.color = PALETTE.soft;
+
+  var m = d.monthly || {};
+  var monthlyCanvas = document.getElementById("chart-monthly");
+  if(monthlyCanvas && m.points && m.points.length){
+    new Chart(monthlyCanvas.getContext("2d"), {
+      type: "line",
+      data: {
+        labels: m.points.map(function(p){ return p.label; }),
+        datasets: [{
+          data: m.points.map(function(p){ return p.value; }),
+          borderColor: PALETTE.green,
+          backgroundColor: function(ctx){
+            var area = ctx.chart.chartArea;
+            if(!area) return "rgba(74,107,62,.15)";
+            var g = ctx.chart.ctx.createLinearGradient(0, area.top, 0, area.bottom);
+            g.addColorStop(0, "rgba(74,107,62,.28)"); g.addColorStop(1, "rgba(74,107,62,0)");
+            return g;
+          },
+          borderWidth: 2.5, fill: true, tension: .32,
+          pointBackgroundColor: PALETTE.surface, pointBorderColor: PALETTE.green,
+          pointBorderWidth: 2, pointRadius: 4.5, pointHoverRadius: 6
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        layout: { padding: { top: 8, right: 6 } },
+        plugins: {
+          legend: { display: false },
+          tooltip: tooltipStyle({ callbacks: { label: function(c){
+            var p = m.points[c.dataIndex] || {};
+            return p.value + "% of new vehicles" + (p.units ? "  ·  " + p.units.toLocaleString() + " BEVs" : "");
+          } } })
+        },
+        scales: {
+          x: { grid: { display: false }, border: { color: PALETTE.line } },
+          y: { beginAtZero: true, suggestedMax: 30, grid: { color: PALETTE.line, drawTicks: false }, border: { display: false },
+               ticks: { callback: function(v){ return v + "%"; }, padding: 8 } }
+        }
+      }
+    });
+  }
+
+  hBar("chart-state", d.states, {
+    highlight: "NSW", tick: function(v){ return v + "%"; },
+    label: function(x){ return x + "% of new vehicles"; }
+  });
+  hBar("chart-brand", d.brands, {
+    highlight: null, tick: function(v){ return v.toLocaleString(); },
+    label: function(x){ return x.toLocaleString() + " BEVs"; }
+  });
+}
+
+/* --- boot ----------------------------------------------------- */
+document.getElementById("y").textContent = new Date().getFullYear();
+
+fetch("content/ev-share.json")
   .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
-  .then(function(data){ renderChamberGallery(data.photos || PHOTOS_FALLBACK); })
-  .catch(function(){ renderChamberGallery(PHOTOS_FALLBACK); });
+  .catch(function(){ return EV_FALLBACK; })
+  .then(function(d){ renderEV(d); buildCharts(d); });
+
+/* the F&I section only renders from its JSON; with no data it hides itself */
+fetch("content/fi-insights.json")
+  .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+  .then(renderFI)
+  .catch(function(){ var s = document.getElementById("fi-section"); if(s) s.hidden = true; });
 </script>
 </body>
 </html>

@@ -19,12 +19,12 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Five Chambers — a personal hive">
 <meta property="og:description" content="A personal site for a Buddhist youth, tea-zen wanderer, EV data analyst, proud ally, and solo driver of long empty roads.">
-<meta property="og:image" content="https://REPLACE-WITH-YOUR-DOMAIN/og-image.jpg">
-<meta property="og:url" content="https://REPLACE-WITH-YOUR-DOMAIN/">
+<meta property="og:image" content="https://fivechambers.netlify.app/photos/img_5492.jpeg">
+<meta property="og:url" content="https://fivechambers.netlify.app/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Five Chambers — a personal hive">
 <meta name="twitter:description" content="A personal site for a Buddhist youth, tea-zen wanderer, EV data analyst, proud ally, and solo driver of long empty roads.">
-<meta name="twitter:image" content="https://REPLACE-WITH-YOUR-DOMAIN/og-image.jpg">
+<meta name="twitter:image" content="https://fivechambers.netlify.app/photos/img_5492.jpeg">
 
 <!-- Person structured data for SEO -->
 <script type="application/ld+json">
@@ -34,7 +34,7 @@
   "name": "Andrew Jin",
   "alternateName": "智宏",
   "email": "mailto:jinandrew@outlook.com.au",
-  "url": "https://REPLACE-WITH-YOUR-DOMAIN/",
+  "url": "https://fivechambers.netlify.app/",
   "sameAs": [
     "https://www.linkedin.com/in/andrewjinyi",
     "https://www.instagram.com/andrewsbrew"
@@ -210,7 +210,10 @@ h3 .cn-sub{font-size:.5em;margin-left:12px;opacity:.85}
 
 .liquid-items{
   position:relative;z-index:2;height:100%;
-  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;
+  display:flex;flex-direction:column;justify-content:safe center;align-items:center;gap:2px;
+  /* six chamber pills + five big links can be taller than a phone screen:
+     scroll inside the menu instead of being clipped by .liquid-menu */
+  overflow-y:auto;overscroll-behavior:contain;padding:84px 20px 40px;
 }
 .liquid-items a{
   font-family:var(--font-display);font-weight:600;
@@ -322,7 +325,7 @@ h3 .cn-sub{font-size:.5em;margin-left:12px;opacity:.85}
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
   mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
 }
-.ticker-track{display:inline-block;animation:marquee 26s linear infinite;font-size:.82rem;letter-spacing:.26em;text-transform:uppercase;font-weight:600}
+.ticker-track{display:inline-block;animation:marquee var(--ticker-speed,32s) linear infinite;font-size:.82rem;letter-spacing:.26em;text-transform:uppercase;font-weight:600}
 .ticker:hover .ticker-track,.ticker:focus-within .ticker-track{animation-play-state:paused}
 .ticker-track a{
   display:inline-block;margin-inline:26px;opacity:.92;color:inherit;
@@ -562,6 +565,19 @@ footer .fine .sep{padding-inline:8px}
 @media (max-width:520px){
   .thread-list{grid-template-columns:1fr}
   .hero{padding-top:140px}
+  /* ticker: tighter type so more than one item fits on a phone, and a
+     slower loop so the six links stay readable/tappable */
+  .ticker{--ticker-speed:40s;padding-block:12px}
+  .ticker-track{font-size:.72rem;letter-spacing:.16em}
+  .ticker-track a{margin-inline:16px;padding-block:6px}
+  /* full-screen menu: smaller headings, chamber pills in a 2-column grid */
+  .liquid-items a{font-size:clamp(1.5rem,8vw,2rem);line-height:1.3}
+  .liquid-items .liquid-sub{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:340px;margin-top:22px}
+  .liquid-items .liquid-sub a{font-size:.68rem;letter-spacing:.08em;padding:9px 10px;text-align:center;display:flex;align-items:center;justify-content:center}
+}
+@media (max-height:640px){
+  .liquid-items a{font-size:clamp(1.3rem,6vh,1.8rem)}
+  .liquid-items .liquid-sub{margin-top:14px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -625,6 +641,7 @@ footer .fine .sep{padding-inline:8px}
       <a href="tea.html">Tea · 茶禅</a>
       <a href="data.html">Data · 数据分析</a>
       <a href="travel.html">Travel · 自驾</a>
+      <a href="notes.html">Notes · 研究笔记</a>
     </div>
   </nav>
 </div>
@@ -689,8 +706,8 @@ footer .fine .sep{padding-inline:8px}
 
   <nav class="ticker" aria-label="Jump to a chamber">
     <div class="ticker-track">
-      <a href="sangha.html">Mind over matter</a><a href="pride.html">Out &amp; proud</a><a href="tea.html">Steeped in stillness</a><a href="data.html">Drive the data</a><a href="travel.html">Explore the world</a>
-      <a href="sangha.html" aria-hidden="true" tabindex="-1">Mind over matter</a><a href="pride.html" aria-hidden="true" tabindex="-1">Out &amp; proud</a><a href="tea.html" aria-hidden="true" tabindex="-1">Steeped in stillness</a><a href="data.html" aria-hidden="true" tabindex="-1">Drive the data</a><a href="travel.html" aria-hidden="true" tabindex="-1">Explore the world</a>
+      <a href="sangha.html">Mind over matter</a><a href="pride.html">Out &amp; proud</a><a href="tea.html">Steeped in stillness</a><a href="data.html">Drive the data</a><a href="travel.html">Explore the world</a><a href="notes.html">Notes worth keeping</a>
+      <a href="sangha.html" aria-hidden="true" tabindex="-1">Mind over matter</a><a href="pride.html" aria-hidden="true" tabindex="-1">Out &amp; proud</a><a href="tea.html" aria-hidden="true" tabindex="-1">Steeped in stillness</a><a href="data.html" aria-hidden="true" tabindex="-1">Drive the data</a><a href="travel.html" aria-hidden="true" tabindex="-1">Explore the world</a><a href="notes.html" aria-hidden="true" tabindex="-1">Notes worth keeping</a>
     </div>
   </nav>
 </header>
@@ -792,6 +809,7 @@ footer .fine .sep{padding-inline:8px}
             <div class="thread-column">
               <div class="thread-item" style="--c:var(--purple-deep)"><a href="data.html" aria-label="Open Data and Drive project"><div class="t-num">04</div><div class="t-content"><div class="t-pun">Drive the data</div><div class="t-desc">turning rows into roads</div></div></a></div>
               <div class="thread-item" style="--c:var(--green)"><a href="travel.html" aria-label="Open Solo Maps project"><div class="t-num">05</div><div class="t-content"><div class="t-pun">Explore the world</div><div class="t-desc">discovering new horizons</div></div></a></div>
+              <div class="thread-item" style="--c:var(--ink)"><a href="notes.html" aria-label="Open the Notes reading log"><div class="t-num">06</div><div class="t-content"><div class="t-pun">Notes worth keeping</div><div class="t-desc">reading, slowly</div></div></a></div>
             </div>
           </div>
     </div>
@@ -949,7 +967,7 @@ const TRIP_GALLERY_FALLBACK = [
   {
     slug:"tasmania",
     when:"April 2026 · Tasmania",
-    title:"Blood, sweat &amp; the highway",
+    title:"Blood, sweat & the highway",
     desc:"Launceston → Hobart → Launceston through National Highway 1.",
     photos:[
       { src:"photos/tasmania/01.jpg", alt:"National Highway 1 road through Tasmania", wide:true },
@@ -960,7 +978,7 @@ const TRIP_GALLERY_FALLBACK = [
   {
     slug:"china",
     when:"February 2026 · China",
-    title:"Clay, memory &amp; momentum",
+    title:"Clay, memory & momentum",
     desc:"Jingdezhen → Changsha: world treasure to influential new city.",
     photos:[
       { src:"photos/china/01.jpg", alt:"Jingdezhen to Changsha trip", wide:true },
@@ -971,7 +989,7 @@ const TRIP_GALLERY_FALLBACK = [
   {
     slug:"new-zealand",
     when:"November–December 2025 · New Zealand",
-    title:"Lakes, temples &amp; cherry blossom",
+    title:"Lakes, temples & cherry blossom",
     desc:"Queenstown → Wanaka → Pukaki Ward → Lake Tekapo → Totara Valley → Christchurch → Auckland.",
     photos:[
       { src:"photos/new-zealand/01.jpg", alt:"South Island New Zealand road trip", wide:true },
@@ -981,6 +999,13 @@ const TRIP_GALLERY_FALLBACK = [
   },
 ];
 
+/* escape CMS text before it goes into innerHTML */
+function esc(v){
+  return String(v == null ? "" : v).replace(/[&<>"']/g, function(c){
+    return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+  });
+}
+
 /* ============================================================
    RENDER: Road Log list
    ============================================================ */
@@ -989,14 +1014,15 @@ function renderRoadLog(entries){
   if(!ul) return;
   ul.innerHTML = entries.map(function(e){
     var body = '\
-      <div class="when">' + e.when + '</div>\
+      <div class="when">' + esc(e.when) + '</div>\
       <div class="what">\
-        <h4>' + e.title + '</h4>\
-        <div class="where">' + e.where + '</div>\
+        <h4>' + esc(e.title) + '</h4>\
+        <div class="where">' + esc(e.where) + '</div>\
       </div>\
-      <span class="tag ' + e.tag + '">' + e.tagLabel + '</span>';
-    if(e.link){
-      return '<li class="linked"><a href="' + e.link + '" aria-label="Open ' + e.title + ' trip page">' + body + '</a></li>';
+      <span class="tag ' + esc(e.tag) + '">' + esc(e.tagLabel) + '</span>';
+    /* only same-site pages (e.g. tasmania.html) or http(s) URLs become links */
+    if(e.link && /^(https?:\/\/|[\w-]+\.html(#[\w-]*)?$)/i.test(e.link)){
+      return '<li class="linked"><a href="' + esc(e.link) + '" aria-label="Open ' + esc(e.title) + ' trip page">' + body + '</a></li>';
     }
     return '<li>' + body + '</li>';
   }).join('');
@@ -1011,15 +1037,15 @@ function renderTripGallery(galleries){
   el.innerHTML = galleries.map(function(g, i){
     var photos = g.photos.map(function(p){
       return '<div class="photo-slot' + (p.wide ? ' wide' : '') + '">\
-        <img src="' + p.src + '" alt="' + (p.alt||"photo") + '" loading="lazy">\
+        <img src="' + esc(p.src) + '" alt="' + esc(p.alt || "photo") + '" loading="lazy" onerror="var s=this.closest(\'.photo-slot\');if(s)s.remove();">\
       </div>';
     }).join('');
     return '\
     <article class="reveal"' + (i ? ' style="transition-delay:' + (i*0.08) + 's"' : '') + '>\
       <div class="trip-gallery-head">\
-        <div class="when">' + g.when + '</div>\
-        <h3>' + g.title + '</h3>\
-        <p>' + g.desc + '</p>\
+        <div class="when">' + esc(g.when) + '</div>\
+        <h3>' + esc(g.title) + '</h3>\
+        <p>' + esc(g.desc) + '</p>\
       </div>\
       <div class="photo-slots">' + photos + '</div>\
     </article>';
@@ -1053,7 +1079,13 @@ document.querySelectorAll("[data-fill]").forEach(function(el){
   if(key === "mail"){ return; }
   if(key === "mailText"){ el.textContent = SITE.mail; return; }
   if(SITE[key] !== undefined){
-    if(el.tagName === "A" && SITE[key] && SITE[key].startsWith("http")) el.href = SITE[key];
+    /* links (LinkedIn, Instagram) only get their href updated — overwriting their
+       text replaced the icon + label with the raw URL, and that long unbreakable
+       URL made the page wider than a phone screen */
+    if(el.tagName === "A"){
+      if(SITE[key] && /^https?:\/\//.test(SITE[key])) el.href = SITE[key];
+      return;
+    }
     el.textContent = SITE[key];
   }
 });

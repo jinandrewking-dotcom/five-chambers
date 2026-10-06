@@ -110,3 +110,136 @@ a{color:inherit;text-decoration:none}
 .route-map .route-dot{fill:var(--c,var(--purple-deep))}
 .route-map .route-label{font-family:var(--font-display);font-style:italic;font-size:15px;fill:var(--ink);text-anchor:middle}
 .route-map .route-label.cn{font-family:var(--font-cn);font-style:normal;font-size:12px;fill:var(--ink-soft)}
+
+/* ============================================================
+   NOTES PAGE (notes.html) — a reading log, one entry at a time
+   ============================================================ */
+.notes-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 26px}
+.notes-toolbar button{
+  font:inherit;font-size:.76rem;font-weight:600;letter-spacing:.06em;
+  padding:7px 15px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-soft);cursor:pointer;
+  transition:background .25s var(--ease),border-color .25s,color .25s,transform .25s var(--ease);
+}
+.notes-toolbar button:hover{border-color:var(--purple-tint);color:var(--ink);transform:translateY(-1px)}
+.notes-toolbar button[aria-pressed="true"]{
+  background:var(--c,var(--ink));border-color:transparent;color:var(--bg);
+}
+.notes-list{display:grid;gap:18px}
+.note{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:22px 24px;
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s;
+}
+.note:hover{transform:translateY(-3px);box-shadow:0 16px 38px -24px rgba(47,36,25,.5);border-color:var(--purple-tint)}
+.note-meta{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);
+}
+.note-meta .dot{width:6px;height:6px;border-radius:50%;background:var(--c,var(--purple));opacity:.55}
+.note h3{
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.08rem,2.4vw,1.32rem);line-height:1.28;margin-top:11px;
+}
+.note h3 .cn{font-family:var(--font-cn);font-size:.78em;color:var(--ink-soft);margin-left:9px;white-space:nowrap}
+.note p{margin-top:11px;color:var(--ink-soft);font-size:.95rem;max-width:72ch}
+.note-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}
+.note-tags span{
+  font-size:.68rem;font-weight:600;letter-spacing:.05em;
+  padding:4px 11px;border-radius:999px;background:var(--bg-2);color:var(--ink-soft);
+}
+.note-src{
+  display:inline-flex;align-items:center;gap:7px;margin-top:16px;
+  font-size:.8rem;font-weight:600;color:var(--c,var(--purple));
+  border-bottom:1px solid currentColor;padding-bottom:2px;
+  transition:opacity .25s;
+}
+.note-src:hover{opacity:.7}
+.note-src svg{width:13px;height:13px;flex:none}
+.notes-empty{
+  border:1px dashed var(--line);border-radius:var(--r-md);
+  padding:22px 24px;background:var(--surface);font-style:italic;color:var(--ink-soft);
+}
+
+/* ============================================================
+   DATA PAGE (data.html) — stat cards, chart panels, tables
+   ============================================================ */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:14px;margin-top:24px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:19px 20px}
+.stat b{
+  display:block;font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.55rem,4vw,2.05rem);line-height:1;color:var(--c,var(--green-soft));
+}
+.stat span{display:block;margin-top:9px;font-size:.78rem;line-height:1.5;color:var(--ink-soft)}
+.chart-panel{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:22px 22px 16px;margin-top:20px;
+}
+.chart-panel h3{font-family:var(--font-display);font-weight:600;font-size:1.06rem;line-height:1.3}
+.chart-panel .chart-sub{font-size:.8rem;color:var(--ink-soft);margin-top:3px}
+.chart-wrap{position:relative;height:300px;margin-top:16px}
+.chart-wrap.bar-chart{height:330px}
+.source-note{margin-top:14px;font-size:.75rem;line-height:1.6;color:var(--ink-soft);opacity:.9}
+.source-note a{border-bottom:1px solid currentColor;transition:opacity .25s}
+.source-note a:hover{opacity:.65}
+.data-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:.85rem}
+.data-table th,.data-table td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
+.data-table th{
+  font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);
+}
+.data-table td:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+.data-table tr:last-child td{border-bottom:none}
+.deep-dive{margin-top:18px;padding-left:18px;border-left:2px solid var(--c,var(--green-soft))}
+.deep-dive li{color:var(--ink-soft);margin-top:9px;max-width:72ch}
+.deep-dive li::marker{color:var(--c,var(--green-soft))}
+@media (max-width:640px){
+  .chart-wrap{height:250px}
+  .chart-wrap.bar-chart{height:300px}
+}
+
+/* ============================================================
+   DATA PAGE — F&I section (metrics, lender comparison, timeline)
+   ============================================================ */
+[hidden]{display:none!important}
+.sub-h{font-family:var(--font-display);font-weight:600;font-size:1.12rem;margin-top:30px;color:var(--ink)}
+.guardrail{
+  margin-top:14px;padding:10px 14px;border-left:3px solid var(--c,var(--green-soft));
+  background:var(--surface);border-radius:0 var(--r-md) var(--r-md) 0;font-size:.82rem;
+}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:14px}
+.metric{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:17px 18px}
+.metric b{display:block;font-family:var(--font-display);font-weight:600;font-size:1.02rem;color:var(--c,var(--green-soft))}
+.metric code{
+  display:block;margin-top:7px;font-family:var(--font-body);font-size:.76rem;
+  color:var(--ink);background:var(--bg-2);border-radius:6px;padding:5px 8px;
+}
+.metric span{display:block;margin-top:9px;font-size:.8rem;line-height:1.5;color:var(--ink-soft)}
+.table-scroll{overflow-x:auto}
+.compare-table td,.compare-table th{vertical-align:top}
+.compare-table td{text-align:left!important;font-variant-numeric:normal;color:var(--ink-soft);line-height:1.5}
+.compare-table td:first-child{color:var(--ink);font-weight:600}
+.deep-dive .test{display:block;margin-top:4px;font-size:.84rem;color:var(--ink-soft);opacity:.9}
+.timeline{list-style:none;margin-top:16px;border-left:2px solid var(--line);padding-left:20px}
+.timeline li{position:relative;padding-bottom:16px}
+.timeline li::before{
+  content:"";position:absolute;left:-26px;top:6px;width:10px;height:10px;border-radius:50%;
+  background:var(--surface);border:2px solid var(--c,var(--green-soft));
+}
+.timeline .t-when{display:block;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--c,var(--green-soft))}
+.timeline b{display:block;margin-top:3px;font-weight:600}
+.timeline li > span:last-child{display:block;margin-top:3px;font-size:.86rem;color:var(--ink-soft);max-width:68ch}
+
+/* phones: the 4-column comparison becomes one card per lender channel */
+@media (max-width:640px){
+  .compare-table thead{display:none}
+  .compare-table,.compare-table tbody,.compare-table tr,.compare-table td{display:block;width:100%}
+  .compare-table tr{border-bottom:1px solid var(--line);padding:10px 0}
+  .compare-table tr:last-child{border-bottom:none}
+  .compare-table td{border:none;padding:4px 0}
+  .compare-table td:not(:first-child)::before{
+    content:attr(data-label);display:block;font-size:.66rem;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);opacity:.8;
+  }
+  .stat-row{grid-template-columns:1fr 1fr}
+  .chart-panel{padding:18px 14px 12px}
+}

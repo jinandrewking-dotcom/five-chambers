@@ -1,0 +1,85 @@
+{
+  "updated": "2026-10-06",
+  "headline": "Battery-electric vehicles went from 8.4% of Australian new-vehicle sales in January 2026 to 24.9% in August — the first month on record that BEVs outsold petrol.",
+  "stats": [
+    {
+      "value": "24.9%",
+      "label": "BEV share of new-vehicle sales, August 2026 — a record, and the first month battery-electric cars outsold petrol."
+    },
+    {
+      "value": "27,089",
+      "label": "BEVs delivered in August 2026, against 7,316 in January — roughly 3.7× in eight months."
+    },
+    {
+      "value": "53.9%",
+      "label": "Electrified share of August sales (BEV + PHEV + hybrid). Combustion-only cars became the minority."
+    },
+    {
+      "value": "21.0%",
+      "label": "Battery-electric share in NSW, Q2 2026 — the ACT leads at 40.1%, the Northern Territory trails at 7.3%."
+    }
+  ],
+  "monthly": {
+    "title": "Battery-electric share of new-vehicle sales",
+    "subtitle": "Australia, monthly 2026 — share of total new-vehicle deliveries (%)",
+    "points": [
+      { "label": "Jan", "value": 8.4, "units": 7316 },
+      { "label": "Feb", "value": 12.2, "units": 11067 },
+      { "label": "Mar", "value": 15.1, "units": 15839 },
+      { "label": "Apr", "value": 16.4, "units": 15459 },
+      { "label": "May", "value": 21.3, "units": 21303 },
+      { "label": "Jun", "value": 23.5, "units": 32583 },
+      { "label": "Jul", "value": 22.7, "units": 23510 },
+      { "label": "Aug", "value": 24.9, "units": 27089 }
+    ],
+    "context": [
+      { "label": "Aug 2024", "value": 5.8 },
+      { "label": "Aug 2025", "value": 9.7 }
+    ],
+    "sources": [
+      {
+        "label": "FCAI VFACTS & Electric Vehicle Council monthly 2026 reports",
+        "url": "https://www.carexpert.com.au/car-news/vfacts-july-2026-record-new-vehicle-sales-in-july-as-toyota-rav4-hilux-lead-the-market"
+      },
+      {
+        "label": "August 2026 VFACTS summary (BEVs outsell petrol)",
+        "url": "https://techtimes.com/articles/326524/20260903/electric-cars-beat-petrol-australia-first-time-led-chinese-brands.htm"
+      },
+      {
+        "label": "Electric Vehicle Council, State of EVs 2026",
+        "url": "https://www.canberratimes.com.au/story/9360196/tenfold-surge-in-ev-sales-needed-to-meet-climate-goals"
+      }
+    ]
+  },
+  "states": {
+    "title": "Battery-electric share by state and territory",
+    "subtitle": "Q2 2026 — battery-electric share of new-vehicle sales (%)",
+    "points": [
+      { "label": "ACT", "value": 40.14 },
+      { "label": "VIC", "value": 22.37 },
+      { "label": "TAS", "value": 21.16 },
+      { "label": "NSW", "value": 21.03 },
+      { "label": "WA", "value": 19.69 },
+      { "label": "QLD", "value": 19.59 },
+      { "label": "SA", "value": 19.42 },
+      { "label": "NT", "value": 7.25 }
+    ],
+    "sources": [
+      {
+        "label": "AAA Electric Vehicle Index, Q2 2026 (state-level BEV and PHEV shares)",
+        "url": "https://techwheel.co/australia-ev-phev-market-analysis-2026"
+      }
+    ]
+  },
+  "brands": {
+    "title": "Battery-electric deliveries by brand",
+    "subtitle": "Top brands for one period: units delivered. Fill from the public VFACTS / EVC brand tables; this chart stays hidden while the list is empty.",
+    "points": [],
+    "sources": []
+  },
+  "notes": [
+    "Electrified share counts battery-electric, plug-in hybrid and conventional hybrid together; BEV-only figures are the ones used in the two charts.",
+    "Monthly shares differ slightly between aggregators because some exclude brands that do not report to VFACTS or to the EVC. Figures here follow the FCAI VFACTS series as reported by the sources above.",
+    "Registration data is a lagging indicator of the sales floor. The leading indicators worth watching are EV finance applications (CBA reported a 161% rise from March 2026) and used-EV auction volumes."
+  ]
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes — Five Chambers</title>
+<meta name="description" content="A running reading log — sociology, religious studies, anthropology and psychology, plus the occasional note on AI, data and the dealership floor.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='%232F2419'/%3E%3Ctext x='16' y='21' font-size='14' text-anchor='middle' fill='%23FAF3E8' font-family='Georgia'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chamber.css">
+</head>
+<body>
+
+<header class="chamber-hero" style="--c:var(--ink)">
+  <div class="container">
+    <a class="back-link" href="index.html#passions">← Back to the hive · 回蜂巢</a>
+    <span class="eyebrow">06 · Notes</span>
+    <h1>Notes<span class="cn">研究笔记</span></h1>
+    <p class="pun">Read slowly, write short.</p>
+    <p class="lead">A running file of what I'm reading — sociology, religious studies, anthropology and psychology — with the occasional note on AI, data and the dealership floor. One entry at a time, no feed, no algorithm.</p>
+    <div class="tags"><span>Reading log</span><span>Method notes</span><span>Sources kept</span></div>
+  </div>
+</header>
+
+<main class="container chamber-body">
+  <section class="chamber-block" style="--c:var(--ink)">
+    <h2>Entries</h2>
+    <p>Mostly method notes: why a paper changed how a question can be asked, rather than what it concluded. Every entry keeps its source so the trail stays walkable.</p>
+    <div class="notes-toolbar" id="notes-filter" role="group" aria-label="Filter notes by tag"></div>
+    <div class="notes-list" id="notes-list"></div>
+  </section>
+</main>
+
+<footer class="chamber-footer">
+  <div class="container">
+    <p>© <span id="y"></span> Andrew Jin</p>
+    <a class="back-link" href="index.html#passions">← Back to the hive · 回蜂巢</a>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   NOTES DATA — inline fallback (used when opening the file
+   directly; the live site fetches content/notes.json instead).
+   Fields: date (YYYY-MM-DD), kind, title, titleZh?, summary,
+           tags[], source?, sourceLabel?
+   ============================================================ */
+var NOTES_FALLBACK = [
+  {
+    date:"2026-10-06", kind:"Journal scan",
+    title:"Optogenetics takes the Nobel — and behavioural science gets its causal switch", titleZh:"光遗传学获奖",
+    summary:"Karl Deisseroth, Peter Hegemann and Georg Nagel share the 2026 Nobel Prize in Physiology or Medicine for light-gated ion channels and optogenetics. Worth keeping because it is the methodological root of the causal turn in behavioural science: before optogenetics, brain research could mostly show correlation, not cause.",
+    tags:["neuroscience","methods"],
+    source:"https://www.nobelprize.org/prizes/medicine/2026/press-release/",
+    sourceLabel:"Nobel Prize press release, 5 Oct 2026"
+  },
+  {
+    date:"2026-10-05", kind:"Archaeology",
+    title:"New data from old bones — Abydos skulls reopen the retainer-sacrifice question", titleZh:"旧骨头，新数据",
+    summary:"Roselyn Campbell re-examined 46 skulls from Flinders Petrie's 1920s excavations at Umm el-Qa'ab. Eighteen of them — 39% — show perimortem cranial trauma. The methodological lesson is the interesting part: Petrie may have seen the fractures but had no way to tell fresh bone from dry bone.",
+    tags:["anthropology","archaeology","methods"],
+    source:"https://www.frontiersin.org/news/2026/10/05/modern-forensic-methods-human-sacrifice-ancient-egypt-frontiers-environmental-archaeology",
+    sourceLabel:"Frontiers in Environmental Archaeology, 5 Oct 2026"
+  },
+  {
+    date:"2026-10-01", kind:"Psychology",
+    title:"Step counts, cortical thickness and adolescent mental health", titleZh:"步数与青少年心理健康",
+    summary:"Li, Paluch and Rakesh used the ABCD cohort (N=5,515, pedometer-measured steps): higher daily step counts were associated with thicker paracentral and rostral anterior cingulate cortex, partially mediating lower mental-health problems a year later. An extra 1,000–2,000 steps a day was already associated with benefit.",
+    tags:["psychology","public health","methods"],
+    source:"https://jamanetwork.com/journals/jamanetworkopen/fullarticle/10.1001/jamanetworkopen.2026.36973",
+    sourceLabel:"JAMA Network Open, 1 Oct 2026"
+  }
+];
+
+var NOTES = [];
+var ACTIVE_TAG = "all";
+
+/* --- helpers ------------------------------------------------- */
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+    return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+  });
+}
+/* only http(s) links are allowed out — blocks javascript:, data: etc. */
+function safeUrl(u){
+  return /^https?:\/\//i.test(String(u || "").trim()) ? String(u).trim() : "";
+}
+function fmtDate(iso){
+  var d = new Date(String(iso) + "T00:00:00");
+  if (isNaN(d.getTime())) return iso;
+  var m = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return d.getDate() + " " + m[d.getMonth()] + " " + d.getFullYear();
+}
+function sortedNotes(){
+  return NOTES.slice().sort(function(a,b){ return String(b.date).localeCompare(String(a.date)); });
+}
+
+/* --- render -------------------------------------------------- */
+function renderFilter(){
+  var bar = document.getElementById("notes-filter");
+  if(!bar) return;
+  var tags = ["all"];
+  NOTES.forEach(function(n){
+    (n.tags || []).forEach(function(t){ if(tags.indexOf(t) === -1) tags.push(t); });
+  });
+  bar.innerHTML = tags.map(function(t){
+    return '<button type="button" data-tag="' + esc(t) + '" aria-pressed="' + (t === ACTIVE_TAG) + '">'
+         + (t === "all" ? "All" : esc(t)) + '</button>';
+  }).join("");
+  bar.querySelectorAll("button").forEach(function(b){
+    b.addEventListener("click", function(){
+      ACTIVE_TAG = b.getAttribute("data-tag");
+      renderFilter();
+      renderNotes();
+    });
+  });
+}
+
+function renderNotes(){
+  var list = document.getElementById("notes-list");
+  if(!list) return;
+  var items = sortedNotes().filter(function(n){
+    return ACTIVE_TAG === "all" || (n.tags || []).indexOf(ACTIVE_TAG) !== -1;
+  });
+  if(!items.length){
+    list.innerHTML = '<p class="notes-empty">Nothing filed under this tag yet.</p>';
+    return;
+  }
+  list.innerHTML = items.map(function(n){
+    var tags = (n.tags || []).map(function(t){ return "<span>" + esc(t) + "</span>"; }).join("");
+    var zh   = n.titleZh ? '<span class="cn">' + esc(n.titleZh) + '</span>' : "";
+    var url  = safeUrl(n.source);
+    var src  = url
+      ? '<a class="note-src" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">'
+        + esc(n.sourceLabel || "Source")
+        + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>'
+      : "";
+    return '<article class="note" style="--c:var(--ink)">'
+      + '<div class="note-meta"><span>' + esc(fmtDate(n.date)) + '</span>'
+      + '<span class="dot"></span><span>' + esc(n.kind || "Note") + '</span></div>'
+      + '<h3>' + esc(n.title) + zh + '</h3>'
+      + '<p>' + esc(n.summary) + '</p>'
+      + (tags ? '<div class="note-tags">' + tags + '</div>' : "")
+      + src
+      + '</article>';
+  }).join("");
+}
+
+/* --- boot ---------------------------------------------------- */
+document.getElementById("y").textContent = new Date().getFullYear();
+
+fetch("content/notes.json")
+  .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+  .then(function(data){ NOTES = (data && data.entries) || NOTES_FALLBACK; })
+  .catch(function(){ NOTES = NOTES_FALLBACK; })
+  .then(function(){ renderFilter(); renderNotes(); });
+</script>
+</body>
+</html>

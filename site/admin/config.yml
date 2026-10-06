@@ -115,23 +115,6 @@ collections:
               - { label: "Image", name: "src", widget: "image" }
               - { label: "Alt Text", name: "alt", widget: "string", default: "Tea photo" }
 
-  - name: "data-gallery"
-    label: "Data Gallery · 数据分析"
-    delete: false
-    files:
-      - file: "site/content/data-photos.json"
-        name: "data"
-        label: "Data Photos"
-        format: json
-        fields:
-          - name: "photos"
-            label: "Photos"
-            widget: "list"
-            add_to_top: true
-            fields:
-              - { label: "Image", name: "src", widget: "image" }
-              - { label: "Alt Text", name: "alt", widget: "string", default: "Data photo" }
-
   - name: "travel-gallery"
     label: "Travel Gallery · 自驾"
     delete: false
@@ -148,3 +131,176 @@ collections:
             fields:
               - { label: "Image", name: "src", widget: "image" }
               - { label: "Alt Text", name: "alt", widget: "string", default: "Travel photo" }
+
+  # ────────────────────────────────────────
+  # Notes — 研究笔记 (notes.html)
+  # ────────────────────────────────────────
+  - name: "notes"
+    label: "Notes · 研究笔记"
+    delete: false
+    files:
+      - file: "site/content/notes.json"
+        name: "data"
+        label: "Notes"
+        format: json
+        fields:
+          - name: "entries"
+            label: "Entries"
+            widget: "list"
+            add_to_top: true
+            summary: "{{date}} — {{title}}"
+            fields:
+              - { label: "Date (YYYY-MM-DD)", name: "date", widget: "string", hint: "Sorts the list; newest first." }
+              - { label: "Kind (e.g. Journal scan, Archaeology, Psychology)", name: "kind", widget: "string", default: "Note" }
+              - { label: "Title (EN)", name: "title", widget: "string" }
+              - { label: "Title (中文, optional)", name: "titleZh", widget: "string", required: false }
+              - { label: "Summary", name: "summary", widget: "text", hint: "Two or three sentences. Say why it matters, not just what it says." }
+              - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+              - { label: "Source URL (optional)", name: "source", widget: "string", required: false }
+              - { label: "Source label (optional)", name: "sourceLabel", widget: "string", required: false, hint: "e.g. 'Nobel Prize press release, 5 Oct 2026'" }
+
+  # ────────────────────────────────────────
+  # EV deep-dive data (data.html)
+  # ────────────────────────────────────────
+  - name: "evdata"
+    label: "EV Data · 数据看板"
+    delete: false
+    files:
+      - file: "site/content/ev-share.json"
+        name: "data"
+        label: "EV share data"
+        format: json
+        fields:
+          - { label: "Headline", name: "headline", widget: "text" }
+          - { label: "Last updated", name: "updated", widget: "string" }
+          - name: "stats"
+            label: "Stat cards"
+            widget: "list"
+            add_to_top: false
+            fields:
+              - { label: "Big number", name: "value", widget: "string" }
+              - { label: "Caption", name: "label", widget: "text" }
+          - name: "monthly"
+            label: "Chart 1 — monthly national series"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - name: "points"
+                label: "Data points"
+                widget: "list"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Value (%)", name: "value", widget: "number", value_type: "float" }
+                  - { label: "Units (optional)", name: "units", widget: "number", required: false }
+              - name: "context"
+                label: "Same month, earlier years (shown under the chart)"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label (e.g. Aug 2025)", name: "label", widget: "string" }
+                  - { label: "Value (%)", name: "value", widget: "number", value_type: "float" }
+              - name: "sources"
+                label: "Sources"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "URL", name: "url", widget: "string" }
+          - name: "states"
+            label: "Chart 2 — by state"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - name: "points"
+                label: "Data points"
+                widget: "list"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Value (%)", name: "value", widget: "number", value_type: "float" }
+              - name: "sources"
+                label: "Sources"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "URL", name: "url", widget: "string" }
+          - name: "brands"
+            label: "Chart 3 — by brand (hidden while empty)"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - name: "points"
+                label: "Data points (public VFACTS / EVC brand totals only)"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Brand", name: "label", widget: "string" }
+                  - { label: "Units", name: "value", widget: "number", value_type: "int" }
+              - name: "sources"
+                label: "Sources"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "URL (https only)", name: "url", widget: "string" }
+          - { label: "Notes on the numbers", name: "notes", widget: "list", required: false }
+
+  # ────────────────────────────────────────
+  # F&I and value-add (data.html) — PUBLIC information and frameworks only.
+  # Never enter employer, dealership, lender or customer figures here.
+  # ────────────────────────────────────────
+  - name: "fi"
+    label: "F&I Insights · 金融保险"
+    delete: false
+    files:
+      - file: "site/content/fi-insights.json"
+        name: "data"
+        label: "F&I and value-add"
+        format: json
+        fields:
+          - { label: "Last updated", name: "updated", widget: "string" }
+          - { label: "Intro", name: "intro", widget: "text" }
+          - { label: "Guardrail note", name: "guardrail", widget: "string", hint: "Keep this: it tells readers the page holds no internal figures." }
+          - name: "metrics"
+            label: "Metrics I'd watch"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Formula", name: "formula", widget: "string" }
+              - { label: "Why it matters", name: "why", widget: "text" }
+          - name: "lenders"
+            label: "Lender channels compared"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - { label: "Column headings", name: "columns", widget: "list" }
+              - name: "rows"
+                label: "Rows (one cell per column, in order)"
+                widget: "list"
+                field: { label: "Row", name: "row", widget: "list" }
+          - name: "hypotheses"
+            label: "Hypotheses"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Body", name: "body", widget: "text" }
+              - { label: "How to test", name: "test", widget: "text", required: false }
+          - name: "timeline"
+            label: "Rule changes timeline"
+            widget: "list"
+            fields:
+              - { label: "When (e.g. Oct 2021)", name: "when", widget: "string" }
+              - { label: "What", name: "what", widget: "string" }
+              - { label: "Why it matters", name: "why", widget: "text" }
+          - name: "sources"
+            label: "Sources"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL (https only)", name: "url", widget: "string", required: false }

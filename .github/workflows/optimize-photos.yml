@@ -1,0 +1,46 @@
+# Photos uploaded from a phone (e.g. through the /admin CMS) carry GPS
+# coordinates and are 3–6 MB each. On every push that touches site/photos,
+# strip their metadata, shrink them to 1600 px, and commit the result back.
+# The script skips files that are already done, so the bot's own commit
+# doesn't trigger another round of changes.
+name: Optimise photos
+
+on:
+  push:
+    branches: [main]
+    paths: ["site/photos/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: optimise-photos
+  cancel-in-progress: false
+
+jobs:
+  optimise:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install --quiet "Pillow>=10"
+
+      - run: python tools/optimize_photos.py
+
+      - name: Commit optimised photos
+        run: |
+          if git diff --quiet -- site/photos; then
+            echo "Nothing to optimise."
+            exit 0
+          fi
+          git config user.name  "photo-optimiser[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/photos
+          git commit -m "Optimise photos: strip GPS/EXIF, resize to 1600px"
+          git pull --rebase origin main
+          git push

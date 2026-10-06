@@ -37,7 +37,17 @@
         {
           "src": "/photos/img_1223.jpeg",
           "alt": "Bullet Train Station",
-          "wide": false
+          "wide": true
+        },
+        {
+          "alt": "Trip photo",
+          "wide": true,
+          "src": "/photos/fd59d89e-c2e9-4bfb-b56c-b1f7113aea3c.jpeg"
+        },
+        {
+          "alt": "Trip photo",
+          "wide": true,
+          "src": "/photos/img_0091.jpeg"
         }
       ]
     },

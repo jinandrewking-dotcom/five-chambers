@@ -17,8 +17,9 @@ site/                  ← THE SITE. Netlify publishes this folder.
   admin/               ← Decap CMS panel — reachable at /admin
   photos/              ← image storage (GPS-stripped, ≤1600 px)
   netlify.toml         ← build config (publish = ".")
-tools/                 ← helper scripts (NOT published): add_note.py, optimize_photos.py
-.github/workflows/     ← optimize-photos.yml: cleans every photo pushed to main
+  fonts/  vendor/      ← self-hosted fonts + Chart.js (no Google Fonts / CDN, works in China)
+tools/                 ← helper scripts (NOT published): add_note.py, optimize_photos.py, build_fonts.py
+.github/workflows/     ← optimize-photos.yml (cleans photos), build-fonts.yml (updates Chinese font subset)
 CONTENT.md             ← how to edit content (CMS, JSON, photos, source rules)
 README.md              ← this file
 ```

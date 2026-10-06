@@ -6,9 +6,9 @@
 <title>Pride & Practice — Five Chambers</title>
 <meta name="description" content="Compassion without rights is just a slogan — showing up as an ally at work and in the community.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='%238A4B9C'/%3E%3Ctext x='16' y='21' font-size='14' text-anchor='middle' fill='%23FAF3E8' font-family='Georgia'%3EH%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/fraunces-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-sans-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="chamber.css">
 </head>
 <body>
@@ -27,7 +27,8 @@
 <main class="container chamber-body">
   <section class="chamber-block" style="--c:var(--green-soft)">
     <h2>The story so far</h2>
-    <p class="placeholder-note">This is where the full write-up goes — replace this paragraph with notes from marches, workplace initiatives, or what allyship means to you day to day.</p>
+    <p>Every March I march in Sydney's Mardi Gras with the community, alongside USYD, ANTRA and ACON. The rest of the year it's smaller and steadier: a rainbow archery session, turning up for the queer group at uni, and pushing for “inclusive workplace” to mean something on an ordinary Tuesday, not just in Mardi Gras season.</p>
+    <p>For me this isn't separate from practice. Compassion that stops at the edge of who's comfortable isn't compassion, and the Dharma hall is a better place when everyone in it can be fully themselves.</p>
   </section>
   <section class="chamber-block" style="--c:var(--green-soft)">
     <h2>Gallery</h2>
@@ -48,13 +49,18 @@ function esc(s){
   });
 }
 /* a photo whose file is missing removes its own slot instead of showing a broken icon */
-function dropSlot(img){ var s = img.closest(".g-slot"); if(s) s.remove(); }
+function dropSlot(img){
+  var s = img.closest(".g-slot"); if(!s) return;
+  var grid = s.parentNode; s.remove();
+  /* every photo failed to load: hide the whole Gallery block, not just leave a heading */
+  if(grid && !grid.querySelector(".g-slot")){ var b = grid.closest(".chamber-block"); if(b) b.hidden = true; }
+}
 var DROP_ON_ERROR = ' onerror="dropSlot(this)"';
 document.getElementById('y').textContent = new Date().getFullYear();
 var PHOTOS_FALLBACK = [
-  { src:"photos/pride/01.jpg", alt:"Pride march photo" },
-  { src:"photos/pride/02.jpg", alt:"Pride march photo" },
-  { src:"photos/pride/03.jpg", alt:"Pride march photo" }
+  { src:"photos/311dd11fba0af58e6f8ac3fdddb8ac3e.jpeg", alt:"I Participate in Sydney Uni Mardi Gras" },
+  { src:"photos/img_0764.jpeg", alt:"Rainbow Archery Session" },
+  { src:"photos/img_3076.jpeg", alt:"Supporting Queer Group in Uni" }
 ];
 function renderChamberGallery(photos){
   var el = document.getElementById("chamber-gallery");

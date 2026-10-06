@@ -6,9 +6,9 @@
 <title>Buddhist Youth — Five Chambers</title>
 <meta name="description" content="Humanistic Buddhism in the Fo Guang Shan tradition — sūtras, AI-ethics, and modern identity meeting an old practice.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='%238A4B9C'/%3E%3Ctext x='16' y='21' font-size='14' text-anchor='middle' fill='%23FAF3E8' font-family='Georgia'%3EH%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/fraunces-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-sans-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="chamber.css">
 </head>
 <body>
@@ -27,7 +27,8 @@
 <main class="container chamber-body">
   <section class="chamber-block" style="--c:var(--purple)">
     <h2>The story so far</h2>
-    <p class="placeholder-note">This is where the full write-up goes — replace this paragraph with your own reflections, retreat notes, or a longer essay about your practice.</p>
+    <p>I practise Humanistic Buddhism (人间佛教) in the Fo Guang Shan tradition founded by Venerable Master Hsing Yun: the idea that practice belongs in ordinary life, at work, at the table and in traffic, not only on retreat. Time at Fo Guang Shan's Tsung Lin University in Taiwan showed me what that looks like when study and daily routine are the same thing.</p>
+    <p>These days my reading moves between the Āgamas, the early discourses, and papers on AI and consciousness. The overlap is closer than it sounds: both ask what a mind is made of, and whether anything in it is as solid as it feels. Meditation is where I check my answers.</p>
   </section>
   <section class="chamber-block" style="--c:var(--purple)">
     <h2>Gallery</h2>
@@ -48,13 +49,18 @@ function esc(s){
   });
 }
 /* a photo whose file is missing removes its own slot instead of showing a broken icon */
-function dropSlot(img){ var s = img.closest(".g-slot"); if(s) s.remove(); }
+function dropSlot(img){
+  var s = img.closest(".g-slot"); if(!s) return;
+  var grid = s.parentNode; s.remove();
+  /* every photo failed to load: hide the whole Gallery block, not just leave a heading */
+  if(grid && !grid.querySelector(".g-slot")){ var b = grid.closest(".chamber-block"); if(b) b.hidden = true; }
+}
 var DROP_ON_ERROR = ' onerror="dropSlot(this)"';
 document.getElementById('y').textContent = new Date().getFullYear();
 var PHOTOS_FALLBACK = [
-  { src:"photos/sangha/01.jpg", alt:"Sangha photo" },
-  { src:"photos/sangha/02.jpg", alt:"Sangha photo" },
-  { src:"photos/sangha/03.jpg", alt:"Sangha photo" }
+  { src:"photos/img_4345.jpeg", alt:"meditation" },
+  { src:"photos/img_2520.jpeg", alt:"Tsung Lin University for Buddhism in Taiwan" },
+  { src:"photos/img_5418.jpeg", alt:"Finding the meaningful moments of current" }
 ];
 function renderChamberGallery(photos){
   var el = document.getElementById("chamber-gallery");

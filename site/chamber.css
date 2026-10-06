@@ -69,7 +69,9 @@ a{color:inherit;text-decoration:none}
 .chamber-hero .tags span{font-size:.72rem;font-weight:600;letter-spacing:.06em;padding:6px 14px;border-radius:999px;background:rgba(250,243,232,.16);color:var(--bg)}
 
 /* body */
-.chamber-body{padding:64px 0 90px}
+/* padding-block only: the shorthand "padding:64px 0 90px" zeroed the .container's
+   side padding, so on phones all text and photos touched the screen edges */
+.chamber-body{padding-block:64px 90px}
 .chamber-block{margin-bottom:56px}
 .chamber-block h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.4rem,3vw,1.9rem);margin-bottom:16px;color:var(--c,var(--purple))}
 .chamber-block p{color:var(--ink-soft);max-width:66ch}
@@ -242,4 +244,22 @@ a{color:inherit;text-decoration:none}
   }
   .stat-row{grid-template-columns:1fr 1fr}
   .chart-panel{padding:18px 14px 12px}
+}
+
+/* ============================================================
+   STORY TEXT + ROUTE MAP FIXES
+   ============================================================ */
+.chamber-block p + p{margin-top:14px}
+.chamber-block p + .route-map{margin-top:22px}
+.chamber-block p a{color:var(--c,var(--purple));text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.chamber-block p a:hover{opacity:.75}
+/* labels near the edges may extend a little past the drawing — let them show */
+.route-map svg{overflow:visible}
+@media (max-width:640px){
+  /* the drawing scales down with the screen; enlarge the labels (in drawing
+     units) so they still read at roughly 11-12 px on a phone */
+  .route-map{padding-inline:6px}
+  .route-map .route-label{font-size:22px}
+  .route-map .route-label.cn{font-size:17px}
+  .route-map .route-dot{r:8px}
 }

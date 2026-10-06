@@ -6,9 +6,9 @@
 <title>Solo Maps — Five Chambers</title>
 <meta name="description" content="New Zealand's South Island and Australia's coastlines, driven alone — a full tank, a half-baked plan, and good company.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='%238A4B9C'/%3E%3Ctext x='16' y='21' font-size='14' text-anchor='middle' fill='%23FAF3E8' font-family='Georgia'%3EH%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/fraunces-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-sans-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="chamber.css">
 </head>
 <body>
@@ -27,7 +27,8 @@
 <main class="container chamber-body">
   <section class="chamber-block" style="--c:var(--purple-deep)">
     <h2>The story so far</h2>
-    <p class="placeholder-note">This is where the full write-up goes — replace this paragraph with the road stories, routes, and the moments that made each drive worth it. See also the <a href="index.html#roadlog" style="color:var(--purple-deep);text-decoration:underline">road log</a> on the home page.</p>
+    <p>I drive alone on purpose. A long road with nobody to talk to is the closest thing I have to walking meditation: the mind wanders, comes back, wanders again, and the kilometres keep count.</p>
+    <p>So far the long ones have been Tasmania's convict-built <a href="tasmania.html">Highway 1</a>, <a href="china.html">Jingdezhen to Changsha</a>, and New Zealand's <a href="new-zealand.html">South Island, Queenstown to the lakes</a>. Each has its own page with a route map and photos, and the full list lives in the <a href="index.html#roadlog">road log</a>.</p>
   </section>
   <section class="chamber-block" style="--c:var(--purple-deep)">
     <h2>Gallery</h2>
@@ -48,14 +49,15 @@ function esc(s){
   });
 }
 /* a photo whose file is missing removes its own slot instead of showing a broken icon */
-function dropSlot(img){ var s = img.closest(".g-slot"); if(s) s.remove(); }
+function dropSlot(img){
+  var s = img.closest(".g-slot"); if(!s) return;
+  var grid = s.parentNode; s.remove();
+  /* every photo failed to load: hide the whole Gallery block, not just leave a heading */
+  if(grid && !grid.querySelector(".g-slot")){ var b = grid.closest(".chamber-block"); if(b) b.hidden = true; }
+}
 var DROP_ON_ERROR = ' onerror="dropSlot(this)"';
 document.getElementById('y').textContent = new Date().getFullYear();
-var PHOTOS_FALLBACK = [
-  { src:"photos/travel/01.jpg", alt:"Solo travel photo" },
-  { src:"photos/travel/02.jpg", alt:"Solo travel photo" },
-  { src:"photos/travel/03.jpg", alt:"Solo travel photo" }
-];
+var PHOTOS_FALLBACK = [];
 function renderChamberGallery(photos){
   var el = document.getElementById("chamber-gallery");
   if(!el) return;

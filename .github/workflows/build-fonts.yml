@@ -1,0 +1,48 @@
+# The Chinese display font (Noto Serif SC) is self-hosted as a small subset
+# containing only the characters used on the site. When page text changes —
+# e.g. a new Chinese note title saved in the /admin CMS — rebuild the subset
+# so the new characters render in the site font, and commit it back.
+# tools/build_fonts.py only downloads when the character set actually changed,
+# so most runs end with "nothing to commit".
+name: Rebuild fonts
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**/*.html"
+      - "site/content/**"
+      - "tools/build_fonts.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-fonts
+  cancel-in-progress: false
+
+jobs:
+  fonts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: python tools/build_fonts.py
+
+      - name: Commit updated font subset
+        run: |
+          if [ -z "$(git status --porcelain -- site/fonts)" ]; then
+            echo "Font subset already covers every character."
+            exit 0
+          fi
+          git config user.name  "font-builder[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/fonts
+          git commit -m "Rebuild Chinese font subset for new characters"
+          git pull --rebase origin main
+          git push

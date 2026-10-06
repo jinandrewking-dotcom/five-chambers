@@ -27,7 +27,8 @@
 <main class="container chamber-body">
   <section class="chamber-block" style="--c:var(--purple-deep)">
     <h2>The route</h2>
-    <p class="placeholder-note">There and back down the island's spine on Highway 1, through the old convict-built Midlands towns — replace this with your own account of the drive.</p>
+    <p>Highway 1 runs down the spine of the island, from Launceston on the Tamar to Hobart on the Derwent, and I drove it there and back. The Midlands in between are quiet sheep-and-hay country, but almost everything built along the way (the bridges, the sandstone towns, much of the road itself) was built by convict labour. Ross Bridge, finished in 1836, still carries traffic.</p>
+    <p>That's what “blood and sweat” means in the road log: most of the colony's first arrivals didn't choose to come, and they came to land that had been palawa country for tens of thousands of years. One end of the drive gave me sandstone warehouses and a paper map read on the footpath; the other gave me vineyards under bird netting at dusk.</p>
     <div class="route-map">
       <svg viewBox="0 0 640 200" role="img" aria-label="Route map: Launceston to Ross to Hobart, then back to Launceston via Highway 1">
         <path class="route-line" d="M70,150 C150,150 180,70 330,80 C460,90 500,150 570,150"/>
@@ -59,7 +60,12 @@ function esc(s){
   });
 }
 /* a photo whose file is missing removes its own slot instead of showing a broken icon */
-function dropSlot(img){ var s = img.closest(".g-slot"); if(s) s.remove(); }
+function dropSlot(img){
+  var s = img.closest(".g-slot"); if(!s) return;
+  var grid = s.parentNode; s.remove();
+  /* every photo failed to load: hide the whole Gallery block, not just leave a heading */
+  if(grid && !grid.querySelector(".g-slot")){ var b = grid.closest(".chamber-block"); if(b) b.hidden = true; }
+}
 var DROP_ON_ERROR = ' onerror="dropSlot(this)"';
 document.getElementById('y').textContent = new Date().getFullYear();
 
@@ -69,9 +75,9 @@ var FALLBACK = {
   title:"Blood, sweat & the highway",
   desc:"Launceston → Hobart → Launceston through National Highway 1.",
   photos:[
-    { src:"photos/tasmania/01.jpg", alt:"National Highway 1 road through Tasmania", wide:true },
-    { src:"photos/tasmania/02.jpg", alt:"A stop along the Tasmania trip", wide:false },
-    { src:"photos/tasmania/03.jpg", alt:"Detail from the Tasmania trip", wide:false }
+    { src:"photos/img_5492.jpeg", alt:"Winery in Launceston", wide:true },
+    { src:"photos/img_5472.jpeg", alt:"Harvest Market in Launceston", wide:false },
+    { src:"photos/img_5841.jpeg", alt:"National Highway 1 - the Women Factory", wide:false }
   ]
 };
 

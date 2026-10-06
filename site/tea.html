@@ -27,7 +27,8 @@
 <main class="container chamber-body">
   <section class="chamber-block" style="--c:var(--amber)">
     <h2>The story so far</h2>
-    <p class="placeholder-note">This is where the full write-up goes — replace this paragraph with tasting notes, tea provenance, or how the practice found you.</p>
+    <p>Gongfu cha (功夫茶) is a small, exact ritual: warm the pot, rinse the leaves, then short infusions, each one tasted for how it has changed since the last. It rewards attention and punishes hurry, which is why it works as my second meditation cushion.</p>
+    <p>禅茶一味, Chan and tea as one flavour, is the idea I keep coming back to. The same leaves are bright in the third cup and quiet by the eighth; nothing stays, and the noticing is the practice. A teahouse in China or a simple set at my own table, it's the pace that matters more than the tea.</p>
   </section>
   <section class="chamber-block" style="--c:var(--amber)">
     <h2>Gallery</h2>
@@ -48,13 +49,18 @@ function esc(s){
   });
 }
 /* a photo whose file is missing removes its own slot instead of showing a broken icon */
-function dropSlot(img){ var s = img.closest(".g-slot"); if(s) s.remove(); }
+function dropSlot(img){
+  var s = img.closest(".g-slot"); if(!s) return;
+  var grid = s.parentNode; s.remove();
+  /* every photo failed to load: hide the whole Gallery block, not just leave a heading */
+  if(grid && !grid.querySelector(".g-slot")){ var b = grid.closest(".chamber-block"); if(b) b.hidden = true; }
+}
 var DROP_ON_ERROR = ' onerror="dropSlot(this)"';
 document.getElementById('y').textContent = new Date().getFullYear();
 var PHOTOS_FALLBACK = [
-  { src:"photos/tea/01.jpg", alt:"Tea photo" },
-  { src:"photos/tea/02.jpg", alt:"Tea photo" },
-  { src:"photos/tea/03.jpg", alt:"Tea photo" }
+  { src:"photos/4a7a6397-c9a7-4d30-b8aa-961392b772e2.jpeg", alt:"Teahouse in China" },
+  { src:"photos/714999a6e8a0f0ca645163fc1dbc661d.jpeg", alt:"tea set" },
+  { src:"photos/img_8233.jpeg", alt:"tea set" }
 ];
 function renderChamberGallery(photos){
   var el = document.getElementById("chamber-gallery");

@@ -27,7 +27,8 @@
 <main class="container chamber-body">
   <section class="chamber-block" style="--c:var(--green-soft)">
     <h2>The story so far</h2>
-    <p class="placeholder-note">This is where the full write-up goes — replace this paragraph with notes from marches, workplace initiatives, or what allyship means to you day to day.</p>
+    <p>Every March I march in Sydney's Mardi Gras with the community, alongside USYD, ANTRA and ACON. The rest of the year it's smaller and steadier: a rainbow archery session, turning up for the queer group at uni, and pushing for “inclusive workplace” to mean something on an ordinary Tuesday, not just in Mardi Gras season.</p>
+    <p>For me this isn't separate from practice. Compassion that stops at the edge of who's comfortable isn't compassion, and the Dharma hall is a better place when everyone in it can be fully themselves.</p>
   </section>
   <section class="chamber-block" style="--c:var(--green-soft)">
     <h2>Gallery</h2>
@@ -48,13 +49,18 @@ function esc(s){
   });
 }
 /* a photo whose file is missing removes its own slot instead of showing a broken icon */
-function dropSlot(img){ var s = img.closest(".g-slot"); if(s) s.remove(); }
+function dropSlot(img){
+  var s = img.closest(".g-slot"); if(!s) return;
+  var grid = s.parentNode; s.remove();
+  /* every photo failed to load: hide the whole Gallery block, not just leave a heading */
+  if(grid && !grid.querySelector(".g-slot")){ var b = grid.closest(".chamber-block"); if(b) b.hidden = true; }
+}
 var DROP_ON_ERROR = ' onerror="dropSlot(this)"';
 document.getElementById('y').textContent = new Date().getFullYear();
 var PHOTOS_FALLBACK = [
-  { src:"photos/pride/01.jpg", alt:"Pride march photo" },
-  { src:"photos/pride/02.jpg", alt:"Pride march photo" },
-  { src:"photos/pride/03.jpg", alt:"Pride march photo" }
+  { src:"photos/311dd11fba0af58e6f8ac3fdddb8ac3e.jpeg", alt:"I Participate in Sydney Uni Mardi Gras" },
+  { src:"photos/img_0764.jpeg", alt:"Rainbow Archery Session" },
+  { src:"photos/img_3076.jpeg", alt:"Supporting Queer Group in Uni" }
 ];
 function renderChamberGallery(photos){
   var el = document.getElementById("chamber-gallery");

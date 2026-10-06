@@ -27,20 +27,21 @@
 <main class="container chamber-body">
   <section class="chamber-block" style="--c:var(--purple-deep)">
     <h2>The route</h2>
-    <p class="placeholder-note">Bungee, swing, luge, lakes, mountains, temples, galleries, sakura and long southern roads — replace this with your own account of the drive.</p>
+    <p>Queenstown was the loud part: bungee, swing and luge, in that order. Then the road went quiet. Wanaka, then the long run beside Lake Pukaki with Aoraki / Mount Cook at the far end of that impossible blue, then Lake Tekapo. The colour isn't a filter. It comes from glacial “rock flour” hanging in the water and scattering the light.</p>
+    <p>Then Totara Valley, north to Christchurch for galleries and temples, and finally up to Auckland. Late spring meant blossom on the trees and long evenings, which on southern roads means you keep driving well past the point where you meant to stop.</p>
     <div class="route-map">
       <svg viewBox="0 0 640 200" role="img" aria-label="Route map: Queenstown to Wanaka to Lake Tekapo to Christchurch to Auckland">
-        <path class="route-line" d="M50,150 C110,150 130,90 190,90 C250,90 270,150 330,150 C390,150 410,90 470,90 C530,90 560,150 610,150"/>
-        <circle class="route-dot" cx="50" cy="150" r="6"/>
-        <text class="route-label" x="50" y="182">Queenstown</text>
-        <circle class="route-dot" cx="190" cy="90" r="6"/>
-        <text class="route-label" x="190" y="68">Wanaka</text>
-        <circle class="route-dot" cx="330" cy="150" r="6"/>
-        <text class="route-label" x="330" y="182">Lake Tekapo</text>
-        <circle class="route-dot" cx="470" cy="90" r="6"/>
-        <text class="route-label" x="470" y="68">Christchurch</text>
-        <circle class="route-dot" cx="610" cy="150" r="6"/>
-        <text class="route-label" x="610" y="182">Auckland</text>
+        <path class="route-line" d="M70,150 C130,150 135,90 195,90 C255,90 260,150 320,150 C380,150 385,90 445,90 C505,90 510,150 570,150"/>
+        <circle class="route-dot" cx="70" cy="150" r="6"/>
+        <text class="route-label" x="70" y="182">Queenstown</text>
+        <circle class="route-dot" cx="195" cy="90" r="6"/>
+        <text class="route-label" x="195" y="68">Wanaka</text>
+        <circle class="route-dot" cx="320" cy="150" r="6"/>
+        <text class="route-label" x="320" y="182">Lake Tekapo</text>
+        <circle class="route-dot" cx="445" cy="90" r="6"/>
+        <text class="route-label" x="445" y="68">Christchurch</text>
+        <circle class="route-dot" cx="570" cy="150" r="6"/>
+        <text class="route-label" x="570" y="182">Auckland</text>
       </svg>
     </div>
   </section>
@@ -63,7 +64,12 @@ function esc(s){
   });
 }
 /* a photo whose file is missing removes its own slot instead of showing a broken icon */
-function dropSlot(img){ var s = img.closest(".g-slot"); if(s) s.remove(); }
+function dropSlot(img){
+  var s = img.closest(".g-slot"); if(!s) return;
+  var grid = s.parentNode; s.remove();
+  /* every photo failed to load: hide the whole Gallery block, not just leave a heading */
+  if(grid && !grid.querySelector(".g-slot")){ var b = grid.closest(".chamber-block"); if(b) b.hidden = true; }
+}
 var DROP_ON_ERROR = ' onerror="dropSlot(this)"';
 document.getElementById('y').textContent = new Date().getFullYear();
 
@@ -73,9 +79,9 @@ var FALLBACK = {
   title:"Lakes, temples & cherry blossom",
   desc:"Queenstown → Wanaka → Pukaki Ward → Lake Tekapo → Totara Valley → Christchurch → Auckland.",
   photos:[
-    { src:"photos/new-zealand/01.jpg", alt:"South Island New Zealand road trip", wide:true },
-    { src:"photos/new-zealand/02.jpg", alt:"A stop along the New Zealand trip", wide:false },
-    { src:"photos/new-zealand/03.jpg", alt:"Detail from the New Zealand trip", wide:false }
+    { src:"photos/img_2915.jpeg", alt:"Lake Tekapo", wide:true },
+    { src:"photos/img_2922.jpeg", alt:"A view from Hostel", wide:true },
+    { src:"photos/img_2718.jpeg", alt:"Bungee Jump", wide:true }
   ]
 };
 

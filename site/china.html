@@ -20,23 +20,24 @@
     <h1 id="trip-title">Clay, memory &amp; momentum</h1>
     <p class="pun" id="trip-when">February 2026 · China</p>
     <p class="lead" id="trip-desc">Jingdezhen → Changsha: world treasure to influential new city.</p>
-    <div class="tags"><span>Jingdezhen</span><span>Changsha</span><span>self-drive</span></div>
+    <div class="tags"><span>Jingdezhen</span><span>Changsha</span><span>porcelain &amp; tea</span></div>
   </div>
 </header>
 
 <main class="container chamber-body">
   <section class="chamber-block" style="--c:var(--purple-deep)">
     <h2>The route</h2>
-    <p class="placeholder-note">From the porcelain capital to a city reinventing itself — replace this with your own account of the drive.</p>
+    <p>Jingdezhen has been firing porcelain for more than a thousand years, and it is still a working town rather than a museum: studios, kilns and clay dust on the backstreets. For a long time it was a name everyone knew and few visited; now a younger crowd is rediscovering it, coming to throw pots rather than just buy them.</p>
+    <p>Changsha is the other end of the story: a city that turned tea drinks, late-night food streets and shopping-mall nostalgia into national brands. As someone who reads consumer data for a living, that's what I came to watch: how a young crowd spends, queues and photographs. In between, a proper tea tasting: fresh green leaves, several cups, no hurry.</p>
     <div class="route-map">
       <svg viewBox="0 0 640 200" role="img" aria-label="Route map: Jingdezhen to Changsha">
         <path class="route-line" d="M80,120 C220,40 420,200 560,120"/>
         <circle class="route-dot" cx="80" cy="120" r="6"/>
-        <text class="route-label" x="80" y="152">Jingdezhen</text>
-        <text class="route-label cn" x="80" y="170">景德镇</text>
+        <text class="route-label" x="80" y="150">Jingdezhen</text>
+        <text class="route-label cn" x="80" y="177">景德镇</text>
         <circle class="route-dot" cx="560" cy="120" r="6"/>
-        <text class="route-label" x="560" y="152">Changsha</text>
-        <text class="route-label cn" x="560" y="170">长沙</text>
+        <text class="route-label" x="560" y="150">Changsha</text>
+        <text class="route-label cn" x="560" y="177">长沙</text>
       </svg>
     </div>
   </section>
@@ -59,7 +60,12 @@ function esc(s){
   });
 }
 /* a photo whose file is missing removes its own slot instead of showing a broken icon */
-function dropSlot(img){ var s = img.closest(".g-slot"); if(s) s.remove(); }
+function dropSlot(img){
+  var s = img.closest(".g-slot"); if(!s) return;
+  var grid = s.parentNode; s.remove();
+  /* every photo failed to load: hide the whole Gallery block, not just leave a heading */
+  if(grid && !grid.querySelector(".g-slot")){ var b = grid.closest(".chamber-block"); if(b) b.hidden = true; }
+}
 var DROP_ON_ERROR = ' onerror="dropSlot(this)"';
 document.getElementById('y').textContent = new Date().getFullYear();
 
@@ -69,9 +75,8 @@ var FALLBACK = {
   title:"Clay, memory & momentum",
   desc:"Jingdezhen → Changsha: world treasure to influential new city.",
   photos:[
-    { src:"photos/china/01.jpg", alt:"Jingdezhen to Changsha trip", wide:true },
-    { src:"photos/china/02.jpg", alt:"A stop along the China trip", wide:false },
-    { src:"photos/china/03.jpg", alt:"Detail from the China trip", wide:false }
+    { src:"photos/img_4282.jpeg", alt:"Tea Tasting", wide:true },
+    { src:"photos/img_1223.jpeg", alt:"Bullet Train Station", wide:false }
   ]
 };
 

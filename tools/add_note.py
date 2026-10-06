@@ -2,9 +2,14 @@
 """Append a note to site/content/notes.json.
 
 notes.html reads this file, and the Decap CMS at /admin edits the same file,
-so you can use whichever is closer to hand.
+so you can use whichever is closer to hand. This script lives outside site/
+on purpose: Netlify publishes everything under site/, and a tool has no
+business being downloadable from the website.
 
-Examples
+A note with the same source URL, or the same title on the same date, as an
+existing entry is refused; pass --force to add it anyway.
+
+Examples (run from the repo root)
 --------
     python tools/add_note.py ^
         --title "Optogenetics takes the Nobel" ^
@@ -26,7 +31,7 @@ import sys
 from datetime import date
 from pathlib import Path
 
-NOTES_PATH = Path(__file__).resolve().parent.parent / "content" / "notes.json"
+NOTES_PATH = Path(__file__).resolve().parent.parent / "site" / "content" / "notes.json"
 DATE_FMT = "%Y-%m-%d"
 
 
@@ -49,7 +54,27 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                         help="Human-readable source, e.g. 'Nature, 2 Oct 2026'")
     parser.add_argument("--dry-run", action="store_true",
                         help="Print the entry without writing anything")
+    parser.add_argument("--force", action="store_true",
+                        help="Add the note even if it looks like a duplicate")
     return parser.parse_args(argv)
+
+
+def _norm(text: str) -> str:
+    return " ".join(str(text).split()).casefold()
+
+
+def find_duplicate(entries: list, entry: dict) -> dict | None:
+    """Return an existing entry with the same source URL, or the same title on the same date."""
+    src = entry.get("source", "").rstrip("/").casefold()
+    for old in entries:
+        if not isinstance(old, dict):
+            continue
+        if src and str(old.get("source", "")).rstrip("/").casefold() == src:
+            return old
+        if (old.get("date") == entry["date"]
+                and _norm(old.get("title", "")) == _norm(entry["title"])):
+            return old
+    return None
 
 
 def load(path: Path) -> dict:
@@ -89,7 +114,10 @@ def build_entry(args: argparse.Namespace) -> dict:
     if tags:
         entry["tags"] = tags
     if args.source.strip():
-        entry["source"] = args.source.strip()
+        source = args.source.strip()
+        if not source.lower().startswith(("http://", "https://")):
+            raise SystemExit(f"! --source must start with http:// or https:// (got {source!r})")
+        entry["source"] = source
     if args.source_label.strip():
         entry["sourceLabel"] = args.source_label.strip()
     return entry
@@ -105,6 +133,13 @@ def main(argv: list[str] | None = None) -> int:
     try:
         data = load(NOTES_PATH)
         entry = build_entry(args)
+
+        dup = find_duplicate(data["entries"], entry)
+        if dup and not args.force:
+            print(f"! Looks like a duplicate of the note dated {dup.get('date')}: "
+                  f"{dup.get('title')!r}. Nothing written (use --force to add it anyway).",
+                  file=sys.stderr)
+            return 2
 
         if args.dry_run:
             print("Dry run -- nothing written. The entry would be:")

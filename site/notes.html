@@ -83,6 +83,10 @@ function esc(s){
     return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
   });
 }
+/* only http(s) links are allowed out — blocks javascript:, data: etc. */
+function safeUrl(u){
+  return /^https?:\/\//i.test(String(u || "").trim()) ? String(u).trim() : "";
+}
 function fmtDate(iso){
   var d = new Date(String(iso) + "T00:00:00");
   if (isNaN(d.getTime())) return iso;
@@ -127,8 +131,9 @@ function renderNotes(){
   list.innerHTML = items.map(function(n){
     var tags = (n.tags || []).map(function(t){ return "<span>" + esc(t) + "</span>"; }).join("");
     var zh   = n.titleZh ? '<span class="cn">' + esc(n.titleZh) + '</span>' : "";
-    var src  = n.source
-      ? '<a class="note-src" href="' + esc(n.source) + '" target="_blank" rel="noopener">'
+    var url  = safeUrl(n.source);
+    var src  = url
+      ? '<a class="note-src" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">'
         + esc(n.sourceLabel || "Source")
         + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>'
       : "";

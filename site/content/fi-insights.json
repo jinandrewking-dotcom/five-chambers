@@ -1,0 +1,123 @@
+{
+  "updated": "2026-10-06",
+  "intro": "Registrations show which cars moved. Finance & insurance (F&I) and value-add products show how the deal was paid for and what it earned, and in Australia that half of the business has been rebuilt by regulation since 2018. Below are the metrics I'd track, how the lender channels compare, and the hypotheses I'd test as the market goes electric.",
+  "guardrail": "Public information and frameworks only. No employer, dealership, lender or customer figures appear on this page.",
+  "metrics": [
+    {
+      "name": "Finance penetration",
+      "formula": "dealer-arranged finance contracts ÷ retail deliveries",
+      "why": "The headline F&I health number. Split it by drivetrain and by brand before reading anything into it."
+    },
+    {
+      "name": "Products per retail unit",
+      "formula": "value-add products sold ÷ retail deliveries",
+      "why": "Shows whether protection products (tyre & rim, paint, GAP) are being offered and accepted consistently, separately from finance."
+    },
+    {
+      "name": "F&I income per retail unit",
+      "formula": "(finance commission + product income) ÷ retail deliveries",
+      "why": "The number that tells you whether the back end is carrying the front end, which matters more as new-car margins compress."
+    },
+    {
+      "name": "Look-to-book",
+      "formula": "settled contracts ÷ applications submitted",
+      "why": "Separates a lender-appetite problem from a desk-process problem. Read it per lender, not just in total."
+    },
+    {
+      "name": "Contracts in transit",
+      "formula": "days from delivery to lender funding",
+      "why": "A cash-flow metric. Slow funding ties up working capital even when the front-end numbers look healthy."
+    }
+  ],
+  "lenders": {
+    "title": "Lender channels compared",
+    "subtitle": "Typical patterns only. They vary by lender, campaign and customer profile.",
+    "columns": ["Channel", "Where it tends to win", "Watch-outs", "EV angle"],
+    "rows": [
+      [
+        "Captive / manufacturer finance",
+        "Subsidised campaign rates; approvals aligned to the brand's model launches",
+        "Volume can swing with campaign calendars; rate support is a marketing cost, not a given",
+        "Rate support and guaranteed-future-value style products are a lever for moving new EV models"
+      ],
+      [
+        "Major bank",
+        "Price for strong-credit customers; existing banking relationships",
+        "Customers often arrive pre-approved, so the finance happens outside the dealership",
+        "Several banks advertise discounted \"green\" car-loan rates for low-emission vehicles"
+      ],
+      [
+        "Non-bank lender",
+        "Approval breadth and speed: self-employed borrowers, thin credit files",
+        "Higher rates; affordability and responsible-lending checks deserve extra care",
+        "Uncertain used-EV residual values can show up in pricing and balloon settings"
+      ],
+      [
+        "Novated lease provider",
+        "Tax: eligible EVs are exempt from fringe benefits tax under salary packaging",
+        "Usually arranged through the employer's provider, not the dealership's F&I desk",
+        "Probably the biggest single reason dealer finance penetration on EVs can look low"
+      ]
+    ]
+  },
+  "hypotheses": [
+    {
+      "title": "Novated leasing pulls EV finance out of the showroom",
+      "body": "Expect lower dealer finance penetration on battery-electric than on combustion models of the same brand.",
+      "test": "Split penetration by drivetrain, and flag deliveries known to be novated."
+    },
+    {
+      "title": "Long battery warranties shrink the extended-warranty pitch",
+      "body": "With manufacturer battery cover commonly around eight years, product mix should shift towards protection products and GAP.",
+      "test": "Compare products per retail unit and product mix by drivetrain, period on period."
+    },
+    {
+      "title": "Used-EV price softness makes GAP and balloon sizing matter more",
+      "body": "Faster depreciation raises negative-equity risk. Since 2021, though, most add-on insurance can't be sold on delivery day.",
+      "test": "Track conversion of deferred-sale offers, not just same-day attachment."
+    },
+    {
+      "title": "Compressed new-car gross shifts profit to the back end",
+      "body": "As price competition from new entrants squeezes front-end margin, F&I and value-add become a larger share of gross per unit.",
+      "test": "Track F&I income as a share of total gross per unit, by brand, over time."
+    }
+  ],
+  "timeline": [
+    {
+      "when": "Sep 2016",
+      "what": "ASIC Report 492 on add-on insurance sold through car dealers",
+      "why": "Found the market was failing consumers and set up the reforms that followed."
+    },
+    {
+      "when": "Nov 2018",
+      "what": "ASIC ban on flex commissions in car finance",
+      "why": "Dealers can no longer earn more by setting a higher interest rate. Income per contract now depends on volume and product mix."
+    },
+    {
+      "when": "Feb 2019",
+      "what": "Hayne Royal Commission final report",
+      "why": "Recommended a deferred sales model for add-on insurance."
+    },
+    {
+      "when": "Oct 2021",
+      "what": "Deferred sales model for add-on insurance; design and distribution obligations",
+      "why": "A four-day pause between the car sale and most add-on insurance sales, plus target-market rules for financial products."
+    },
+    {
+      "when": "Jul 2022",
+      "what": "Electric Car Discount: FBT exemption for eligible EVs",
+      "why": "Made novated leasing the cheapest way for many employees to finance an EV."
+    },
+    {
+      "when": "Apr 2025",
+      "what": "Plug-in hybrids drop out of the FBT exemption",
+      "why": "Except under existing commitments, which tilts novated demand towards pure battery-electric."
+    }
+  ],
+  "sources": [
+    { "label": "ASIC Report 492: A market that is failing consumers — the sale of add-on insurance through car dealers (2016)", "url": "" },
+    { "label": "ASIC Corporations (Flexible Credit Cost Arrangements) Instrument 2017/780", "url": "" },
+    { "label": "Royal Commission into Misconduct in the Banking, Superannuation and Financial Services Industry, Final Report (2019)", "url": "" },
+    { "label": "Treasury Laws Amendment (Electric Car Discount) Act 2022 / ATO guidance on the electric car FBT exemption", "url": "" }
+  ]
+}

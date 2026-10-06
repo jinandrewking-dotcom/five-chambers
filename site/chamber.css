@@ -196,3 +196,50 @@ a{color:inherit;text-decoration:none}
   .chart-wrap{height:250px}
   .chart-wrap.bar-chart{height:300px}
 }
+
+/* ============================================================
+   DATA PAGE — F&I section (metrics, lender comparison, timeline)
+   ============================================================ */
+[hidden]{display:none!important}
+.sub-h{font-family:var(--font-display);font-weight:600;font-size:1.12rem;margin-top:30px;color:var(--ink)}
+.guardrail{
+  margin-top:14px;padding:10px 14px;border-left:3px solid var(--c,var(--green-soft));
+  background:var(--surface);border-radius:0 var(--r-md) var(--r-md) 0;font-size:.82rem;
+}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:14px}
+.metric{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:17px 18px}
+.metric b{display:block;font-family:var(--font-display);font-weight:600;font-size:1.02rem;color:var(--c,var(--green-soft))}
+.metric code{
+  display:block;margin-top:7px;font-family:var(--font-body);font-size:.76rem;
+  color:var(--ink);background:var(--bg-2);border-radius:6px;padding:5px 8px;
+}
+.metric span{display:block;margin-top:9px;font-size:.8rem;line-height:1.5;color:var(--ink-soft)}
+.table-scroll{overflow-x:auto}
+.compare-table td,.compare-table th{vertical-align:top}
+.compare-table td{text-align:left!important;font-variant-numeric:normal;color:var(--ink-soft);line-height:1.5}
+.compare-table td:first-child{color:var(--ink);font-weight:600}
+.deep-dive .test{display:block;margin-top:4px;font-size:.84rem;color:var(--ink-soft);opacity:.9}
+.timeline{list-style:none;margin-top:16px;border-left:2px solid var(--line);padding-left:20px}
+.timeline li{position:relative;padding-bottom:16px}
+.timeline li::before{
+  content:"";position:absolute;left:-26px;top:6px;width:10px;height:10px;border-radius:50%;
+  background:var(--surface);border:2px solid var(--c,var(--green-soft));
+}
+.timeline .t-when{display:block;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--c,var(--green-soft))}
+.timeline b{display:block;margin-top:3px;font-weight:600}
+.timeline li > span:last-child{display:block;margin-top:3px;font-size:.86rem;color:var(--ink-soft);max-width:68ch}
+
+/* phones: the 4-column comparison becomes one card per lender channel */
+@media (max-width:640px){
+  .compare-table thead{display:none}
+  .compare-table,.compare-table tbody,.compare-table tr,.compare-table td{display:block;width:100%}
+  .compare-table tr{border-bottom:1px solid var(--line);padding:10px 0}
+  .compare-table tr:last-child{border-bottom:none}
+  .compare-table td{border:none;padding:4px 0}
+  .compare-table td:not(:first-child)::before{
+    content:attr(data-label);display:block;font-size:.66rem;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);opacity:.8;
+  }
+  .stat-row{grid-template-columns:1fr 1fr}
+  .chart-panel{padding:18px 14px 12px}
+}

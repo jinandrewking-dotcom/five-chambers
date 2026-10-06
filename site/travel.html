@@ -42,6 +42,14 @@
   </div>
 </footer>
 <script>
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+    return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+  });
+}
+/* a photo whose file is missing removes its own slot instead of showing a broken icon */
+function dropSlot(img){ var s = img.closest(".g-slot"); if(s) s.remove(); }
+var DROP_ON_ERROR = ' onerror="dropSlot(this)"';
 document.getElementById('y').textContent = new Date().getFullYear();
 var PHOTOS_FALLBACK = [
   { src:"photos/travel/01.jpg", alt:"Solo travel photo" },
@@ -52,8 +60,11 @@ function renderChamberGallery(photos){
   var el = document.getElementById("chamber-gallery");
   if(!el) return;
   el.innerHTML = photos.map(function(p){
-    return '<div class="g-slot"><img src="' + p.src + '" alt="' + (p.alt||"photo") + '" loading="lazy"></div>';
+    return '<div class="g-slot"><img src="' + esc(p.src) + '" alt="' + esc(p.alt || "photo") + '" loading="lazy"' + DROP_ON_ERROR + '></div>';
   }).join('');
+  /* nothing to show (empty list in the CMS) — hide the whole Gallery block */
+  var block = el.closest(".chamber-block");
+  if(block) block.hidden = !photos.length;
 }
 fetch("content/travel-photos.json")
   .then(function(r){ return r.ok ? r.json() : Promise.reject(); })

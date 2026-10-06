@@ -71,6 +71,12 @@
       }
     ]
   },
+  "brands": {
+    "title": "Battery-electric deliveries by brand",
+    "subtitle": "Top brands for one period: units delivered. Fill from the public VFACTS / EVC brand tables; this chart stays hidden while the list is empty.",
+    "points": [],
+    "sources": []
+  },
   "notes": [
     "Electrified share counts battery-electric, plug-in hybrid and conventional hybrid together; BEV-only figures are the ones used in the two charts.",
     "Monthly shares differ slightly between aggregators because some exclude brands that do not report to VFACTS or to the EVC. Figures here follow the FCAI VFACTS series as reported by the sources above.",

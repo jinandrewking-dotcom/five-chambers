@@ -1,7 +1,3 @@
 {
-  "photos": [
-    { "src": "photos/travel/01.jpg", "alt": "travel photo" },
-    { "src": "photos/travel/02.jpg", "alt": "travel photo" },
-    { "src": "photos/travel/03.jpg", "alt": "travel photo" }
-  ]
+  "photos": []
 }

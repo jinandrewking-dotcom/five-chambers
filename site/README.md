@@ -8,6 +8,7 @@ pride.html          ← Pride & Practice chamber
 tea.html            ← Tea & the Way chamber
 data.html           ← Data & Drive chamber
 travel.html         ← Solo Maps chamber
+notes.html          ← Notes · 研究笔记 — the reading log
 tasmania.html       ← Trip page: Launceston → Hobart (route map + gallery)
 china.html          ← Trip page: Jingdezhen → Changsha (route map + gallery)
 new-zealand.html    ← Trip page: Queenstown → ... → Auckland (route map + gallery)
@@ -18,6 +19,8 @@ admin/              ← Decap CMS admin panel
 content/            ← CMS-managed JSON data
   roadlog.json       ← Road Log entries
   tripgallery.json   ← Trip Gallery entries + photos
+  notes.json         ← Notes entries (the reading log)
+  ev-share.json      ← EV figures behind the data.html charts
   sangha-photos.json
   pride-photos.json
   tea-photos.json
@@ -33,12 +36,14 @@ photos/             ← image storage
   data/              ← Data gallery photos
   travel/            ← Travel gallery photos
 netlify.toml        ← Netlify build config
+tools/              ← small helper scripts
+  add_note.py        ← append a note to content/notes.json from the terminal
 ```
 
 ## Updating content via Decap CMS
 1. Go to `yourdomain.netlify.app/admin` (or your custom domain `/admin`)
 2. Log in with your Netlify Identity account
-3. Edit Road Log, Trip Gallery, or any Chamber Gallery
+3. Edit Road Log, Trip Gallery, Notes, EV Data, or any Chamber Gallery
 4. Upload photos with any filename — no renaming needed
 5. Click Save → Netlify auto-rebuilds in ~30s
 
@@ -49,6 +54,15 @@ netlify.toml        ← Netlify build config
 - **Trip Gallery**: edit `content/tripgallery.json` (or inline `TRIP_GALLERY_FALLBACK`)
   - Each gallery entry needs a stable `"slug"` (e.g. `"tasmania"`) — this is how `tasmania.html`/`china.html`/`new-zealand.html` find their own photos/title/description. Don't change an existing slug unless you also update the matching `SLUG` constant near the bottom of that trip page's `<script>`.
 - **Chamber photos**: edit `content/{chamber}-photos.json`
+- **Notes (reading log)**: edit `content/notes.json`, or run the helper:
+  ```
+  python tools/add_note.py --title "..." --summary "..." --tags neuroscience,methods \
+      --source https://example.org/paper --source-label "Journal, 1 Oct 2026"
+  python tools/add_note.py --title "..." --summary "..." --dry-run   # preview only
+  ```
+  Newest entries sort to the top automatically. Tag buttons on the page build themselves from the tags you use.
+- **EV charts (data.html)**: edit `content/ev-share.json` — `stats` feed the big-number cards, `monthly.points` feeds the line chart, `states.points` feeds the bar chart. Both charts also render as tables (open the "View as table" toggle), so the numbers stay readable without JavaScript.
+  - **Source discipline**: every chart reads its attribution from the `sources` array in the JSON. Keep public, citable figures here (FCAI VFACTS, EVC, AAA EV Index) — never internal dealership data.
 - **Photo src accepts any filename/path** — e.g. `"photos/tasmania/my-sunset.jpg"`
 - **Trip route maps**: each trip page (`tasmania.html`/`china.html`/`new-zealand.html`) has its own hand-drawn SVG route illustration inline in the HTML (search for `<div class="route-map">`) — it's decorative, not a real map, so edit the `<path>`/`<circle>`/`<text>` coordinates by hand if you add/rename waypoints. To add a 4th trip page, copy one of these three files as a template.
 

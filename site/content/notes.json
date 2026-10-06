@@ -1,0 +1,34 @@
+{
+  "entries": [
+    {
+      "date": "2026-10-06",
+      "kind": "Journal scan",
+      "title": "Optogenetics takes the Nobel — and behavioural science gets its causal switch",
+      "titleZh": "光遗传学获奖",
+      "summary": "Karl Deisseroth, Peter Hegemann and Georg Nagel share the 2026 Nobel Prize in Physiology or Medicine for light-gated ion channels and optogenetics. Worth keeping because it is the methodological root of the causal turn in behavioural science: before optogenetics, brain research could mostly show correlation, not cause. The citation also points to clinical work on restoring sight and on depression, Alzheimer's and pain circuits.",
+      "tags": ["neuroscience", "methods"],
+      "source": "https://www.nobelprize.org/prizes/medicine/2026/press-release/",
+      "sourceLabel": "Nobel Prize press release, 5 Oct 2026"
+    },
+    {
+      "date": "2026-10-05",
+      "kind": "Archaeology",
+      "title": "New data from old bones — Abydos skulls reopen the retainer-sacrifice question",
+      "titleZh": "旧骨头，新数据",
+      "summary": "Roselyn Campbell (Purdue) re-examined 46 skulls from Flinders Petrie's 1920s excavations at Umm el-Qa'ab, now held in the Duckworth Collection at Cambridge. Eighteen of them — 39% — show perimortem cranial trauma. The methodological lesson is the interesting part: Petrie may well have seen the fractures but had no way to distinguish fresh bone from dry bone, and the paraffin wax he used to stabilise the skulls sits directly on top of them.",
+      "tags": ["anthropology", "archaeology", "methods"],
+      "source": "https://www.frontiersin.org/news/2026/10/05/modern-forensic-methods-human-sacrifice-ancient-egypt-frontiers-environmental-archaeology",
+      "sourceLabel": "Frontiers in Environmental Archaeology, 5 Oct 2026"
+    },
+    {
+      "date": "2026-10-01",
+      "kind": "Psychology",
+      "title": "Step counts, cortical thickness and adolescent mental health",
+      "titleZh": "步数与青少年心理健康",
+      "summary": "In JAMA Network Open, Li, Paluch and Rakesh used the ABCD cohort (N=5,515, pedometer-measured steps) and found that higher daily step counts were associated with thicker paracentral and rostral anterior cingulate cortex, which partially mediated lower mental-health problems a year later. The dose finding is the practical one: from any starting point, an extra 1,000–2,000 steps a day was already associated with benefit. Observational, so causation is not established — but the objective measurement is a real advance over decades of self-report.",
+      "tags": ["psychology", "public health", "methods"],
+      "source": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/10.1001/jamanetworkopen.2026.36973",
+      "sourceLabel": "JAMA Network Open, 1 Oct 2026"
+    }
+  ]
+}

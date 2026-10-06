@@ -148,3 +148,92 @@ collections:
             fields:
               - { label: "Image", name: "src", widget: "image" }
               - { label: "Alt Text", name: "alt", widget: "string", default: "Travel photo" }
+
+  # ────────────────────────────────────────
+  # Notes — 研究笔记 (notes.html)
+  # ────────────────────────────────────────
+  - name: "notes"
+    label: "Notes · 研究笔记"
+    delete: false
+    files:
+      - file: "site/content/notes.json"
+        name: "data"
+        label: "Notes"
+        format: json
+        fields:
+          - name: "entries"
+            label: "Entries"
+            widget: "list"
+            add_to_top: true
+            summary: "{{date}} — {{title}}"
+            fields:
+              - { label: "Date (YYYY-MM-DD)", name: "date", widget: "string", hint: "Sorts the list; newest first." }
+              - { label: "Kind (e.g. Journal scan, Archaeology, Psychology)", name: "kind", widget: "string", default: "Note" }
+              - { label: "Title (EN)", name: "title", widget: "string" }
+              - { label: "Title (中文, optional)", name: "titleZh", widget: "string", required: false }
+              - { label: "Summary", name: "summary", widget: "text", hint: "Two or three sentences. Say why it matters, not just what it says." }
+              - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+              - { label: "Source URL (optional)", name: "source", widget: "string", required: false }
+              - { label: "Source label (optional)", name: "sourceLabel", widget: "string", required: false, hint: "e.g. 'Nobel Prize press release, 5 Oct 2026'" }
+
+  # ────────────────────────────────────────
+  # EV deep-dive data (data.html)
+  # ────────────────────────────────────────
+  - name: "evdata"
+    label: "EV Data · 数据看板"
+    delete: false
+    files:
+      - file: "site/content/ev-share.json"
+        name: "data"
+        label: "EV share data"
+        format: json
+        fields:
+          - { label: "Headline", name: "headline", widget: "text" }
+          - { label: "Last updated", name: "updated", widget: "string" }
+          - name: "stats"
+            label: "Stat cards"
+            widget: "list"
+            add_to_top: false
+            fields:
+              - { label: "Big number", name: "value", widget: "string" }
+              - { label: "Caption", name: "label", widget: "text" }
+          - name: "monthly"
+            label: "Chart 1 — monthly national series"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - name: "points"
+                label: "Data points"
+                widget: "list"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Value (%)", name: "value", widget: "number", value_type: "float" }
+                  - { label: "Units (optional)", name: "units", widget: "number", required: false }
+              - name: "sources"
+                label: "Sources"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "URL", name: "url", widget: "string" }
+          - name: "states"
+            label: "Chart 2 — by state"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - name: "points"
+                label: "Data points"
+                widget: "list"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Value (%)", name: "value", widget: "number", value_type: "float" }
+              - name: "sources"
+                label: "Sources"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "URL", name: "url", widget: "string" }
+          - { label: "Notes on the numbers", name: "notes", widget: "list", required: false }
